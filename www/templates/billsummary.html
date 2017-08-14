@@ -1,0 +1,91 @@
+<ion-view title="Bill Summary" id="page5" hide-back-button="true">
+  <ion-content padding="true" class="has-header" overflow-scroll="false">
+
+  <!--   <ion-list id="page-list5">
+      <ion-item class="item-divider" id="page-list-item-divider1"> Bill Summary</ion-item>
+    </ion-list> -->
+	
+    <!-- <ion-list id="page-list6">
+      <ion-item class="dark" id="page-list-item41">Total
+        <span class="item-note">{{cart_details.cart_amount}}</span>
+      </ion-item>
+    </ion-list> -->
+
+
+         <div class="col container2-bg-color" >
+            <div class="col" align="center">
+                <h3 style="color: #FFF;">Total Price</h3>
+                <h4 style="color: #FFF;">Rs {{total_amount}}</h4>
+            </div>
+          </div>
+           <br>
+		   <div id="apply" class="card" align="center" style="padding-top:25px;padding-bottom:25px" ng-click="offer_modal()">
+		   
+			<span>Apply Coupon Code</span></br>
+			
+		   
+		   </div>
+		   <div id="offer" class="card" align="center" style="padding-top:25px;padding-bottom:25px;display:none" ng-click="offer_modal()">
+		   
+			
+			<span>Congratulations! You have availed a discount of Rs {{amount}}</span>
+		   
+		   </div>
+          <div class="col" align="center">
+            <h4>How do want to pay ?</h4>
+          </div>
+
+          <div class="row">
+            <div class="col col-50" align="center" ng-click="select_pay1()">
+               <i class="icon ion-card bill-card-icon"></i>
+                 <h5>Credit Card</h5>
+            </div>
+            <div class="col col-50" align="center" ng-click="select_pay1()">
+            <i class="icon ion-card bill-card-icon"></i>
+                 <h5>Debit Card</h5>
+            </div>
+          </div>
+
+           <br>
+
+          <div class="row">
+            <div class="col col-50" align="center" ng-click="select_pay1()">
+               <i class="icon ion-network bill-card-icon"></i>
+                 <h5>Net Banking</h5>
+            </div>
+            <div class="col col-50" align="center" ng-click="select_pay1()">
+              <i class="icon ion-android-happy bill-card-icon"></i>
+                 <h5>PayPal</h5>
+            </div>
+          </div>
+
+          <br>
+          <div class="row">
+            <div class="col col-50" align="center" ng-click="select_pay1()">
+               <i class="icon ion-ios-filing-outline bill-card-icon"></i>
+                 <h5>Wallet</h5>
+            </div>
+            <div class="col col-50" align="center"  ng-click="select_pay()">
+              <i class="icon ion-cash bill-card-icon"></i>
+                 <h5>Cash on Delivery</h5>
+            </div>
+          </div>
+
+ 
+
+<!--     <div class="list card" id="page-card22">
+      <ion-item class="item-icon-left" id="page-list-item14">
+        <i class="icon ion-card"></i>Credit card</ion-item>
+      <ion-item class="item-icon-left" id="page-list-item15">
+        <i class="icon ion-card"></i>Debit card</ion-item>
+      <ion-item class="item-icon-left" id="page-list-item16">
+        <i class="icon ion-network"></i>Net banking</ion-item>
+      <ion-item class="item-icon-left" id="page-list-item17">
+        <i class="icon ion-android-happy"></i>Paypal</ion-item>
+      <ion-item class="item-icon-left" id="page-list-item18">
+        <i class="icon ion-ios-filing-outline"></i>Wallet</ion-item>
+      <ion-item class="item-icon-left" id="page-list-item19" ui-sref="app.order_placed">
+        <i class="icon ion-cash"></i>Cash on delivery</ion-item>
+    </div> -->
+  </ion-content>
+</ion-view>

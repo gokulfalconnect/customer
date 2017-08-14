@@ -1,0 +1,116 @@
+<ion-modal-view cache-view="false">
+<ion-nav-bar class="bar-royal">
+		<ion-nav-title>
+			Rate the delivery
+		</ion-nav-title>
+		<ion-nav-buttons side="right">
+      	<button class="button button-icon button-clear ion-close-round" ng-click="closeModal()">
+        	</button>
+    	</ion-nav-buttons>	
+</ion-nav-bar>
+	  <ion-content overflow-scroll="true">
+		<div style="padding-top:20%">
+			
+			<span>Select Any of the question from the drop down!</span></br></br>
+				<form ng-submit="rate_delivery(ratedata)">
+					<ion-list ng-repeat="feeddata in feedback_data">
+					{{feeddata.question_text}}</br>
+					
+					
+					<div ng-if="feeddata.answer_type=='score'">
+						<ion-radio   ng-value="1"   ng-model="ratedata.feedback_score" >
+							1
+						</ion-radio>
+						<ion-radio  ng-value="2"   ng-model="ratedata.feedback_score">
+							2
+						</ion-radio>
+						<ion-radio  ng-value="3"   ng-model="ratedata.feedback_score">
+							3
+						</ion-radio>
+						<ion-radio  ng-value="4"   ng-model="ratedata.feedback_score">
+							4
+						</ion-radio>
+						<ion-radio  ng-value="5"   ng-model="ratedata.feedback_score">
+							5
+						</ion-radio>
+					</div>
+					
+					<div  ng-if="feeddata.answer_type=='yesno'">
+						
+						<ion-radio   ng-value="1"   ng-model="ratedata.feedback_score1" >
+							YES
+						</ion-radio>
+						<ion-radio  ng-value="2"   ng-model="ratedata.feedback_score1">
+							NO
+						</ion-radio>
+					</div>
+					<div ng-if="feeddata.answer_type=='text'">
+						<textarea rows="4" cols="50" placeholder="Type your Message Here...."  ng-model="ratedata.feedback_text" ></textarea>
+					</div>	
+					
+				
+			
+
+				
+					</ion-list>
+					<button type="submit" class="submit" >Rate it</button>
+				</form>
+				
+			<!--	<select ng-model="rate_data.answer_type" ng-change="select_qstn(rate_data.answer_type)">
+						
+					<option ng-repeat ="feeddata in feedback_data" value="{{feeddata}}">
+						{{feeddata.question_text}}
+					</option>
+						
+				</select></br></br>
+				
+				<form ng-submit="rate_delivery(ratedata)">
+				
+				<div ng-if="question_type.answer_type=='score'">
+					<ion-radio   ng-value="1"   ng-model="ratedata.feedback_score" >
+						1
+					</ion-radio>
+					<ion-radio  ng-value="2"   ng-model="ratedata.feedback_score">
+						2
+					</ion-radio>
+					<ion-radio  ng-value="3"   ng-model="ratedata.feedback_score">
+						3
+					</ion-radio>
+					<ion-radio  ng-value="4"   ng-model="ratedata.feedback_score">
+						4
+					</ion-radio>
+					<ion-radio  ng-value="5"   ng-model="ratedata.feedback_score">
+						5
+					</ion-radio>
+				</div>
+				
+				<div  ng-if="question_type.answer_type=='yesno'">
+					
+					<ion-radio   ng-value="1"   ng-model="ratedata.feedback_score" >
+						YES
+					</ion-radio>
+					<ion-radio  ng-value="2"   ng-model="ratedata.feedback_score">
+						NO
+					</ion-radio>
+				</div>
+				<div ng-if="question_type.answer_type=='text'">
+					<textarea rows="4" cols="50" placeholder="Type your Message Here...."  ng-model="ratedata.feedback_text" ></textarea>
+				</div>	
+				<button type="submit" class="submit" >Rate it</button>
+			
+		
+
+			</form>-->
+	
+		</div>
+		
+		<div>
+		
+		</div>
+	  
+	  
+  </ion-content>
+  
+ 
+</ion-modal-view>
+

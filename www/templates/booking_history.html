@@ -1,0 +1,154 @@
+<ion-view view-title="Booking Details" cache-view="false" hide-back-button="true">
+  <ion-content class="no-header3">
+
+  <div class="col" style="padding-top:60px">
+  	<button class="button button-full button-calm  ion-android-add-circle" ui-sref="app.book_table">
+   Book Table
+</button>
+  </div>
+
+	<div class="has-subheader">
+	<ion-tabs class="tabs-positive">
+		<ion-tab title="New Bookings">
+			<ion-nav-view name="home-tab">
+			
+			
+				<div class="card" ng-repeat="resdata in reservation_presentdata">
+					<div >		
+							<h2 align="center">{{resdata.restaurant_name}}</h2>
+						
+						<div class="row">
+					    <div class="col col-50">
+					      	<p> Reservation Date </p></br>
+					      	
+					    </div>
+						<div class="col col-50">
+					      	<p style="align:center">{{resdata.reservation_date}}</p></br>
+					      	
+					    </div>
+		    		</div>
+					<div class="row">
+					    <div class="col col-50">
+					      	<p> Reservation Time </p></br>
+					      	
+					    </div>
+						<div class="col col-50">
+					      	<p style="align:center"> {{resdata.timeslot}} </p></br>
+					      	
+					    </div>
+		    		</div>
+					<div class="row">
+					    <div class="col col-50">
+					      	<p> No of seats </p></br>
+					      	
+					    </div>
+						<div class="col col-50">
+					      	<p style="align:center"> {{resdata.party_size}} </p></br>
+					      	
+					    </div>
+		    		</div>
+					<div class="row">
+					    <div class="col col-50">
+					      	<p> Booking Status </p></br>
+					      	
+					    </div>
+						<div class="col col-50">
+					      	<p style="align:center"> {{resdata.status_name}} </p></br>
+					      	
+					    </div>
+		    		</div>
+					</div>
+					<div class="item item-divider" style="padding: 0 !important; background-color: #FFF !important; border:none !important;" align="center">
+				    	
+				    	<div class="item item-body">
+							<div class="show-list-numbers-and-dots">
+								<span class="order-success" ng-click="cancel_book(resdata.id)">Click here to cancel booking</span>
+							</div>
+						</div>
+				   </div>
+				
+			</div>
+					
+				<div class="card" ng-if="reservation_presentdata.length<1">
+				
+					<span>There is no reservations available</span>
+				
+				</div>
+		
+		</ion-nav-view>
+		</ion-tab>
+		<ion-tab title="Past Bookings">
+			<ion-nav-view name="home-tab">
+				
+				<div class="card" ng-repeat="pastdata in reservation_pastdata">
+					<div>		
+							<h2 align="center">{{pastdata.restaurant_name}}</h2>
+						
+						<div class="row">
+					    <div class="col col-50">
+					      	<p> Order Date </p></br>
+					      	
+					    </div>
+						<div class="col col-50">
+					      	<p style="align:center">{{pastdata.reservation_date}} </p></br>
+					      	
+					    </div>
+		    		</div>
+					<div class="row">
+					    <div class="col col-50">
+					      	<p> Order Time </p></br>
+					      	
+					    </div>
+						<div class="col col-50">
+					      	<p style="align:center"> {{pastdata.timeslot}} </p></br>
+					      	
+					    </div>
+		    		</div>
+					<div class="row">
+					    <div class="col col-50">
+					      	<p> No of seats </p></br>
+					      	
+					    </div>
+						<div class="col col-50">
+					      	<p style="align:center"> {{pastdata.party_size}} </p></br>
+					      	
+					    </div>
+		    		</div>
+					<div class="row">
+					    <div class="col col-50">
+					      	<p> Booking Status </p></br>
+					      	
+					    </div>
+						<div class="col col-50">
+					      	<p style="align:center"> {{pastdata.status_name}} </p></br>
+					      	
+					    </div>
+		    		</div>
+					</div>
+					<div class="item item-divider" style="padding: 0 !important; background-color: #FFF !important; border:none !important;" align="center">
+				    	
+				    	<div class="item item-body">
+							<div class="show-list-numbers-and-dots">
+								<span class="order-success"></span>
+							</div>
+						</div>
+				   </div>
+				
+
+				
+				
+			</div>
+			<div class="card" ng-if="reservation_pastdata.length<1">
+				
+				<span>No Reservations are Available</span>
+				
+				</div>
+			
+			</ion-nav-view>
+		</ion-tab>
+		
+	</ion-tabs>
+	</div>
+	
+  </ion-content>
+</ion-view>

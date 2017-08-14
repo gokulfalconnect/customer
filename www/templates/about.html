@@ -1,0 +1,36 @@
+<ion-view view-title="About" class="red_bg" hide-back-button="true">
+  <ion-content>
+	<ion-list>
+       		
+				
+		<ion-slide-box  on-slide-changed="slideHasChanged($index)">
+					<ion-slide>
+						
+							<img ng-src="{{about_details.image_url}}" style="width:500px;height:300px;>
+						
+					</ion-slide>
+					
+				</ion-slide-box>
+			
+		<div class="card">
+			<div class="item item-text-wrap">
+				<span>
+				 <h1>{{about_details.restaurant_name}}</h1> 
+				 <h2>{{about_details.address}}</h2></br>
+			 
+				<span style="font-weight:bold">Phone: </span> <span>{{about_details.phone_number}}</span> </br>
+				<span style="font-weight:bold">Hours: </span> <span></span> </br>
+				<span style="font-weight:bold">Branches: </span> <span></span> </br>
+				</span></br>
+				
+				
+			<!--	<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set in Chennai's upscale Alwarpet neighbourhood, this high-end hotel in an imposing modern building 
+				with a pillared portico is 10 km from Marina Beach.</p>
+				<p>Refined restaurant  have free Wi-Fi, flat-screen TVs and have a variety of cusines.</p>
+				<p>There are 4 branches in chennai, adyar,velacherry,OMR,Porur . Parking is complimentary.</p>-->
+			</div>
+		</div>
+       
+    </ion-list>
+  </ion-content>
+</ion-view>

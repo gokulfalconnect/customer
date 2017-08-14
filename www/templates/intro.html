@@ -1,0 +1,38 @@
+
+  <ion-view view-title="" hide-back-button="true">
+        <ion-nav-buttons side="left" class="ion-nav-button-positive">
+          <button class="button button-icon icon No Icon"
+                  ng-click="startApp()" ng-if="$index = 1">
+            Skip Intro
+          </button>
+          <button class="button button-icon icon No Icon"
+                  ng-click="previous()" ng-if="$index > 1">
+            Previous
+          </button>
+        </ion-nav-buttons>
+        <ion-nav-buttons side="right"> 
+          <button class="button button-icon icon No Icon"
+                  ng-click="next()" ng-if="$index < 1">
+            Next
+          </button>
+          <button ng-if="$index = 1" class="button button-positive button-clear no-animation"
+                  ng-click="startApp()" >
+           Enter
+          </button>
+        </ion-nav-buttons>
+        <ion-slide-box class="intro_slide" on-slide-changed="slideChanged(index)" ng-if="intro_images">
+          <ion-slide ng-repeat="screen in intro_images">
+           
+			<!-- <div class="img_set">
+              <img class="img_set" ng-src="img/i1.jpg">
+			</div> -->
+
+      <div class="img_set">
+        <img class="img_set" style="background:url( {{screen.image_url}} ) center center / cover no-repeat;">
+
+
+      </div>
+			 </ion-slide>
+        </ion-slide-box>
+      </ion-view>
+

@@ -1,0 +1,95 @@
+<ion-view view-title="Profile" cache-view="false" hide-back-button="true">
+<ion-content overflow-scroll="true">
+<div ng-repeat="profile in profile_details">
+  <div class="col item-bg-color">
+  <div class="row">
+  	<div class="col">
+  	</div>
+  	<div class="col" align="center">
+  		<img ng-src="{{profile.profile_image}}" style="border-radius: 50%; width: 80px; height: 80px;" ng-click="show_actionsheet()">
+	</div>
+  	<div class="col" align="right" ui-sref="app.edit_profile">
+  		<img src="img/icon-edit-profile.svg" width="30" height="30">
+  	</div>
+
+  </div>
+  	
+	<div class="row">
+		<div class="col " align="center">
+			<h3 class="white-font2">{{profile.firstname}}</h3>
+		</div>
+	</div>
+
+	<div class="row">
+			<div class="col col-33" align="center" ui-sref="app.wallet">
+				<img src="img/wallet.svg" width="30" height="28">
+				<h5 class="white-font4">Wallet</h5>
+			</div>
+			<div class="col col-33" align="center"  ui-sref="app.profile_address_book">
+				<img src="img/notebook.svg" width="30" height="28">
+				<h5 class="white-font4">Address Book</h5>
+			</div>
+			<div class="col col-33" align="center">
+				<img src="img/message.svg" width="30" height="28">
+				<h5 class="white-font4">Message</h5>
+			</div>
+		</div>
+	</div>
+
+<div class="list padding">
+	<label class="item-input item-stacked-label row-bottom-border">
+		<!-- <h5 class="input-label h4-font">Name</h5> -->
+		<div class="row">
+			<div class="col col-80">
+				<h5>{{profile.firstname}}</h5>
+			</div>
+			<div class="col col-20 icon-padding1" align="right">
+				<img src="img/user.svg" width="30" height="30">
+			</div>
+		</div>
+		
+	</label>
+	<label class="item-input item-stacked-label row-bottom-border">
+		<div class="row">
+			<div class="col col-80">
+				<h5>{{profile.email}}</h5>
+			</div>
+			<div class="col col-20 icon-padding1" align="right">
+				<img src="img/message.png" width="28" height="28">
+			</div>
+		</div>
+	</label>
+<!--	<label class="item-input item-stacked-label row-bottom-border">
+		<div class="row">
+			<div class="col col-80">
+				<h5>01/05/1990</h5>
+			</div>
+			<div class="col col-20 icon-padding1" align="right">
+				<img src="img/calendar.svg" width="30" height="30">
+			</div>
+		</div>
+	</label>-->
+	<label class="item-input item-stacked-label row-bottom-border">
+		<div class="row">
+			<div class="col col-80">
+				<h5>{{profile.phone}}</h5>
+			</div>
+			<div class="col col-20 icon-padding1" align="right">
+				<img src="img/phone1.svg" width="30" height="30">
+			</div>
+		</div>
+	</label>
+<!--	<label class="item-input item-stacked-label row-bottom-border">
+		<div class="row">
+			<div class="col col-80">
+				<h5>No 13, Gandhi Nagar, Adyar, Chennai</h5>
+			</div>
+			<div class="col col-20 icon-padding1" align="right">
+				<img src="img/address-book.png" width="30" height="30">
+			</div>
+		</div>
+	</label>-->
+</div>
+</div>
+</ion-content>
+</ion-view>

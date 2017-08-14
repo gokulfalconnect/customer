@@ -1,0 +1,21 @@
+<ion-view view-title="Favourites" hide-back-button="true">
+  <ion-content>
+     <img ng-src="img/133.jpg" width="100%" height="auto" style="width: 100%; height: auto;">
+        <div class="button-bar">
+            <button class="button button-positive button-clear button-block  icon ion-android-cart" ng-click="add_cart()"></button>
+            <button id="bf" style ="display:none" class="button button-assertive button-clear button-block  icon ion-android-favorite-outline" ng-click="click_fav()"></button>
+			<button id="af"  class="button button-assertive button-clear button-block  icon ion-android-favorite" ng-click="cancel_fav()"></button>
+            <button class="button button-balanced button-clear button-block  icon ion-share"></button>
+        </div>
+        <div class="list card">
+            <div class="item item-divider">Description</div>
+            <div class="item item-body">
+                <div>
+					<p> Demo</p>
+					<p>Price: $220</p>
+                    <p>It's the one of the top food item in the menu.</p>
+                </div>
+            </div>
+        </div>
+  </ion-content>
+</ion-view>

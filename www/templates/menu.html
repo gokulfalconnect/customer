@@ -1,0 +1,99 @@
+<ion-side-menus enable-menu-with-back-views="true">
+  <ion-side-menu-content>
+    <ion-nav-bar class="bar-stable">
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+
+      <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left" ng-click="menu_click()">
+        </button>
+        <div class="row header-icon-padding">
+          <div class="col">
+             <i class="ion-home ion_icons_header"  ui-sref="app.home" ng-if="home_page =='0'">
+           </i>
+          </div>
+        </div>
+      </ion-nav-buttons>
+   <ion-nav-buttons side="right" >
+
+   <div class = "row header-icon-padding"  >
+   <div class = "col"><i class="ion_icons_header ion-android-notifications custom-icon " ui-sref="app.notification"></i></div>
+   <div class = "col"><i class="ion-ios-heart ion_icons_header" ui-sref="app.favourites"></i></div>
+   <div class = "col"><i  class="ion-android-funnel ion_icons_header" ng-if="is_cart=='1'" ng-click="filter_modal()"></i></div>
+   <!-- <div class = "col"><i class="ion-android-arrow-dropleft ion_icons_header" ng-click="goBack()" ng-if="back_show=='1'"></i></div>-->
+   
+  </div>
+  
+   </ion-nav-buttons>
+</ion-nav-bar>
+
+
+    <ion-nav-view name="menuContent"></ion-nav-view>
+  </ion-side-menu-content>
+
+  <ion-side-menu side="left">
+    
+    <ion-content>
+      <ion-list>
+      <div  ng-click="go_profile()" ng-if="user_status=='1'">
+      <div class="item item-avatar" style="padding-top:30px;padding-left:15%">
+        <img ng-src="{{userdata.image}}">
+        <h2>&nbsp;&nbsp;&nbsp;{{userdata.name}}</h2>
+        <h3>&nbsp;&nbsp;&nbsp;{{userdata.phone}}</h3>
+      </div>
+      </div> 
+     <div  ng-click="go_login()" ng-if="user_status==null">
+      <div class="item item-avatar" style="padding-top:30px;padding-left:10px">
+        <img ng-src="img/guest.jpg">
+        <h2>&nbsp;&nbsp;&nbsp;Welcome Guest</h2>
+        
+      </div>
+      </div> 
+    
+    <ion-item  menu-close ui-sref="app.food_menu" class="item-icon-left" >
+          <i class="icon ion-ios-book"></i>
+          Menu
+        </ion-item>
+    <ion-item  menu-close ui-sref="app.my_order"   class="item-icon-left" >
+          <i class="icon ion-ios-monitor-outline"></i>
+          My Order
+        </ion-item>
+       <ion-item  menu-close ui-sref="app.booking_history"  class="item-icon-left" >
+          <i class="icon ion-ios-compose"></i>
+          Table Booking History
+        </ion-item>
+   <!--  <ion-item  menu-close ui-sref="app.branch"  class="item-icon-left" >
+          <i class="icon ion-android-pin"></i>
+         Branches
+        </ion-item>
+    <ion-item  menu-close   class="item-icon-left" ui-sref="app.help">
+          <i class="icon ion-ios-briefcase"></i>
+         Help
+        </ion-item>-->
+    <ion-item  menu-close   class="item-icon-left" ui-sref="app.enquiry">
+          <i class="icon ion-android-call"></i>
+          Contact Us
+        </ion-item>
+        <ion-item  menu-close   class="item-icon-left"  ui-sref="app.about">
+          <i class="icon ion-android-list"></i>
+          About Us
+        </ion-item> 
+    <!--  <ion-item  menu-close   class="item-icon-left"  ui-sref="app.address_book">
+          <i class="icon ion-android-list"></i>
+          Address Book
+        </ion-item>-->
+  <!--  <ion-item  menu-close   class="item-icon-left"  ui-sref="app.billsummary">
+          <i class="icon ion-android-list"></i>
+          Bill Summary
+        </ion-item>-->
+		<ion-item menu-close ui-sref="app.index" ng-if="user_status!='1'">
+          sign in
+        </ion-item>
+		
+      <ion-item menu-close ng-click="logout()" ng-if="user_status=='1'">
+          Logout
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>

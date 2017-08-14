@@ -1,0 +1,85 @@
+<ion-modal-view cache-view="true" >
+<ion-nav-bar class="bar-royal">
+		<ion-nav-title>
+			Filter
+		</ion-nav-title>
+		<ion-nav-buttons side="left" >
+      	<i class="ion_icons_header1 ion-arrow-left-c " style="padding-left:20%" ng-click="close_filter()"></i>
+    	</ion-nav-buttons>
+		<ion-nav-buttons side="right">
+      	<button ion-button color="secondary"  ng-click="filter_clear()">clear</button>
+    	</ion-nav-buttons>
+</ion-nav-bar>
+	  <ion-content overflow-scroll="true">
+	 
+	  	  
+	<form method="post">
+		<div class="card"  style="padding-top:35px;">
+		
+			<div>
+		 <i class="ion_icons_header ion-fork " style="padding-left:20%">&nbsp;&nbsp;&nbsp;Type Of Food</i>
+			<!--	<ion-radio class="item-borderless" ng-repeat="item in foodList"   ng-value="item.value"   ng-model="filterTypeData.foodList"  name="food">
+          <div align="left">{{ item.text }}</div>
+        </ion-radio>-->
+			 <div class = "item item-checkbox item-borderless" ng-repeat="item in foodList">
+      <div align="left">{{ item.text }}</div>
+      <label class = "checkbox">
+         <input type = "radio" name="food" ng-value="item.value"  ng-model="filterTypeData.foodList"/>
+      </label>
+   </div>
+			</div>
+			<div>
+			<i class="ion_icons_header ion-social-usd-outline " style="padding-left:20%">&nbsp;&nbsp;&nbsp;Price</i>
+			<!--	<ion-radio class="item-borderless item-borderless" ng-repeat="item in pricelist"   ng-value="item.value"  ng-model="filterTypeData.pricelist"  name="price">
+           <div align="left">{{ item.text }}</div>
+        </ion-radio>-->	
+		<div class = "item item-checkbox item-borderless" ng-repeat="item in pricelist">
+      <div align="left">{{ item.text }}</div>
+      <label class = "checkbox">
+         <input type = "radio" name="price" ng-value="item.value"  ng-model="filterTypeData.pricelist"/>
+      </label>
+   </div>
+		
+			</div>
+			<div>
+			<i class="ion_icons_header ion-ios-star-outline " style="padding-left:20%">&nbsp;&nbsp;&nbsp;Rating</i>
+			<!--	<ion-radio class="item-borderless item-borderless" ng-repeat="item in ratinglist"   ng-value="item.value"  ng-model="filterTypeData.ratinglist"  name="rate">
+           <div align="left">{{ item.text }}</div>
+        </ion-radio>-->
+			<div class = "item item-checkbox item-borderless" ng-repeat="item in ratinglist">
+      <div align="left">{{ item.text }}</div>
+      <label class = "checkbox">
+         <input type = "radio" name="rate" ng-value="item.value"  ng-model="filterTypeData.ratinglist"/>
+      </label>
+   </div>
+			</div>
+				 
+		<!--	<div class="row">
+			
+			<div class="col s5">
+				<button ion-button color="secondary" class="filter_button button-royal" ng-click="closeModal()">Cancel</button>
+			</div>
+			
+			<div class="col s2">
+			</div>
+			
+			<div class="col s5" style="display:none">
+				<button ion-button color="secondary" class="filter_button button-royal" type="submit" ng-click="filter_submit()">Apply Filter</button>
+			</div>
+			
+			
+			</div>-->
+			
+			<div align="center">
+				<button  style="background-color:red" class="filter_button button-royal" type="submit" ng-click="filter_submit()">Apply Filter</button>
+			</div>
+			
+		</div>	
+		
+	</form>	  
+	  
+	  
+  </ion-content>
+  
+ 
+</ion-modal-view>

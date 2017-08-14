@@ -1,0 +1,197 @@
+<ion-view class="wrapper" view-title="Cart Details"  cache-view="false" style="background-color: #FFF !important;" hide-back-button="true">
+
+<style type="text/css">
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+.scroll-container {
+height: 500px;
+overflow-y: scroll;
+}}
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 568px) {
+.scroll-container {
+height: 450px;
+margin-bottom:20px;
+overflow-y: scroll;
+}}
+@media only screen
+and (min-device-width : 360px)
+and (max-device-width : 640px) {
+.scroll-container {
+height: 500px;
+overflow-y: scroll;
+}}
+@media only screen
+and (min-device-width : 375px)
+and (max-device-width : 667px) {
+.scroll-container {
+height: 531px;
+
+overflow: scroll;
+}}
+@media only screen
+and (min-device-width : 414px)
+and (max-device-width : 736px) {
+.scroll-container {
+height: 599px;
+padding-top: 0px;
+overflow: scroll;
+}}
+/*  @media only screen
+and (min-device-width : 412px)
+and (max-device-width : 732px) {
+.scroll-container {
+height: 620px;
+overflow-y: scroll;
+}}
+*/
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px) {
+.scroll-container {
+height: 928px;
+padding-bottom: 20px;
+overflow-y: scroll;
+}}
+</style>
+<ion-content class="has-header" overflow-scroll="true"  cache-view="false">
+<ion-list>
+<ion-item class="item-bg-color" style="padding: 0px;" >
+<div class="row">
+  <div class="col ">
+    <h2 class="white-font1"> Total Amount : {{cart_items.cart_amount}}</h2>
+  </div>
+</div>
+</ion-item>
+</ion-list>
+
+<!-- <ion-scroll scroll-height direction = "y" scroll="true">
+<div class = "scroll-container">
+  <div class="row">
+    <div class="col col-50" style="margin:1px;" ng-repeat="item in cart_items">
+      <div class="col" style="background-color: #f1f1f1; margin-bottom: 8px;"  ng-repeat="item in cart_items">
+        <img src="{{item.image_url}}" width="100%" height="100">
+        <h5>{{item.item_name}}</h5>
+        <h5><img src="img/rupee.svg" width="11" height="11">  {{item.amount}}</h5>
+        <h6 ng-click="cart_update(item.item_id,item.cart_id,item.item_price,item.quanitity,item.customers_id)">Qty : {{item.quanitity}}</h6>
+      </div>
+    </div>
+  </div>
+</div>
+</ion-scroll> -->
+
+<ion-scroll scroll-height direction = "y" scroll="true">
+ <div class = "scroll-container">
+  <div class="col" ng-repeat="item in cart_items">
+   
+     <div class="col cart-bg-color">
+        <img src="{{item.image_url}}" width="100%" height="200">
+     </div>
+      <div class="row cart-bg-color">
+     <div class="col col-70">
+           <h4 class="h4-font">{{item.item_name}}</h4>
+		    <h4 class="h4-font">{{item.quanitity}} (X) Rs.{{item.item_price}}</h4>
+          
+           <div  id="cart{{item.id}}" style="display:block">
+				<div  ng-click="add_demo()" style="display: inline-block">
+					<input type='button' value='-' class='qtyminus' field='quantity' ng-click="update_cart_decr(item.item_id,item.cart_id,item.item_price,item.quanitity,item.customers_id,item.offer_id)"/>
+				</div>
+				<div style="display: inline-block">
+					<input type='text' id='{{item.item_id}}' name='quantity' value='{{item.quanitity}}' min="1" class='cartqty' />
+				</div>
+				<div style="display: inline-block">
+					<input type='button' value='+' class='qtyplus' field='quantity'  ng-click="update_cart_incr(item.item_id,item.cart_id,item.item_price,item.quanitity,item.customers_id,item.offer_id)"/>
+				</div>
+									
+			</div>
+		   
+		   <!--  <h5 ng-click="cart_update(item.item_id,item.cart_id,item.item_price,item.quanitity,item.customers_id)">Quantity : {{item.quanitity}}  <i class="icon ion-edit icon-font-edit"></i></h5>-->
+    </div>
+     <div class="col-30 cart-delete-padding" style="padding-top: 15px;" align="center">
+			 <h4><img src="img/rupee.svg" width="13" height="13">  {{item.amount}}</h4>
+             <i class="ion-android-arrow-dropleft ion-trash-a icon-font-delete icon-font-medium" ng-click="cart_delete(item.customers_id,item.cart_id)"></i>
+            </div>
+    </div>
+	
+	<div class="row cart-bg-color">
+		<div class="col">
+			<h4 class="h4-font">{{item.item_name}}</h4>
+		</div>
+	</div>
+	
+	
+  </div>
+ </div>
+</ion-scroll>
+
+<!--    <div class="list card" ng-repeat="item in cart_items">
+  <div class = "row" >
+    <div class = "col col-80">
+      <ion-item class="item-avatar-left">
+      <img src="{{item.image_url}}" style="background-color: #FFF;">
+      <h2>{{item.item_name}}</h2>
+      </ion-item>
+    </div>
+    <div class = "col col-30">
+        <span ng-click="cart_update(item.item_id,item.cart_id,item.item_price,item.quanitity,item.customers_id)">{{item.quanitity}}</span>
+    </div>
+  </div>
+  -->
+  <!--  <div class = "row">
+    <div class = "col col-80">
+      <ion-item class="item-avatar-left">
+      <h5 style="padding-top: 18px;">{{item.amount}}</h5>
+      
+      </ion-item>
+    </div>
+    <div class = "col col-30">
+      <i class="ion-android-arrow-dropleft ion-trash-a" ng-click="cart_delete(item.customers_id,item.cart_id)"></i>
+    </div>
+  </div>
+    
+</div> -->
+
+<!-- Tab -->
+<!-- <div class = "tabs tabs-icon-top footer-bg-color">
+  <a class = "tab-item">
+    <i class="icon ion-android-cart footer-icon"></i>
+    <span ui-sref="app.food_menu" class="footer-text" >Continue Shopping</span>
+  </a>
+  
+  <a class = "tab-item">
+    <i class="icon ion-ios-pricetag footer-icon"></i>
+    <p ui-sref="app.checkout" class="footer-text" >CheckOut</p>
+  </a>
+  
+  
+</div>
+-->
+<!-- Footer -->
+
+<!--
+  <div class="row">
+    <div class="col col-80">
+      Total Amount :{{cart_items.cart_amount}}
+    </div>
+  </div>
+  <div>
+    <input class="button button-block button-stable"  value="Continue Shopping" ui-sref="app.food_menu"/>
+    <input class="button button-block button-stable"  value="CheckOut" ui-sref="app.checkout"/>
+  </div>
+-->
+</ion-content>
+</ion-view>
+
+<ion-footer-bar align-title="left" class="item-bg-color" ng-if="cart_qty =='1'">
+<div class="row ">
+  
+  <div class="col col-50" align="center">
+    <span  ui-sref="app.food_menu" >Continue</span>
+  </div>
+  <div class="col col-50 " align="center">
+    <span ng-click="go_checkout()" >Confirm</span>
+  </div>
+</div>
+</ion-footer-bar>

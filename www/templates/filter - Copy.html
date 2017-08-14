@@ -1,0 +1,43 @@
+<ion-modal-view cache-view="false" >
+<ion-nav-bar class="bar-royal">
+		<ion-nav-title>
+			Filter
+		</ion-nav-title>
+		<ion-nav-buttons side="right">
+      	<button ion-button color="secondary"  ng-click="filter_clear()">clear</button>
+    	</ion-nav-buttons>
+</ion-nav-bar>
+	  <ion-content overflow-scroll="true">
+	 
+	  	  
+<form method="post">
+	<div class="card"  style="padding-top:35px;">
+	 <ion-checkbox ng-repeat="flist in filter_list" ng-model="flist.checked"  ng-checked="flist.checked">
+	 {{ flist.text }}
+        </ion-checkbox>
+		 
+		<div class="row">
+		
+		<div class="col s5">
+		<button ion-button color="secondary" class="filter_button button-royal" ng-click="closeModal()">Cancel</button>
+		</div>
+		
+		<div class="col s2">
+		</div>
+		
+		<div class="col s5">
+		<button ion-button color="secondary" class="filter_button button-royal" ng-click="filter_submit()">Apply Filter</button>
+		</div>
+		
+		
+		</div>
+		
+		
+		
+	</form>	  
+	  
+	  
+  </ion-content>
+  
+ 
+</ion-modal-view>

@@ -1,0 +1,111 @@
+<ion-view title="Product" cache-view="false" hide-back-button="true">
+<ion-content >
+<div ng-repeat="product in product_details">
+    <div>
+        <img ng-src="{{product.image_url}}" style="display: block; width: 100%; height: 200px; margin-left: auto; margin-right: auto;">
+    </div>
+	
+    <div class="button-bar bar-white">
+        <!--<button class="button button-positive button-block button-clear  icon ion-android-cart ion-button-color" ng-if="list_id.indexOf(product.id) == -1" ng-click="cart_popup(product.id)"></button>-->
+		<div ng-click="cartBtn=!cartBtn;click_add(product.id,product.item_price)"  ng-show="!cartBtn">
+			<input type='button' value='ADD' class='addbtn'   />
+		</div>
+		<div class="row" ng-show="cartBtn" style="width:100px;margin-top:10px">
+									<div>
+										<input type='button' value='-' class='qtyminus' field='quantity' ng-click="cart_decr(product.id,product.item_price)"/>
+									</div>
+									<div>
+										<input type='text' id='{{product.id}}' name='quantity' value='1' min="1" class='qty1' />
+									</div>
+									<div>
+										<input type='button' value='+' class='qtyplus' field='quantity'  ng-click="cart_incr(product.id,product.item_price)"/>
+									</div>
+									
+								</div>
+        <button id="bf" class="button button-assertive button-clear button-block  icon ion-android-favorite-outline ion-button-color" ng-click="add_fav(product.id)"></button>
+        <button id="af" style ="display:none" class="button button-assertive button-clear button-block  icon ion-android-favorite ion-button-color" ng-click="cancel_fav(product.id)"></button>
+        <button class="button button-balanced button-clear button-block  icon ion-share ion-button-color"></button>
+    </div>
+	
+		  <ng-touch-spin ng-model="ctrl.val" prefix="$" postfix="%" initval="26.20" decimals="2" step="0.5">
+  </ng-touch-spin>
+  
+    <input type="text" ng-model="ctrl.val4" ng-touch-spin>
+		
+	
+        <div class="item container-bg-color" align="center">
+             <h2 class="white-font2">Description</h2>
+        </div>
+
+    <div class="card">
+   <!--   <div class="item item-divider item-bg-color">
+            <div class="row">
+                <div class="col">
+                    <span class="white-font2">Description</span>
+                </div>
+                
+            </div>
+            
+        </div>  -->
+        <div class="item item-divider" style="padding: 0 !important; background-color: #FFF !important; border:none !important;" >
+
+        <!--     <div class="row">
+                <div class="col">
+                    <h2 class="h4-font">Description</h2>
+                </div>
+            </div> -->
+
+            <div class="row" align="center">
+                
+					<div class="col">
+						<h2 class="h4-font">{{product.item_name}}</h2>
+                </div>
+				<div class="col col-10">
+					<img src="img/veg.jpg" width="20" height="20" ng-if="product.item_type=='Vegetarian'">
+					<img src="img/non.jpg" width="20" height="20" ng-if="product.item_type=='Non-vegetarian'">
+				</div>
+            </div>
+			<div class="row">
+				<div class="col align="right">
+						<h2>{{product.item_description}}</h2>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col col-60">
+				<!--	<p>{{product.item_type}}</p>-->
+				<p> Rs {{product.item_price}}</p>
+				</div>
+				<div class="col col-40">
+					 
+				</div>
+			
+			</div>
+
+         <!--   <div class="row responsive-sm">
+                <div class="col col-50">
+                 
+                    <p class="item-wrap">{{product.item_type}}</p>
+                </div>
+                <div class="col col-50">
+                    <span> Rs {{product.item_price}}</span>
+                </div>
+                
+            </div>-->
+          
+        </div>
+    </div>
+<!--     <div class="card">
+        <div class="item item-divider padding">Description</div>
+        <div class="item item-body">
+            <div>
+                <p> {{product.item_name}}</p>
+                <p>Rs {{product.item_price}}</p>
+                <p>{{product.item_type}}</p>
+                <p>{{product.item_description}}</p>
+            </div>
+        </div>
+    </div> -->
+</div>
+</ion-content>
+</ion-view>

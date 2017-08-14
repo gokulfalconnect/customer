@@ -1,0 +1,36 @@
+<ion-view view-title="Notifications" hide-back-button="true">
+  <ion-content>
+
+  <div class="row item-bg-color" align="center">
+  		<div class="col col-10">
+  			<h5 align="center"></h5>
+  		</div>
+ 	
+	<div class="col col-80" align="center">
+  		<h4 class="white-font3">3 Unread Messages</h4>
+	</div>
+   	<div class="col col-10" align="center" ">
+
+  		<div class="col icon-padding1"><i class="icon ion-android-delete"></i></div>
+	</div>
+ </div>
+</div>
+  <div class="row row-bottom-border" ng-repeat="notification in notification_items">
+  		<div class = "col ">
+       	 <ion-item class="item-avatar-left " style="border-color: #FFF !important">
+        	
+        	<h2><strong class="h4-font "> </strong></br>
+			<span class="item-wrap">{{notification.message}}</span></h2>
+      	<!--	<h4>{{notification.order_date}}</h4>-->
+        </ion-item>
+      </div>
+ </div>
+ <div class="card" ng-if="notification_items.length<0">
+ 
+ <span>No Notifications Available</span>
+ 
+ </div>
+
+
+  </ion-content>
+</ion-view>

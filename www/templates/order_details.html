@@ -1,0 +1,148 @@
+
+
+<ion-view title="Details" id="page7" hide-back-button="true">
+<style type="text/css">
+  @media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px) {
+ .scroll-container {
+    height: 500px;
+    overflow-y: scroll;
+ }}
+
+ @media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 568px) {
+ .scroll-container {
+    height: 453px;
+    padding-bottom: 50px;
+    overflow-y: scroll;
+ }}
+
+  @media only screen 
+and (min-device-width : 360px) 
+and (max-device-width : 640px) {
+ .scroll-container {
+    height: 525px;
+    overflow-y: scroll;
+ }}
+
+  @media only screen 
+and (min-device-width : 375px) 
+and (max-device-width : 667px) {
+ .scroll-container {
+    height: 555px;
+  
+    overflow: scroll;
+ }}
+
+  @media only screen 
+and (min-device-width : 414px) 
+and (max-device-width : 736px) {
+ .scroll-container {
+    height: 620px;
+    padding-top: 0px;
+    overflow: scroll;
+ }}
+
+
+/*  @media only screen 
+and (min-device-width : 412px) 
+and (max-device-width : 732px) {
+ .scroll-container {
+    height: 620px;
+    overflow-y: scroll;
+ }}
+*/
+
+   @media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) {
+ .scroll-container {
+    height: 910px;
+    padding-bottom: 20px;
+    overflow-y: scroll;
+ }}
+
+
+</style>
+
+<ion-list>
+<ion-item style="padding-top:50px">
+	<div class="row">
+
+		<div class="col col-60">
+			Total Amount : Rs {{order_items.total_amount}}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col col-50">
+			<button class="button button-full button-small button-assertive" ng-click="open_rate()">
+			Rate Delivery 
+			</button>
+		</div>
+	<div id ="track"  class="col col-40" ui-sref="app.track({order_id : order_details.orderid})" ng-if="order_items.order_status=='OutToDelivery'">
+			<button class="button button-full button-small button-assertive">
+			Track Order
+			</button>
+		</div>
+
+	</div>
+
+
+</ion-item>
+</ion-list>
+
+<ion-content class="has-header" style="background-color: #4e4a72 !important;" overflow-scroll="true">
+
+<!-- <ion-list>
+      <ion-item> Order Details</ion-item>
+    </ion-list> -->
+
+<ion-scroll direction = "y" style = "scroll-behavior: smooth;">
+<div class = "scroll-container" style="padding-top:100px">
+  <div class="list card" ng-repeat="item in order_items">
+   
+    <div class = "row">
+      <div class = "col item-padding-card">
+        <ion-item class="item-avatar-left ">
+        <img ng-src="{{item.image_url}}" style="background-color: #FFF;">
+        <h2>{{item.item_name}}</h2>
+    <p>Quantiy : {{item.item_quanitity}}</p>
+        <p>Rs.{{item.amount}}</p>
+        </ion-item>
+      </div>
+   
+    </div>
+  </div>
+
+</ion-scroll>
+
+
+<!-- <div class="list card">
+  <ion-item>Hyderabadi Biryani
+  <span class="item-note">Rs.155.00</span>
+  </ion-item>
+  <ion-item>Hyderabadi Biryani
+  <span class="item-note">Rs.155.00</span>
+  </ion-item>
+  <ion-item>Hyderabadi Biryani
+  <span class="item-note">Rs.155.00</span>
+  </ion-item>
+  <ion-item>Hyderabadi Biryani
+  <span class="item-note">Rs.155.00</span>
+  </ion-item>
+  <ion-item class="item-icon-left dark">
+  <i class="icon ion-ionic"></i>Subtotal
+  <span class="item-note">Rs.620.00</span>
+  </ion-item>
+</div> -->
+
+<!--  <ion-list>
+<ion-item class="item-divider"> Item</ion-item>
+<ion-item class="item-icon-left balanced">
+<i class="icon ion-ionic"></i> 011 2345678</ion-item>
+</ion-list> -->
+</ion-content>
+
+</ion-view>

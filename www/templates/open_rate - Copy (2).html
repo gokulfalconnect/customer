@@ -1,0 +1,165 @@
+<ion-modal-view cache-view="false">
+<ion-nav-bar class="bar-royal">
+		<ion-nav-title>
+			Rate the delivery
+		</ion-nav-title>
+		<ion-nav-buttons side="right">
+      	<button class="button button-icon button-clear ion-close-round" ng-click="closeModal()">
+        	</button>
+    	</ion-nav-buttons>	
+</ion-nav-bar>
+	  <ion-content overflow-scroll="true">
+		<div style="padding-top:20%">
+			
+			<span>Please rate us through the questions!</span></br></br>
+				<form ng-submit="rate_delivery()">
+				
+					<div class="row">
+						<div class="col col-12">
+							<h4> 1. {{feedback_data[0].question_text}}? </h4>
+								<fieldset class="rating">
+									<input type="radio" id="star50" name="rating0" ng-model="ratedata.qst1" value="5" /><label class = "full" for="star50" title="Awesome - 5 stars"></label>
+									  <input type="radio" id="star4half0" name="rating0" ng-model="ratedata.qst1" value="4 and a half" /><label class="half" for="star4half0" title="Pretty good - 4.5 stars"></label>
+									  <input type="radio" id="star40" name="rating0" ng-model="ratedata.qst1" value="4" /><label class = "full" for="star40" title="Pretty good - 4 stars"></label>
+									  <input type="radio" id="star3half0" name="rating0" ng-model="ratedata.qst1" value="3 and a half" /><label class="half" for="star3half0" title="Meh - 3.5 stars"></label>
+									  <input type="radio" id="star30" name="rating0" ng-model="ratedata.qst1" value="3" /><label class = "full" for="star30" title="Meh - 3 stars"></label>
+									  <input type="radio" id="star2half0" name="rating0" ng-model="ratedata.qst1" value="2 and a half" /><label class="half" for="star2half0" title="Kinda bad - 2.5 stars"></label>
+									  <input type="radio" id="star20" name="rating0" ng-model="ratedata.qst1" value="2" /><label class = "full" for="star20" title="Kinda bad - 2 stars"></label>
+									  <input type="radio" id="star1half0" name="rating0" ng-model="ratedata.qst1" value="1 and a half" /><label class="half" for="star1half0" title="Meh - 1.5 stars"></label>
+									  <input type="radio" id="star10" name="rating0" ng-model="ratedata.qst1" value="1" /><label class = "full" for="star10" title="Sucks big time - 1 star"></label>
+									  <input type="radio" id="starhalf0" name="rating0" ng-model="ratedata.qst1" value="half" /><label class="half" for="starhalf0" title="Sucks big time - 0.5 stars"></label>
+								</fieldset>
+						</div>
+					</div>
+					 <div class="row">
+						<div class="col col-12">
+							<h4> 2. {{feedback_data[1].question_text}}?</h4>
+							<input type="radio"  name="YES" ng-model="ratedata.qstn3" value="YES" style="align="/>Yes
+							
+							<input type="radio"  name="NO" ng-model="ratedata.qstn3" value="NO" />NO
+						</div>
+					</div>
+					<div class="row">
+						<div class="col col-12">
+							<h4> 3. {{feedback_data[3].question_text}}?</h4>
+							<fieldset class="rating">
+								<input type="radio" id="star52" name="rating2" ng-model="ratedata.qstn2" value="5" /><label class = "full" for="star512" title="Awesome - 5 stars"></label>
+								<input type="radio" id="star4half2" name="rating2" ng-model="ratedata.qstn2" value="4 and a half" /><label class="half" for="star4half2" title="Pretty good - 4.5 stars"></label>
+								<input type="radio" id="star42" name="rating2" ng-model="ratedata.qstn2" value="4" /><label class = "full" for="star42" title="Pretty good - 4 stars"></label>
+								<input type="radio" id="star3half2" name="rating2" ng-model="ratedata.qstn2" value="3 and a half" /><label class="half" for="star3half2" title="Meh - 3.5 stars"></label>
+								<input type="radio" id="star32" name="rating2" ng-model="ratedata.qstn2" value="3" /><label class = "full" for="star32" title="Meh - 3 stars"></label>
+								<input type="radio" id="star2half2" name="rating2" ng-model="ratedata.qstn2" value="2 and a half" /><label class="half" for="star2half2" title="Kinda bad - 2.5 stars"></label>
+								<input type="radio" id="star22" name="rating2" ng-model="ratedata.qstn2" value="2" /><label class = "full" for="star22" title="Kinda bad - 2 stars"></label>
+								<input type="radio" id="star1half2" name="rating2" ng-model="ratedata.qstn2" value="1 and a half" /><label class="half" for="star1half2" title="Meh - 1.5 stars"></label>
+								<input type="radio" id="star12" name="rating2" ng-model="ratedata.qstn2" value="1" /><label class = "full" for="star12" title="Sucks big time - 1 star"></label>
+								<input type="radio" id="starhalf1" name="rating2" ng-model="ratedata.qstn2" value="half" /><label class="half" for="starhalf2" title="Sucks big time - 0.5 stars"></label>
+							</fieldset>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col col-12">
+							<h4> 4. {{feedback_data[2].question_text}}?</h4>
+							<textarea placeholder="This is an awesome comment box" ng-model="ratedata.comment" rows="20" name="comment[text]" id="comment_text" cols="40" class="ui-autocomplete-input" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true"></textarea>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col col-12">
+							<h4> 5. {{feedback_data[4].question_text}}?</h4>
+							<fieldset class="rating">
+								<input type="radio" id="star54" name="rating3" ng-model="ratedata.qstn4" value="5" /><label class = "full" for="star54" title="Awesome - 5 stars"></label>
+								<input type="radio" id="star4half4" name="rating3" ng-model="ratedata.qstn4" value="4 and a half" /><label class="half" for="star4half4" title="Pretty good - 4.5 stars"></label>
+								<input type="radio" id="star44" name="rating3" ng-model="ratedata.qstn4" value="4" /><label class = "full" for="star414" title="Pretty good - 4 stars"></label>
+								<input type="radio" id="star3half4" name="rating3" ng-model="ratedata.qstn4" value="3 and a half" /><label class="half" for="star3half4" title="Meh - 3.5 stars"></label>
+								<input type="radio" id="star34" name="rating3" ng-model="ratedata.qstn4" value="3" /><label class = "full" for="star34" title="Meh - 3 stars"></label>
+								<input type="radio" id="star2half4" name="rating3" ng-model="ratedata.qstn4" value="2 and a half" /><label class="half" for="star2half1" title="Kinda bad - 2.5 stars"></label>
+								<input type="radio" id="star24" name="rating3" ng-model="ratedata.qstn4" value="2" /><label class = "full" for="star24" title="Kinda bad - 2 stars"></label>
+								<input type="radio" id="star1half4" name="rating3" ng-model="ratedata.qstn4" value="1 and a half" /><label class="half" for="star1half4" title="Meh - 1.5 stars"></label>
+								<input type="radio" id="star14" name="rating3" ng-model="ratedata.qstn4" value="1" /><label class = "full" for="star14" title="Sucks big time - 1 star"></label>
+								<input type="radio" id="starhalf14" name="rating3" ng-model="ratedata.qstn4" value="half" /><label class="half" for="starhalf14" title="Sucks big time - 0.5 stars"></label>
+							</fieldset>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col col-12">
+							<h4> 6. {{feedback_data[5].question_text}}?</h4>
+							<fieldset class="rating">
+								<input type="radio" id="star55" name="rating5" ng-model="ratedata.qstn5" value="5" /><label class = "full" for="star55" title="Awesome - 5 stars"></label>
+								<input type="radio" id="star4half5" name="rating5" ng-model="ratedata.qstn5" value="4 and a half" /><label class="half" for="star4half5" title="Pretty good - 4.5 stars"></label>
+								<input type="radio" id="star45" name="rating5" ng-model="ratedata.qstn5" value="4" /><label class = "full" for="star415" title="Pretty good - 4 stars"></label>
+								<input type="radio" id="star3half5" name="rating5" ng-model="ratedata.qstn5" value="3 and a half" /><label class="half" for="star3half5" title="Meh - 3.5 stars"></label>
+								<input type="radio" id="star35" name="rating5" ng-model="ratedata.qstn5" value="3" /><label class = "full" for="star35" title="Meh - 3 stars"></label>
+								<input type="radio" id="star2half5" name="rating5" ng-model="ratedata.qstn5" value="2 and a half" /><label class="half" for="star2half5" title="Kinda bad - 2.5 stars"></label>
+								<input type="radio" id="star25" name="rating5" ng-model="ratedata.qstn5" value="2" /><label class = "full" for="star25" title="Kinda bad - 2 stars"></label>
+								<input type="radio" id="star1half5" name="rating5" ng-model="ratedata.qstn5" value="1 and a half" /><label class="half" for="star1half5" title="Meh - 1.5 stars"></label>
+								<input type="radio" id="star115" name="rating5" ng-model="ratedata.qstn5" value="1" /><label class = "full" for="star115" title="Sucks big time - 1 star"></label>
+								<input type="radio" id="starhalf15" name="rating5" ng-model="ratedata.qstn5" value="half" /><label class="half" for="starhalf15" title="Sucks big time - 0.5 stars"></label>
+							</fieldset>
+						</div>
+					</div>
+				
+				
+			
+
+				
+					
+					<button type="submit" class="submit" >Rate it</button>
+				</form>
+				
+			<!--	<select ng-model="rate_data.answer_type" ng-change="select_qstn(rate_data.answer_type)">
+						
+					<option ng-repeat ="feeddata in feedback_data" value="{{feeddata}}">
+						{{feeddata.question_text}}
+					</option>
+						
+				</select></br></br>
+				
+				<form ng-submit="rate_delivery(ratedata)">
+				
+				<div ng-if="question_type.answer_type=='score'">
+					<ion-radio   ng-value="1"   ng-model="ratedata.feedback_score" >
+						1
+					</ion-radio>
+					<ion-radio  ng-value="2"   ng-model="ratedata.feedback_score">
+						2
+					</ion-radio>
+					<ion-radio  ng-value="3"   ng-model="ratedata.feedback_score">
+						3
+					</ion-radio>
+					<ion-radio  ng-value="4"   ng-model="ratedata.feedback_score">
+						4
+					</ion-radio>
+					<ion-radio  ng-value="5"   ng-model="ratedata.feedback_score">
+						5
+					</ion-radio>
+				</div>
+				
+				<div  ng-if="question_type.answer_type=='yesno'">
+					
+					<ion-radio   ng-value="1"   ng-model="ratedata.feedback_score" >
+						YES
+					</ion-radio>
+					<ion-radio  ng-value="2"   ng-model="ratedata.feedback_score">
+						NO
+					</ion-radio>
+				</div>
+				<div ng-if="question_type.answer_type=='text'">
+					<textarea rows="4" cols="50" placeholder="Type your Message Here...."  ng-model="ratedata.feedback_text" ></textarea>
+				</div>	
+				<button type="submit" class="submit" >Rate it</button>
+			
+		
+
+			</form>-->
+	
+		</div>
+		
+		<div>
+		
+		</div>
+	  
+	  
+  </ion-content>
+  
+ 
+</ion-modal-view>
+

@@ -1,0 +1,92 @@
+
+
+<ion-view  view-title="Home" cache-view="false" hide-back-button="true">
+
+<div class = "tabs tabs-top tabs-striped tabs-top tabs-color-light " style="padding-top:32px;height:81px;width:100%">
+    <a class = "tab-item item-wrap" ng-repeat="categories in menu_categories"    ng-click="tab_click(categories.id,$index)"  ng-class="{active: $index===selectedIndex}" style="width:100%">
+      {{categories.category_name}}
+   </a> 
+
+  
+</div>
+ <div class="col" style="padding-top:32px;height:90px">
+		<!--Select-->
+		<div class="list" style="margin-top: 50px;">
+			<label class = "item item-input item-select item-positive">
+				<div class="col col-50">
+					<span class="input-label">
+						Select the Branch
+					</span>
+				</div>
+				<div class="col col-50">
+					<select  ng-model="bookdata.branch" ng-change="click_branch(bookdata.branch)">
+						<option ng-repeat ="restaurant in restaurant_details" value="{{restaurant.id}}">
+						{{restaurant.restaurant_name}}
+						</option>
+						
+					</select>
+				</div>
+			</label>
+		</div>
+	</div>
+	
+	
+
+
+<ion-content overflow-scroll="true">
+
+<!--<div class = "tabs tabs-top tabs-striped tabs-top tabs-color-light bar bar-header"">
+    <a class = "tab-item item-wrap" ng-repeat="categories in menu_categories"   ng-click="tab_click(categories.id)">
+      {{categories.category_name}}
+   </a> 
+
+  
+</div>-->
+
+
+
+<div ng-show="tabIndex==0" style="padding-top:50px">
+
+	<!--Select End-->
+	<!-- <ion-scroll direction="y"> -->
+		<div class="col">
+			<!--Slider End-->
+			<!--	<ion-slide-box on-slide-changed="slideHasChanged($index)" ng-if="home_banners">
+					<ion-slide ng-repeat="banners in home_banners">
+							<img  ng-src="{{banners.image_url}}" height="200px">
+					</ion-slide>
+				</ion-slide-box>-->
+				<ion-slide-box  on-slide-changed="slideHasChanged($index)">
+					<ion-slide ng-repeat="banners in home_banners track by $index">
+						
+							<img ng-src="{{banners}}" style="width:{{width}}px;height:300px;margin:auto;display:block">
+						
+					</ion-slide>
+					
+				</ion-slide-box>
+								
+			<!--Slider End-->
+		</div>
+	
+			
+		<div class="col">
+		
+						<button  ui-sref="app.food_menu" id="page-button3" style="text-align:left;" class="button ion-button-color button-full icon-right ion-android-arrow-forward">Order Food Online</button>
+			<button ui-sref="app.hot_offers" id="page-button3" style="text-align:left;" class="button ion-button-color button-full icon-right ion-android-arrow-forward">Hot Offer Deals</button>
+		</div>
+		<div class="container">
+			<div>
+				<div class="grid-image" id="img1" ng-repeat="item in menu_items" >
+					<img src="{{item.image_url}}" class="img-responsive " id="img1" ui-sref="app.product({product_id: item.id})" style="height:200px">
+					<span class="gallery-font">{{item.item_name}}</span>
+				</div>
+				
+			</div>
+			
+		</div>
+</div>
+
+
+</ion-content>
+</ion-view>
+

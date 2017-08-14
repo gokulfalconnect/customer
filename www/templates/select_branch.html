@@ -1,0 +1,32 @@
+<ion-modal-view cache-view="false">
+<ion-nav-bar class="bar-royal">
+		<ion-nav-title>
+			Select Branch
+		</ion-nav-title>
+		<ion-nav-buttons side="right">
+      	<button class="button button-icon button-clear ion-close-round" ng-click="closeModal()">
+        	</button>
+    	</ion-nav-buttons>
+</ion-nav-bar>
+	  <ion-content overflow-scroll="true">
+		<div style="padding-top:10%">
+		
+		
+			<ion-item-group>
+				
+				<ion-item ng-repeat ="restaurant in restaurant_details" ng-click="select_branch(restaurant.id,restaurant.restaurant_name)">{{restaurant.restaurant_name}}</ion-item>
+				
+			</ion-item-group>
+		
+
+
+	
+		</div>
+  
+	  
+	  
+  </ion-content>
+  
+ 
+</ion-modal-view>
+

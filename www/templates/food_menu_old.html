@@ -1,0 +1,625 @@
+<ion-view view-title="Menus" hide-back-button="false" cache-view="false">
+    
+  <ion-content>
+    <form>
+		<label class="item item-input item-stacked-label">
+		<span class="input-label ext">Select Branch</span>
+			<select ng-model="bookdata.branch">
+				<option value="">Please Select</option>
+				<option value="adyar">
+				Adayar
+				</option>
+				<option value="vel">
+				Velacherry
+				</option><option value="omr">
+				OMR
+				</option><option value="por">
+				Porur
+			
+			</select>
+		</label>
+		<div style="padding-top:60px">
+		<ion-tabs class="tabs-icon-top tabs-positive">
+
+        <ion-tab title="Soups And Salads" icon="ion-home">
+          <ion-nav-view name="home-tab">
+		<div class="card">
+			<div class="row">
+				<div class="col s8">
+				<h5>Quinoa Salad</h5>
+				<h6>Quinoa salad is a healthy and delicious salad.
+				This bright and colorful salad is also a great summertime recipe.
+				</h6>
+				<h5>Rs.150</h5>
+				</div>
+				<div class="col s4"> 
+				 <div class="button-bar">
+            <button id="cart_demo1" class="button button-positive button-clear button-block  icon ion-android-cart"  ng-click="cart_btn_change(1)"></button>
+			<div class="row" id="cart_btn1" style="display:none">
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-minus-round" ng-click="showPopup()"></button>
+								</div>
+								<div class="col s4">
+								<input type="text"  name="count" ng-model="count.value">
+								</div>
+								
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-plus-round" ng-click="click_incr()"></button>
+								</div>
+							
+							</div>
+            
+        </div>
+				
+				</div>
+			</div>
+		</div>
+		<div class="card">
+			<div class="row">
+				<div class="col s8">
+				<h5>Grilled Veggie Pasta Salad</h5>
+				<h6>Grilled Veggie Pasta Salad is nutritious, tasty and full of flavor. 
+				This salad is made with a combination of vegetables and pasta.
+				</h6>
+				<h5>Rs.250</h5>
+				</div>
+				<div class="col s4"> 
+				  <button id="cart_demo2" class="button button-positive button-clear button-block  icon ion-android-cart"  ng-click="cart_btn_change(2)"></button>
+				  <div class="row" id="cart_btn2" style="display:none">
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-minus-round" ng-click="click_decr()"></button>
+								</div>
+								<div class="col s4">
+								{{food_count}}
+								</div>
+								
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-plus-round" ng-click="click_incr()"></button>
+								</div>
+							
+							</div>
+				
+				</div>
+			</div>
+		</div>
+		<div class="card">
+			<div class="row">
+				<div class="col s8">
+				<h5>Masala Idli</h5>
+				<h6>Masala idli is a simple and easy snack. This is one of my favorite ways 
+				to serve masala idli. Adding the stir-fry salad to idli makes a very versatile dish. 
+				</h6>
+				<h5>Rs.100</h5>
+				</div>
+				<div class="col s4"> 
+				  <button id="cart_demo3" class="button button-positive button-clear button-block  icon ion-android-cart"  ng-click="cart_btn_change(3)"></button>
+				  <div class="row" id="cart_btn3" style="display:none">
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-minus-round" ng-click="click_decr()"></button>
+								</div>
+								<div class="col s4">
+								{{food_count}}
+								</div>
+								
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-plus-round" ng-click="click_incr()"></button>
+								</div>
+							
+							</div>
+				
+				</div>
+			</div>
+		</div>
+		<div class="card">
+			<div class="row">
+				<div class="col s8">
+				<h5>Carrot Ginger Soup</h5>
+				<h6>Carrot and Ginger Soup is light and super healthy with an added benefit of tasting delicious.
+				</h6>
+				<h5>Rs.200</h5>
+				</div>
+				<div class="col s4"> 
+				
+				  <button id="cart_demo4" class="button button-positive button-clear button-block  icon ion-android-cart"  ng-click="cart_btn_change(4)"></button>
+				  <div class="row" id="cart_btn4" style="display:none">
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-minus-round" ng-click="click_decr()"></button>
+								</div>
+								<div class="col s4">
+								{{food_count}}
+								</div>
+								
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-plus-round" ng-click="click_incr()"></button>
+								</div>
+							
+							</div>
+				</div>
+			</div>
+		</div>
+		<div class="card">
+			<div class="row">
+				<div class="col s8">
+				<h5>Cucumber Salad</h5>
+				<h6>This is a fresh and easy cucumber salad recipe, with a creamy dressing and has touch of fennel seeds. 
+				This is a refreshing and healthy low cal Salad and looks beautiful.
+				</h6>
+				<h5>Rs.110</h5>
+				</div>
+				<div class="col s4"> 
+				
+				 <button id="cart_demo" class="button button-positive button-clear button-block  icon ion-android-cart"  ng-click="cart_btn_change()"></button>
+				 <div class="row" id="cart_btn" style="display:none">
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-minus-round" ng-click="click_decr()"></button>
+								</div>
+								<div class="col s4">
+								{{food_count}}
+								</div>
+								
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-plus-round" ng-click="click_incr()"></button>
+								</div>
+							
+							</div>
+				</div>
+			</div>
+		</div>
+		 
+		  </ion-nav-view>
+        </ion-tab>
+
+        <ion-tab title="Main Course" icon="ion-ios-information" >
+			<ion-nav-view name="about-tab">
+				<div class="card">
+			<div class="row">
+				<div class="col s8">
+				<h5>THAI FISH CURRY</h5>
+				<h6>An easy curry made with a mix of fresh, canned & frozen ingredients.
+				</h6>
+				<h5>Rs.650</h5>
+				</div>
+				<div class="col s4"> 
+				  <button id="cart_demo" class="button button-positive button-clear button-block  icon ion-android-cart"  ng-click="cart_btn_change()"></button>
+				  <div class="row" id="cart_btn" style="display:none">
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-minus-round" ></button>
+								</div>
+								<div class="col s4">
+								1
+								</div>
+								
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-plus-round" ></button>
+								</div>
+							
+							</div>
+				
+				</div>
+			</div>
+		</div>
+		<div class="card">
+			<div class="row">
+				<div class="col s8">
+				<h5>MONKFISH CURRY</h5>
+				<h6>A rich curry of monkfish and petits pois.
+				</h6>
+				<h5>Rs.550</h5>
+				</div>
+				<div class="col s4"> 
+				  <button id="cart_demo" class="button button-positive button-clear button-block  icon ion-android-cart"  ng-click="cart_btn_change()"></button>
+				  <div class="row" id="cart_btn" style="display:none">
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-minus-round" ></button>
+								</div>
+								<div class="col s4">
+								1
+								</div>
+								
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-plus-round" ></button>
+								</div>
+							
+							</div>
+				
+				</div>
+			</div>
+		</div>
+		<div class="card">
+			<div class="row">
+				<div class="col s8">
+				<h5>ROASTED SKATE</h5>
+				<h6>Chilli and capers add a piquant kick to this delicate white fish.
+				</h6>
+				<h5>Rs.270</h5>
+				</div>
+				<div class="col s4"> 
+				
+				  <button id="cart_demo" class="button button-positive button-clear button-block  icon ion-android-cart"  ng-click="cart_btn_change()"></button>
+				  <div class="row" id="cart_btn" style="display:none">
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-minus-round" ></button>
+								</div>
+								<div class="col s4">
+								1
+								</div>
+								
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-plus-round" ></button>
+								</div>
+							
+							</div>
+				</div>
+			</div>
+		</div>
+		<div class="card">
+			<div class="row">
+				<div class="col s8">
+				<h5>PORK CHEEK VINDALOO</h5>
+				<h6>A gloriously tasty Indian recipe from Michelin star restaurant Gymkhana.
+				</h6>
+				<h5>Rs.810</h5>
+				</div>
+				<div class="col s4"> 
+				  <button id="cart_demo" class="button button-positive button-clear button-block  icon ion-android-cart"  ng-click="cart_btn_change()"></button>
+				  <div class="row" id="cart_btn" style="display:none">
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-minus-round" ></button>
+								</div>
+								<div class="col s4">
+								1
+								</div>
+								
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-plus-round" ></button>
+								</div>
+							
+							</div>
+				
+				</div>
+			</div>
+		</div>
+		<div class="card">
+			<div class="row">
+				<div class="col s8">
+				<h5>CASHEW BIRYANI</h5>
+				<h6>A simple Sri Lankan-inspired dish with a wealth of flavours.
+				</h6>
+				<h5>Rs.150</h5>
+				</div>
+				<div class="col s4"> 
+				 <button id="cart_demo" class="button button-positive button-clear button-block  icon ion-android-cart"  ng-click="cart_btn_change()"></button>
+				 <div class="row" id="cart_btn" style="display:none">
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-minus-round" ></button>
+								</div>
+								<div class="col s4">
+								1
+								</div>
+								
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-plus-round" ></button>
+								</div>
+							
+							</div>
+				
+				</div>
+			</div>
+		</div>
+		  
+		  
+		  
+			</ion-nav-view>
+        </ion-tab>
+		
+		<ion-tab title="Desserts" icon="ion-ios-information" >
+			<ion-nav-view name="about-tab">
+				<div class="card">
+					<div class="row">
+						<div class="col s8">
+						<h5>Biscotti</h5>
+						<h6>Elevate your coffee hour with this delectable biscotti. All you need is butter, sugar, eggs, flour and baking powder.
+						</h6>
+						<h5>Rs.150</h5>
+						</div>
+						<div class="col s4"> 
+						
+						 <button id="cart_demo" class="button button-positive button-clear button-block  icon ion-android-cart"  ng-click="cart_btn_change()"></button>
+						 <div class="row" id="cart_btn" style="display:none">
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-minus-round" ></button>
+								</div>
+								<div class="col s4">
+								1
+								</div>
+								
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-plus-round" ></button>
+								</div>
+							
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card">
+					<div class="row">
+						<div class="col s8">
+						<h5>Nachni Barfi</h5>
+						<h6>This festive season make this chocolaty barfi for all your guests at home!.
+						</h6>
+						<h5>Rs.150</h5>
+						</div>
+						<div class="col s4"> 
+						 <button id="cart_demo" class="button button-positive button-clear button-block  icon ion-android-cart"  ng-click="cart_btn_change()"></button>
+						 <div class="row" id="cart_btn" style="display:none">
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-minus-round" ></button>
+								</div>
+								<div class="col s4">
+								1
+								</div>
+								
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-plus-round" ></button>
+								</div>
+							
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card">
+					<div class="row">
+						<div class="col s8">
+						<h5>Milk Mendiant</h5>
+						<h6>A Mendiant is a traditional French confection composed of a chocolate disk studded with nuts and dried fruits.
+						</h6>
+						<h5>Rs.150</h5>
+						</div>
+						<div class="col s4"> 
+						
+						 <button id="cart_demo" class="button button-positive button-clear button-block  icon ion-android-cart"  ng-click="cart_btn_change()"></button>
+						 <div class="row" id="cart_btn" style="display:none">
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-minus-round" ></button>
+								</div>
+								<div class="col s4">
+								1
+								</div>
+								
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-plus-round" ></button>
+								</div>
+							
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card">
+					<div class="row">
+						<div class="col s8">
+						<h5>No Bake Chocolate Cheesecake</h5>
+						<h6>No Bake Chocolate Cheesecake layered with cookies
+						and cream for a delightful dessert that is perfect any night of the week</h6>.
+						
+						<h5>Rs.150</h5>
+						</div>
+						<div class="col s4"> 
+						
+						 <button id="cart_demo" class="button button-positive button-clear button-block  icon ion-android-cart"  ng-click="cart_btn_change()"></button>
+						 <div class="row" id="cart_btn" style="display:none">
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-minus-round" ></button>
+								</div>
+								<div class="col s4">
+								1
+								</div>
+								
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-plus-round" ></button>
+								</div>
+							
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card">
+					<div class="row">
+						<div class="col s8">
+						<h5>Mini Oreo Cheesecakes</h5>
+						<h6>An easy two ingredient Oreo crust topped with a smooth and creamy Oreo cheesecake filling.
+						These Mini Oreo Cheesecakes make a perfect dessert for any time of year!
+						</h6>
+						<h5>Rs.150</h5>
+						</div>
+						<div class="col s4"> 
+						
+						 <button id="cart_demo" class="button button-positive button-clear button-block  icon ion-android-cart"  ng-click="cart_btn_change()"></button>
+						 <div class="row" id="cart_btn" style="display:none">
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-minus-round" ></button>
+								</div>
+								<div class="col s4">
+								1
+								</div>
+								
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-plus-round" ></button>
+								</div>
+							
+							</div>
+						</div>
+					</div>
+				</div>
+		  
+			</ion-nav-view>
+        </ion-tab>
+				
+		<ion-tab title="Side dishes" icon="ion-ios-information" >
+			<ion-nav-view name="about-tab">
+				<div class="card">
+					<div class="row">
+						<div class="col s8">
+						<h5>Garlic Green Beans</h5>
+						<h6>Caramelized garlic and cheese! is there anything better with green beans.
+						</h6>
+						<h5>Rs.150</h5>
+						</div>
+						<div class="col s4"> 
+						
+						  <button id="cart_demo" class="button button-positive button-clear button-block  icon ion-android-cart"  ng-click="cart_btn_change()"></button>
+						  <div class="row" id="cart_btn" style="display:none">
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-minus-round" ></button>
+								</div>
+								<div class="col s4">
+								1
+								</div>
+								
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-plus-round" ></button>
+								</div>
+							
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card">
+					<div class="row">
+						<div class="col s8">
+						<h5>Mexican Rice</h5>
+						<h6>Rice is cooked with cumin and onion,then simmered with tomato sauce and chicken borth.
+						</h6>
+						<h5>Rs.150</h5>
+						</div>
+						<div class="col s4"> 
+						  <button id="cart_demo" class="button button-positive button-clear button-block  icon ion-android-cart"  ng-click="cart_btn_change()"></button>
+						<div class="row" id="cart_btn" style="display:none">
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-minus-round" ></button>
+								</div>
+								<div class="col s4">
+								1
+								</div>
+								
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-plus-round" ></button>
+								</div>
+							
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card">
+					<div class="row">
+						<div class="col s8">
+						<h5>Sauteed Mushrooms</h5>
+						<h6>Sauteed Mushrooms with a hint of wine and teriyaki sauce are the perfect topper for steak
+						and baked potatoes.
+						</h6>
+						<h5>Rs.150</h5>
+						</div>
+						<div class="col s4"> 
+						
+						 <button id="cart_demo" class="button button-positive button-clear button-block  icon ion-android-cart"  ng-click="cart_btn_change()"></button>
+						<div class="row" id="cart_btn" style="display:none">
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-minus-round" ></button>
+								</div>
+								<div class="col s4">
+								1
+								</div>
+								
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-plus-round" ></button>
+								</div>
+							
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card">
+					<div class="row">
+						<div class="col s8">
+						<h5>Bacon Feta Beans</h5>
+						<h6>A versatile green bean side dish with crumbled bacon and feta cheese.
+						</h6>
+						<h5>Rs.150</h5>
+						</div>
+						<div class="col s4"> 
+						
+						 <button id="cart_demo" class="button button-positive button-clear button-block  icon ion-android-cart"  ng-click="cart_btn_change()"></button>
+						<div class="row" id="cart_btn" style="display:none">
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-minus-round" ></button>
+								</div>
+								<div class="col s4">
+								1
+								</div>
+								
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-plus-round" ></button>
+								</div>
+							
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card">
+					<div class="row">
+						<div class="col s8">
+						<h5>Garlicky Potatoes</h5>
+						<h6>Potatoes are boiled in chicken broth and mashed with garlic,sour cream,cream,chives and butter.
+						</h6>
+						<h5>Rs.150</h5>
+						</div>
+						<div class="col s4"> 
+							<button id="cart_demo" class="button button-positive button-clear button-block  icon ion-android-cart" ></button>
+							<div class="row" id="cart_btn" style="display:none">
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-minus-round" ></button>
+								</div>
+								<div class="col s4">
+								1
+								</div>
+								
+								<div class="col s4">
+								<button  class="button button-positive button-clear button-block  icon ion-plus-round" ></button>
+								</div>
+							
+							</div>
+						</div>
+					</div>
+				</div>
+		  
+			</ion-nav-view>
+        </ion-tab>
+		
+
+      </ion-tabs>
+	  
+	
+	</div>
+
+	
+	</form>
+	
+  </ion-content>
+</ion-view>
+
+	<ion-footer-bar align-title="left"  ng-if="cart_show=='1'" >
+	<div class="row">
+		<div class="col s10">
+		
+			<span>Product Details</span>
+		</div>
+		
+		<div class="col s2">
+		
+			<span><i class="icon ion-android-cart" ></i>{{total_count}}</span>
+		
+		</div>
+	
+	</div>
+	
+	
+	</ion-footer-bar>

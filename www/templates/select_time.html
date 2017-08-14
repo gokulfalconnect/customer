@@ -1,0 +1,35 @@
+<ion-modal-view cache-view="false">
+<ion-nav-bar class="bar-royal">
+		<ion-nav-title>
+			Select Available Time Slots
+		</ion-nav-title>
+		<ion-nav-buttons side="right">
+      	<button class="button button-icon button-clear ion-close-round" ng-click="closeModal()">
+        	</button>
+    	</ion-nav-buttons>
+</ion-nav-bar>
+	  <ion-content overflow-scroll="true">
+		<div style="padding-top:10%">
+		
+		
+			<ion-item-group>
+				
+				<ion-item ng-repeat ="time in timesdata" ng-click="select_timeslot(time.id,time.timeslot)">{{time.timeslot}}</ion-item>
+				
+			</ion-item-group>
+		
+
+
+	
+		</div>
+		
+		<div>
+		
+		</div>
+	  
+	  
+  </ion-content>
+  
+ 
+</ion-modal-view>
+

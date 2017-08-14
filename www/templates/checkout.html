@@ -1,0 +1,146 @@
+<ion-view title="Checkout" id="page7"  cache-view="false" hide-back-button="true">
+<style type="text/css">
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+.scroll-container {
+height: 380px;
+overflow-y: scroll;
+}}
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 568px) {
+.scroll-container {
+height: 300px;
+margin-bottom: 0px;
+overflow-y: scroll;
+}}
+@media only screen
+and (min-device-width : 360px)
+and (max-device-width : 640px) {
+.scroll-container {
+height: 375px;
+overflow-y: scroll;
+}}
+@media only screen
+and (min-device-width : 375px)
+and (max-device-width : 667px) {
+.scroll-container {
+height: 400px;
+
+overflow: scroll;
+}}
+@media only screen
+and (min-device-width : 414px)
+and (max-device-width : 736px) {
+.scroll-container {
+height: 475px;
+padding-top: 0px;
+overflow: scroll;
+}}
+/*  @media only screen
+and (min-device-width : 412px)
+and (max-device-width : 732px) {
+.scroll-container {
+height: 620px;
+overflow-y: scroll;
+}}*/
+/*   @media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px) {
+.scroll-container {
+height: 750px;
+padding-bottom: 20px;
+overflow-y: scroll;
+}}
+*/
+div.login-form {
+position: fixed !important;
+left: 0 !important;
+right: 0 !important;
+bottom: 0 !important;
+}
+</style>
+
+
+<ion-content class="has-header" scroll="true" cache-view="false">
+<ion-list>
+<ion-item class="item-avatar-left item-bg-color">
+<img src="img/avatar.svg" style="background-color: #FFF;">
+<h3 class="white-font2 item-wrap col-90 address-height" style="white-space: none !important; ">{{checkout_details.address}}</h3>
+<h4><i class="icon ion-edit icon-white" ui-sref="app.address_book">
+Add/Edit Address
+</i></h4>
+</ion-item>
+</ion-list>
+
+
+<!-- <ion-scroll scroll-height direction = "y" overflow-scroll="true">
+<div class = "scroll-container">
+  <div class="row" ng-repeat="item in cart_items" >
+    <div class="col col-60" style="margin:1px;" >
+      <div class="col" style="background-color: #f1f1f1; margin-bottom: 8px;">
+        <img src="{{item.image_url}}" width="100%" height="100">
+        <h5>{{item.item_name}}</h5>
+        <h5><img src="img/rupee.svg" width="11" height="11">  {{item.amount}}</h5>
+        <h6 ng-click="cart_update(item.item_id,item.cart_id,item.item_price,item.quanitity,item.customers_id)">Qty : {{item.quanitity}}</h6>
+      </div>
+    </div>
+  </div>
+</div>
+</ion-scroll> -->
+
+
+<ion-scroll scroll-height direction = "y" scroll="true">
+    <div class = "scroll-container">
+          <div class="col" ng-repeat="item in cart_items" style="margin-bottom: 10px;">
+          <div class="col" style="background-color: #f1f1f1;">
+              <img src="{{item.image_url}}" width="100%" height="200">
+          </div>
+          <div class="col" style="background-color: #f1f1f1;">
+              <h4 class="h4-font">{{item.item_name}}</h4>
+        <h5><img src="img/rupee.svg" width="11" height="11">  {{item.amount}}</h5>
+        <h6 ng-click="cart_update(item.item_id,item.cart_id,item.item_price,item.quanitity,item.customers_id)">Quantity : {{item.quanitity}}</h6>
+          </div>
+         </div>
+    </div>
+</ion-scroll>
+
+
+<div class="bottom-form">
+  
+  <h4 align="center"><img src="img/rupee.svg" width="15" height="15"> {{total_amount}}</h4>
+  
+  
+  <div class="row" ui-sref="app.billsummary"  >
+    <div class="col col-50" align="center">
+      <button class="button button-full button-small item-bg-color">
+       Payment Method
+      </button>
+     <!--  <h5 class="h4-font" style="color: #FF0000; vertical-align: middle !important;">Payment Method</h5> -->
+    </div>
+    <div class="col col-50" align="center">
+    <button class="button button-full button-small button-assertive">
+       Cash On Delivery
+      </button>
+     <!--  <h5 style="color: #FF0000;">Cash On Delivery</h5> -->
+    </div>
+  </div>
+</div>
+
+</ion-content>
+
+</ion-view>
+
+<ion-footer-bar align-title="left" class="item-bg-color">
+<div class="row ">
+  
+  <div class="col col-50" align="center">
+    <span  ui-sref="app.cart_details" >Edit Cart</span>
+  </div>
+  <div class="col col-50 " align="center">
+    <span ng-click="order_placed()" >Confirm</span>
+  </div>
+</div>
+
+</ion-footer-bar>

@@ -1,0 +1,52 @@
+<ion-view view-title="Add Address" cache-view="false" hide-back-button="true">
+  <ion-content overflow-scroll="true">
+  
+  
+
+	<div id="map_canvas" style="width: {{width}}px; height: 50%;">
+	
+	
+      
+	</div>
+
+	<div class="card">
+		<div class="list-inset">
+			<form method="post" ng-submit="add_address(addressdata)">
+				
+				<label class="item item-input item-stacked-label">
+					<span class="input-label heading">Enter House Name/Number</span>
+					<input type="text"  name="firstname" ng-model="addressdata.building_name">
+				</label>
+				<label class="item item-input item-stacked-label">
+					<span class="input-label heading">Address</span>
+					<textarea placeholder="This is an awesome comment box" ng-model="addressdata.address" rows="20"  id="address_value" cols="40" ></textarea>
+				</label>
+				<label class="item item-input item-stacked-label">
+					<span class="input-label ext">Address Type</span>
+					<select  ng-model="addressdata.address_type">
+							<option value="">Please Select</option>
+							<option ng-repeat="addtypes in addresstypes" value="{{addtypes.id}}">
+							{{addtypes.name}}
+							</option>
+										
+					</select>
+				</label>
+				<input class="button button-block button-royal" type="submit"  value="Add Address"/>  
+				
+			</form>
+		</div>
+	
+	</div>
+
+	
+  
+
+
+  
+  
+  
+</ion-content>
+</ion-view>
+
+
+

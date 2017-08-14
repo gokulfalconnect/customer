@@ -1,0 +1,123 @@
+<ion-view view-title=""  cache-view="false" hide-back-button="true">
+    
+	<div class = "tabs tabs-top tabs-striped tabs-top tabs-color-light" style="padding-top:32px;height:81px">
+				<a class = "tab-item item-wrap" ng-repeat="categories in menu_categories" ng-click="tab_click(categories.id,$index)" ng-class="{active: $index===selectedIndex}">
+						{{categories.category_name}}
+				</a> 
+
+  
+			</div>
+	
+  <ion-content overflow-scroll="true">
+    <form>
+
+    
+ 	<!--<div class="list">
+	  <label class = "item item-input item-select item-positive">
+ 		  <div class="col col-50">
+     		 <span class="input-label ext">
+        		 Select the Branch
+        	 </span>
+     	   </div>
+
+	      <div class="col col-50">
+	          <select ng-model="bookdata.branch">
+
+	         	<option value="adyar">Adyar</option>
+	         	<option value="vel">Velachery</option>
+	         	<option value="por">Porur</option>
+	      	   </select>
+	      </div>
+ 		</label>
+	</div>-->
+<br>
+	<div class="container">
+	
+			
+			
+			<div ng-show="tabIndex==0">
+			
+			<div class="card" ng-repeat="item in menu_items">
+						<div class="row">
+							<div class="col-60 card-padding">
+							
+								 <span class="card-title-color">{{item.item_name}}</span>
+								 <img src="img/veg.jpg" width="20" height="20"  ng-if="item.item_type=='Vegetarian'">
+								<img src="img/non.jpg" width="20" height="20"  ng-if="item.item_type=='Non-vegetarian'">
+								<img src="img/vegan.jpg" width="20" height="20"  ng-if="item.item_type=='Vegan'">
+							</div>
+							<div class="col-40 card-padding" align="center">
+												 
+							<!--	<i class="icon icon-large ion-android-cart ion-icon-medium card-title-icon" ng-if="list_id.indexOf(item.id) == -1" ng-click="cart_popup(item.id,item.item_price)"></i>	-->
+								<div class="row" ng-show="cartBtn">
+									<div class="col col-15">
+										<input type='button' value='-' class='qtyminus' field='quantity' ng-click="cart_decr(item.id,item.item_price)"/>
+									</div>
+									<div class="col col-10">
+										<input type='text' id='{{item.id}}' name='quantity' value='1' min="1" class='qty' />
+									</div>
+									<div class="col col-15">
+										<input type='button' value='+' class='qtyplus' field='quantity'  ng-click="cart_incr(item.id,item.item_price)"/>
+									</div>
+									
+								</div>
+								<div class="row"  ng-click="cartBtn=!cartBtn;click_add(item.id,item.item_price)" ng-show="!cartBtn">
+									<input type='button' value='ADD' class='addbtn' />
+								</div>
+								
+							</div>
+						</div>
+
+						<div class="col">								  
+      						<h5>{{item.item_description}}</h5>
+
+   						</div>
+
+   						<div class="row">
+							<div class="col">
+								<img src="img/rupee.svg" width="12" height="12">
+								<span class="card-price-name">{{item.item_price}}</span>
+								 
+							</div>
+							<div class="col" align="right">
+								
+								
+							</div>
+						</div>
+			
+						<div class="row" >
+				      		<div class="col" id="img1">
+				        		<img src="{{item.image_url}}" class="img-responsive " id="img1" ui-sref="app.product({product_id : item.id})">
+				      		 </div>
+						</div>
+				</div>
+				
+				<div class="card" ng-if="menu_items.length<1">
+				
+				<span>No Items Available</span>
+				
+				</div>
+				
+			 
+			</div>
+		  
+				
+	<!---->
+
+				
+
+
+		  </ion-nav-view>
+        </ion-tab>
+
+
+        <!--Main Course-->
+        
+	</ion-tabs>
+ </div>
+</form>
+	
+  </ion-content>
+</ion-view>
+
+	

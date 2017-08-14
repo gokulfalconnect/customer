@@ -1,0 +1,154 @@
+<ion-view view-title="Register" hide-nav-bar="true" cache-view="false" hide-back-button="true">
+	<ion-content overflow-scroll="true" scroll="false" style="background:url(img/food.jpg) ;  background-size: 100% 100% !important;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;">
+
+<!-- 	<div class = "row " align="center">
+  		 <div class = "col col-50">Sign Up</div>
+   	 	<div class = "col col-50">Sign In</div>
+	</div> -->
+<div >
+	<div class="login-wrap" >
+		<div class="login-html">
+		<div class="row" style="margin-top: -10px;">
+			<div class="col col-40">
+			
+			</div>
+			<div class="col col-30">
+				<img src="img/restaurant-logo.png" width="60" height="60">
+
+			</div>
+			<div class="col col-50" align="right" ui-sref="app.home">
+			<h5 class="h4-font">Skip</h5>
+			</div>
+		</div>
+
+		<div class="col" align="center" style="margin-top: -20px;">
+			<h4 class="h4-font" style="padding-left: 20px;">Food Delivery App</h4>
+			</div>
+
+			<!-- <div class = "col" align="center">
+  				 <div class = "col">
+  		 				<img src="img/restaurant-logo.png" width="60" height="60">
+  				 </div>
+  		 		<div class = "col">
+  		 				<h4 class="h4-font">Food Delivery App</h4>
+  				 </div>
+   			</div> -->
+
+
+
+   			<div class = "col">
+  				<input id="tab-1" type="radio" name="tab" ng-click="click_in()" class="sign-in" checked>
+  				<label for="tab-1" class="tab h4-font" >Sign In</label>
+				<input id="tab-2" type="radio" name="tab" ng-click="click_up()" class="sign-up">
+				<label for="tab-2" class="tab h4-font">Sign Up</label>
+   			
+			 <div class="login-form">
+				<div class="sign-in-htm">
+					<form>
+						<br>
+						<div class="group">
+						  <label for="user" class="label" ><h6 class=" h4-font">Email</h6></label>
+						  <h5><input id="user" type="email" maxlength="30" align="center" placeholder="Email Address" class="input padding" ng-model="logindata.email"></h5>
+						</div>
+						
+						<div class="group">
+						  <label for="pass" class="label"><h6 class=" h4-font">Password<h6></label>
+						   <h5><input id="pass" type="password" maxlength="15" placeholder="Password" class="input padding" data-type="password" ng-model="logindata.password"></h5>
+						</div>
+						
+						<div class="group" align="center">
+						<div class="col-80 padding bar-stable" >
+						  <input type="submit" ng-click="user_login()" class="button" value="Sign In">
+						  </div>
+						</div>
+						<div class="group" align="center">
+						 <div class="col-80 padding" >
+						 	<label class="forget_button" ng-click="open_forget_pwd()">Forgot Password ?</label>
+							
+						 </div>
+						</div>
+
+						
+					<!-- 	<div class="col" align="center" >
+							<label class="class=" h4-font"">or</label>
+						 </div> -->
+
+						  <div class="col padding" align="center" >
+							<label  class="class=" h4-font"">Login with</label>
+						 </div>
+
+
+						 <div class = "row " align="center" style="margin-top: -5px;">
+					  		 <div class = "col col-43">
+					  		<!-- 	<img src="img/facebook.png" width="30" height="30" ui-sref="app.facebook">-->
+							<img src="img/facebook.png" width="30" height="30">
+					  		 </div>
+					   	 
+					   	 	<div class = "col col-43">
+					   	 	<!--	<img src="img/googleplus.png" width="30" height="30" ui-sref="app.gmail">-->
+							<img src="img/googleplus.png" width="30" height="30">
+					   	 	</div>
+						</div> 
+
+					</form>
+			
+				</div>
+
+				<div class="sign-up-htm">
+					<form name="register_form" ng-submit="user_register(registerdata)">
+					<br>
+						<div class="group">
+						  <label for="user" class="label"><h6 class="h4-font">First Name</h6></label>
+						  <h5><input id="user" type="text" maxlength="20" class="input" ng-model="registerdata.firstname"></h5>
+						</div>
+					<!--	<div class="group">
+						  <label for="user" class="label">Last Name</label>
+						  <input id="user" type="text" class="input" ng-model="registerdata.lastname">
+						</div> -->
+						<div class="group">
+						  <label for="pass" class="label"><h6 class="h4-font">phone Number</h6></label>
+						  <input  type="tel"  maxlength="10"  class="input"  ng-model="registerdata.phoneno">
+						</div>
+						<div class="group">
+						  <label for="pass" class="label"><h6 class="h4-font">Email Address</h6></label>
+						  <input  type="email" class="input" maxlength="30" ng-model="registerdata.email">
+						</div>
+						<div class="group">
+						  <label for="pass" class="label"><h6>Password</h6></label>
+						  <input id="pass" type="password" class="input" maxlength="15" data-type="password" ng-model="registerdata.password">
+						</div>
+						<div class="group" align="center">
+							<div class="col-80 padding" >
+						 		 <input style="color: #FFF !important;" type="submit" class="button" value="Sign Up">
+						 	</div>
+						</div>
+				
+							  <div class="col padding" align="center" >
+							<label  class="class="h4-font"">Login With</label>
+						 </div>
+
+
+						 <div class = "row " align="center" style="margin-top: -15px;">
+					  		 <div class = "col col-43">
+					  		 	<img src="img/facebook.png" width="30" height="30" ui-sref="app.facebook">
+					  		 </div>
+					   	 
+					   	 	<div class = "col col-43">
+					   	 		<img src="img/googleplus.png" width="30" height="30" ng-click="gmail_login()">
+					   	 	</div>
+						</div> 
+				<!-- 		
+						<img ng-src="img/fb.png" style="width:100%;height:50px" ui-sref="app.facebook">
+						<img ng-src="img/gmail.png" style="width:100%;height:50px" ng-click="gmail_login()"> -->
+					</form>
+				</div>
+			</div>
+			</div>
+		</div>
+	</div>
+</div>
+    </ion-content>
+</ion-nav-view>

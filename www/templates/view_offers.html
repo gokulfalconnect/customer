@@ -1,0 +1,62 @@
+<ion-view view-title="Offer Details" hide-back-button="true">
+
+ <ion-content class="has-header" overflow-scroll="true">
+
+ <div class="card" ng-repeat="item in offerdetails">
+						<div class="row">
+							<div class="col-60 card-padding">
+								 <span class="card-title-color">{{item.item_name}}</span>
+							</div>
+						<!--	<div class="col-20 card-padding" align="center">
+								<i class="icon icon-large ion-android-cart ion-icon-medium card-title-icon"  ng-click="cart_popup(item.offeritemsid,item.item_price)"></i>	
+							</div>-->
+							<div class="col-40 card-padding" align="center">
+												 
+							<!--	<i class="icon icon-large ion-android-cart ion-icon-medium card-title-icon" ng-if="list_id.indexOf(item.id) == -1" ng-click="cart_popup(item.id,item.item_price)"></i>	-->
+								<div class="row" ng-show="cartBtn">
+									<div class="col col-15">
+										<input type='button' value='-' class='qtyminus' field='quantity' ng-click="cart_decr(item.offeritemsid,item.item_price)"/>
+									</div>
+									<div class="col col-10">
+										<input type='text' id='{{item.offeritemsid}}' name='quantity' value='1' min="1" class='qty' />
+									</div>
+									<div class="col col-15">
+										<input type='button' value='+' class='qtyplus' field='quantity'  ng-click="cart_incr(item.offeritemsid,item.item_price)"/>
+									</div>
+									
+								</div>
+								<div class="row"  ng-click="cartBtn=!cartBtn;click_add(item.offeritemsid,item.item_price)" ng-show="!cartBtn">
+									<input type='button' value='ADD' class='addbtn' />
+								</div>
+								
+							</div>
+							
+						</div>
+
+						<div class="col">								  
+      						<h5>{{item.item_description}}</h5>
+
+   						</div>
+
+   						<div class="row">
+							<div class="col">
+								 <span class="card-price-name">{{item.item_type}}</span>
+							</div>
+							<div class="col" align="right">
+								<img src="img/rupee.svg" width="12" height="12">
+								<span class="card-price-name">{{item.item_price}}</span>
+								
+							</div>
+						</div>
+			
+						<div class="row" >
+				      		<div class="col" id="img1">
+				        		<img src="{{item.image_url}}" class="img-responsive " id="img1" ui-sref="app.product({product_id : item.id})">
+				      		 </div>
+						</div>
+				</div>
+
+  
+
+</ion-content>
+</ion-view>

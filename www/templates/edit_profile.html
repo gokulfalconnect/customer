@@ -1,0 +1,171 @@
+<ion-view view-title="Edit Profile" cache-view="true" hide-back-button="true">
+  <ion-content overflow-scroll="true">
+
+   <div class="col item-bg-color">
+  <div class="row">
+  	<div class="col">
+  	</div>
+  	<div class="col" align="center">
+  		<img src="{{profileInfo.profile_image}}" style="border-radius: 50%; width: 80px; height: 80px;" ng-click="show_actionsheet()">
+	</div>
+  	<div class="col" align="right">
+  		
+  	</div>
+
+  </div>
+  	
+	<div class="row">
+		<div class="col " align="center">
+			<h3 class="white-font2">{{profileInfo.firstname}}</h3>
+		</div>
+	</div>
+
+	<div class="row">
+			<div class="col col-30" align="center" ui-sref="app.wallet">
+				<img src="img/wallet.svg" width="30" height="25">
+				<h5 class="white-font4">Wallet</h5>
+			</div>
+			<div class="col col-30" align="center" ui-sref="app.profile_address_book">
+				<img src="img/notebook.svg" width="30" height="25"  >
+				<h5 class="white-font4">Address Book</h5>
+			</div>
+			<div class="col col-40" align="center"  ng-click="open_lang()">
+		
+			<select  ng-model="langdata.lang" ng-change="click_branch(bookdata.branch)">
+						<option ng-repeat ="lang in language_list" value="{{lang.text}}">
+						{{lang.value}}
+						</option>
+						
+					</select>
+			</div>
+		</div>
+	</div>
+
+<div class="list padding">
+<form method="post" ng-submit="update_profile1(profileinfo)">
+   
+   <label class="item-input item-stacked-label row-bottom-border">
+		<!-- <h5 class="input-label h4-font">Name</h5> -->
+		<div class="row">
+			<div class="col col-80">
+				<input type="text" name="firstname" placeholder="Enter the  Name" ng-model="profileInfo.firstname">
+			</div>
+			<div class="col col-20 icon-padding1" align="right">
+				<img src="img/user.svg" width="30" height="30">
+			</div>
+		</div>
+		
+	</label>
+  
+	<label class="item-input item-stacked-label row-bottom-border">
+		<div class="row">
+			<div class="col col-80">
+				<input type="email"  name="emailid" placeholder="Enter the email" ng-model="profileInfo.email" readonly>
+			</div>
+			<div class="col col-20 icon-padding1" align="right">
+				<img src="img/message.png" width="28" height="28">
+			</div>
+		</div>
+	</label>
+	
+	<label class="item-input item-stacked-label row-bottom-border">
+		<div class="row">
+			<div class="col col-80">
+				<input type="tel"  name="phone" maxlength="10"  placeholder="Enter the  Phone number" ng-model="profileInfo.phone" readonly>
+			</div>
+			<div class="col col-20 icon-padding1" align="right">
+				<img src="img/phone1.svg" width="30" height="30">
+			</div>
+		</div>
+	</label>
+    
+   <br>
+   <div class="row">
+   	<div class="col">
+   		<button class="button button-full button-medium item-bg-color" type="submit" ng-click="update_profile()" value="Update Profile">
+  			 <h6 class="white-font2">Update Profile</h6>
+		</button>
+	</div>
+	<div class="col">
+		<button class="button button-full button-medium button-assertive" ng-click="modal_change_password()">
+  			<h6 class="white-font2">Change Password</h6>
+		</button>
+	</div>
+   </div>
+
+
+<!--     <div class="row" align="center">
+	<div class="col" type="submit" value="Update Profile">
+		<img src="img/icon-profile.svg" width="30" height="30" type="submit" value="Update Profile">
+		<h5 class="h4-font" type="submit" value="Update Profile">Update Profile</h5>
+
+	</div>
+	<div class="col" ng-click="modal_change_password()">
+		<img src="img/icon-password.svg" width="30" height="30">
+		<h5 class="h4-font">Change Password</h5>
+
+	</div>
+</div> -->
+
+</form>
+ <br>
+</div>
+    
+<!-- 	<div class="card" style="padding-top:20px;">
+		 <div class="user" style="padding-bottom:10px;padding-left:30%">
+	
+       <img ng-src="img/profile.jpg" ng-click="show_actionsheet()">
+	  
+		
+		<br>
+		
+		</div>
+      </div>
+	  -->
+	  	
+		
+
+<!--   <div class="card">
+  
+  <div class="list-inset">
+	<form method="post" ng-submit="update_profile(profileinfo)">
+		<label class="item item-input item-stacked-label">
+		<span class="input-label heading">First Name</span>
+		 <input type="text"  name="firstname" ng-model="profileinfo.firstname">
+		</label>
+		  <label class="item item-input item-stacked-label">
+           <span class="input-label heading">Last Name</span>
+           <input type="text"  name="lastname" ng-model="profileinfo.lastname">
+         </label>
+		   <label class="item item-input item-stacked-label">
+           <span class="input-label heading">Date of Birth</span>
+           <input type="text"  onfocus=" (this.type='date')" onchange="this.blur();" name="dob" ng-model="profileinfo.dob">
+         </label>
+		
+		 <label class="item item-input item-stacked-label">
+           <span class="input-label heading">Contact Number</span>
+           <input type="number"  name="phone" ng-model="profileinfo.phone">
+         </label>
+		 <label class="item item-input item-stacked-label">
+		  <span class="input-label heading">Contact Address</span>
+		<textarea placeholder="Contact Address"  rows="5"  ng-model="profileinfo.address" name="address">
+         </textarea>
+		</label>
+	
+		<input class="button button-block button-royal" type="submit"   value="Update Profile"/>  
+
+			
+		
+		 
+		<a class="button  button-full button-royal" ng-click="modal_change_password()" >Change Password</a> 
+	</form> 
+		</div>
+	 </div> -->
+
+	
+</ion-content>
+
+</ion-view>
+
+
+

@@ -1,0 +1,113 @@
+<ion-view view-title="My Order" hide-back-button="true">
+
+<ion-content class="padding" overflow-scroll="true">
+
+<div>
+  <ion-tabs class="no-header tabs-positive">
+  		<ion-tab title="Live Order" ng-click="ordertab_click()">
+			<ion-nav-view class="no-header" name="home-tab">
+				<div  style="padding-top:40px">
+					<div class="card" ng-repeat="order in present_order_details">
+						<div ui-sref="app.order_details({order_id : order.id})">
+							<div class="item item-thumbnail-left">
+							  
+								<div class="col">
+							  
+									<p style="white-space: none !important;">{{order.address}}</p>
+								</div>
+								<div class="col col-80">
+									<h2 style="align:center"> Order Date </h2></br>
+									<h3 style="align:center">{{order.order_date}}</h3>
+								</div>
+							</div>
+							<div class="item item-divider" style="padding: 0 !important; background-color: #FFF !important; border:none !important;" align="center">
+								<div class="row">
+									<div class="col col-50">
+										<h3 class="h4-font">Payment Method</h3>
+										<h4>{{order.order_type_name}}</h4>
+									</div>
+								
+									<div class="col col-50">
+										<h3 class="h4-font">Total</h3>
+										<h4>{{order.totalamount}}</h4>
+									</div>
+								</div>
+							</div>
+						</div>
+						 <div class="item item-body" align="center">
+							<div class="show-list-numbers-and-dots">
+							  <span class="order-success">{{order.order_status_desc}}</span>
+							</div>
+						</div>
+				  
+					</div>
+
+				<div class="card" ng-if="present_order_details.length<1">
+				
+				<span>No Items Available</span>
+				
+				</div>
+			
+
+				
+
+		
+			</ion-nav-view>
+		</ion-tab>
+
+
+
+
+
+			<ion-tab title="Past Order">
+			<ion-nav-view name="home-tab">
+					<div style="padding-top:40px">
+					<div class="card" ng-repeat="order in past_order_details"  ui-sref="app.order_details({order_id : order.id})">
+						<div class="item item-thumbnail-left">
+					      
+					      <div class="col">
+					      
+					      <p style="white-space: none !important;">{{order.address}}</p>
+					      </div>
+					    <div class="col col-50">
+					      	 	<span> Payment Method :</span>
+					      	 	  <span>{{order.order_type_name}}</span>
+					      	 </div>
+		    			</div>
+					<div class="item item-divider" style="padding: 0 !important; background-color: #FFF !important; border:none !important;" align="center">
+				    	<div class="row">
+				    		<div class="col col-50">
+				    			<h3 class="h4-font">Order Date</h3>
+				    			<h4>{{order.order_date}}</h4>
+				    		</div>
+				    		
+				    		<div class="col col-50">
+				    		<h3 class="h4-font">Total</h3>
+				    		<h4>{{order.totalamount}}</h4>
+				    		</div>
+				    	</div>
+
+				    	 <div class="item item-body">
+						<div class="show-list-numbers-and-dots">
+						  <span class="order-success">{{order.order_status_desc}}</span>
+						</div>
+					  </div>
+				   </div>
+				</div>
+					
+					<div class="card" ng-if="past_order_details.length<1">
+				
+				<span>No Items Available</span>
+				
+				</div>
+
+					</div>
+			
+			</ion-nav-view>
+		</ion-tab>
+</ion-tabs>
+</div>
+
+
+</ion-content>
+</ion-view>
