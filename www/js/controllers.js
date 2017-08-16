@@ -23,11 +23,11 @@ angular.module('starter.controllers', [])
   
   if(window.localStorage.getItem('user') == null || window.localStorage.getItem('user_id') == undefined)
   {
-	  $rootScope.user_status = 1;
+	  $rootScope.user_status = 0;
   }
   else
   {
-	  $rootScope.user_status = '0';
+	  $rootScope.user_status = 1;
   }
   
     $scope.userdata = {};
@@ -351,7 +351,7 @@ angular.module('starter.controllers', [])
 	  
 	  */
 	  
-	  $rootScope.user_status = null;
+	  $rootScope.user_status = 0;
 	  
 	  //$rootScope.cart_qty = 0;
 	  
@@ -1909,6 +1909,11 @@ angular.module('starter.controllers', [])
 		
 		
 		
+		
+	}
+	
+	$scope.slideHasChanged = function(index)
+	{
 		
 	}
 	
@@ -6997,6 +7002,8 @@ $rootScope.$ionicGoBack = function() {
 	 
 	 $scope.langdata = {};
 	 
+	 $scope.indexval = 1;
+	 
 	 $scope.langdata.lang = 'AF';
 	 
 	 $scope.select_lang = function()
@@ -7033,8 +7040,12 @@ $rootScope.$ionicGoBack = function() {
 	$ionicSideMenuDelegate.canDragContent(false);
 	
 	$scope.slideChanged = function(index) {
+		
 		console.log(index);
     $scope.slideIndex = index;
+	
+	 $scope.indexval = parseInt($scope.slideIndex)+1;	
+	
 	};
 	
 	 $scope.startApp = function() {
@@ -7085,7 +7096,7 @@ $rootScope.$ionicGoBack = function() {
 							
 									$scope.length = response.introbannerimages.length;
 									
-												
+									//$scope.lesslength = parseInt($scope.qty)-1;			
 							}, 
 						
 							function(response) { // optional

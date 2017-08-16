@@ -1,21 +1,22 @@
 
   <ion-view view-title="" hide-back-button="true">
         <ion-nav-buttons side="left" class="ion-nav-button-positive">
+		
           <button class="button button-icon icon No Icon"
-                  ng-click="startApp()" ng-if="$index = 1">
+                  ng-click="startApp()" ng-if="indexval == 1">
             Skip Intro
           </button>
           <button class="button button-icon icon No Icon"
-                  ng-click="previous()" ng-if="$index > 1">
+                  ng-click="previous()" ng-if="indexval > length">
             Previous
           </button>
         </ion-nav-buttons>
         <ion-nav-buttons side="right"> 
           <button class="button button-icon icon No Icon"
-                  ng-click="next()" ng-if="$index < 1">
+                  ng-click="next()" ng-if="indexval < length">
             Next
           </button>
-          <button ng-if="$index = 1" class="button button-positive button-clear no-animation"
+          <button ng-if="indexval == length" class="button button-positive button-clear no-animation"
                   ng-click="startApp()" >
            Enter
           </button>
