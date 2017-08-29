@@ -7,7 +7,7 @@
             Skip Intro
           </button>
           <button class="button button-icon icon No Icon"
-                  ng-click="previous()" ng-if="indexval > length">
+                  ng-click="previous()" ng-if="indexval <= length && indexval != 1">
             Previous
           </button>
         </ion-nav-buttons>

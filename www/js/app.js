@@ -89,6 +89,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngSanitize', 'MassAu
     .handleNotificationOpened(notificationOpenedCallback)
     .endInit();
 	
+	window.plugins.OneSignal.getIds(function(ids) {
+		//alert("id="+ids.userId);
+	
+	});
+	
 	window.plugins.OneSignal.enableInAppAlertNotification(true);
 	
 	/*one signal end*/

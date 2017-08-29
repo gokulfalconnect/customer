@@ -1638,11 +1638,15 @@ angular.module('starter.controllers', [])
 						{
 							$scope.bookdata.branch =  JSON.stringify(response.restaurant[0].id);
 							
+							
+							
 							window.localStorage.setItem('restaurant_id',$scope.bookdata.branch);
 						}
 						else
 						{
 							$scope.bookdata.branch = window.localStorage.getItem('restaurant_id');
+							
+							
 						}
 						
 						
@@ -1672,6 +1676,7 @@ angular.module('starter.controllers', [])
 	
 	if(window.localStorage.getItem('restaurant_id') == null || window.localStorage.getItem('restaurant_id') == undefined)
 	{
+		
 		$ionicLoading.show();
 			
 	$http({
@@ -1738,6 +1743,8 @@ angular.module('starter.controllers', [])
 	{
 		
 		$scope.category.restaurant_id = window.localStorage.getItem('restaurant_id');
+		
+		
 		
 		$ionicLoading.show();
 			
@@ -2645,11 +2652,17 @@ angular.module('starter.controllers', [])
 	  
 	  $scope.category = {};
 	  
+	  $scope.branch = {};
+	  
 	  $scope.cart_details = {};
 	  
 	  $scope.cart_data = {};
 	  
 	  $scope.cart_details.customer_id = window.localStorage.getItem('user_id');
+	  
+	   $scope.branch.customer_id = window.localStorage.getItem('user_id');
+	  
+	  $scope.branch.restaurant_id = window.localStorage.getItem('restaurant_id');
 	  
 	  $scope.selectedIndex=0;
 	  
@@ -2708,8 +2721,9 @@ angular.module('starter.controllers', [])
 		 $ionicLoading.show();
 			
 	$http({
-								url: server+'restaurantshome',
-								method: "GET",
+								//url: server+'restaurantshome',
+								url:server+'browserestaurants',
+								method: "POST",
 								headers : {
 									
 									'Content-Type': 'application/json'
@@ -2717,7 +2731,7 @@ angular.module('starter.controllers', [])
 									
 								},
 								//timeout : 4500,
-								data: JSON.stringify($scope.category),
+								data: JSON.stringify($scope.branch),
 							})
 							.success(function(response) {
 										
@@ -7041,7 +7055,7 @@ $rootScope.$ionicGoBack = function() {
 	
 	$scope.slideChanged = function(index) {
 		
-		console.log(index);
+	//	console.log(index);
     $scope.slideIndex = index;
 	
 	 $scope.indexval = parseInt($scope.slideIndex)+1;	
