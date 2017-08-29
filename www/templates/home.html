@@ -2,7 +2,7 @@
 
 <ion-view  view-title="Home" cache-view="false" hide-back-button="true">
 
-<div class = "tabs tabs-top tabs-striped tabs-top tabs-color-light " style="padding-top:32px;height:81px;width:100%;overflow-x: scroll">
+<div class = "tabs tabs-top tabs-striped tabs-top tabs-color-light " style="padding-top:32px;height:81px;width:100%;">
     <a class = "tab-item item-wrap" ng-repeat="categories in menu_categories"    ng-click="tab_click(categories.id,$index)"  ng-class="{active: $index===selectedIndex}" style="width:100%">
       {{categories.category_name}}
    </a> 
