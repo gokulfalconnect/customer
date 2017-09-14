@@ -1,101 +1,135 @@
 <ion-view view-title="Address Book" cache-view="false" hide-back-button="true">
-  <ion-content class="no-header3">
-	  <div class="col" style="padding-top:60px">
-  	<button class="button button-full button-calm  ion-android-add-circle" ui-sref="app.add_address">
-   Add New Address
-</button>
-  </div>
- 	  
-	<div class="has-subheader">
-	<ion-tabs class="tabs-positive">
-		<ion-tab title="Home">
-			<ion-nav-view name="home-tab">
-				<div class="list card" ng-repeat="address in address_details" ng-if="address.address_type_id=='1'">
-				
-         <div class="item item-body">
 
-						<div>
-							    <p>{{address.address}}</p>
-						</div>
+	<ion-nav-buttons side="right">
+		<i style="padding:10px;position:relative" class="ion-plus ion_icons_header" ng-if="address_length!='3'" ui-sref="app.add_address"></i>
+		
+		<i style="padding:10px;position:relative" class="ion-plus ion_icons_header" ng-if="address_length=='3'" ng-click="address_full()"></i>
+    </ion-nav-buttons>
+	
+  <ion-content class="no-header3"  style="background-color:#AAAEA4" overflow-scroll="true">
+  
+  <div class="card" ng-repeat="address in address_details" ng-if="address.address_type_id=='1'">
+  
+	  <div class="row">
+	  
+		<div class="col col-25">
+			<i class="ion-home ion_icons_header"></i>
+		</div>
+		
+		<div class="col col-75">
+			<span style="color:black">Home</span>
+		</div>
+	  
+	  </div>
+	  <div class="row">
+		
+		<div class="col col-25">
+		
+		</div>
+		<div class="col col-75">
+			<p style="font-size:13px">{{address.address}}</p>
+		</div>
 			
-						<div style="padding-top:10px">
-							<i class="icon address_icon ion-trash-a" style="float:right;" ng-click="delete_address(address.address_type_id)"></i>
-							<i class="icon ion-edit address_icon" style="float:left;" ui-sref="app.edit_address({address_type : 1,address_id : address.id})"></i>
-						</div>
-					
-					</div>
-        
-					
-				</div>
-				
+	  </div>
+	  <div class="row" align="center">
+	  
+		<div class="col col-50">
+			<!--<i class="icon ion-edit address_icon"  ui-sref="app.edit_address({address_type : 1,address_id : address.id})"></i>-->
+			<span style="color:orange;font-size:14px" ui-sref="app.edit_address({address_type : 1,address_id : address.id})">EDIT</span>
+		</div>
+		<div class="col-50">
+			<!--<i class="icon address_icon ion-trash-a"  ng-click="delete_address(address.address_type_id)"></i>-->
+			<span style="color:orange;font-size:14px" ng-click="delete_address(address.address_type_id)">DELETE</span>
+		</div>
+	  
+	  </div>
+  
+  </div>
+  
+  <div class="card" ng-repeat="address in address_details" ng-if="address.address_type_id=='2'">
+  
+	  <div class="row">
+	  
+		<div class="col col-25">
+			<i class="ion-person-stalker ion_icons_header"></i>
+		</div>
+		
+		<div class="col col-75">
+			<span style="color:black">Work</span>
+		</div>
+	  
+	  </div>
+	  <div class="row">
+		
+		<div class="col col-25">
+		
+		</div>
+		<div class="col col-75">
+			<p style="font-size:13px">{{address.address}}</p>
+		</div>
 			
-			</ion-nav-view>
-		</ion-tab>
-		<ion-tab title="Office">
-			<ion-nav-view name="home-tab">
-				
-				<div class="list card" ng-repeat="address in address_details" ng-if="address.address_type_id=='2'">
-					<div class="item item-body">
-					
-						<div>
-							    <p>{{address.address}}</p>
-						</div>
-					
-						<div style="padding-top:10px">
-							<i class="icon address_icon ion-trash-a" style="float:right;" ng-click="delete_address(address.address_type_id)"></i>
-							<i class="icon ion-edit address_icon" style="float:left;" ui-sref="app.edit_address({address_type : 2,address_id : address.id})"></i>
-						</div>
-					
-					</div>
-				</div>
+	  </div>
+	  <div class="row" align="center">
+	  
+		<div class="col col-50">
+			<!--<i class="icon ion-edit address_icon"  ui-sref="app.edit_address({address_type : 1,address_id : address.id})"></i>-->
+			<span style="color:orange;font-size:14px" ui-sref="app.edit_address({address_type : 2,address_id : address.id})">EDIT</span>
+		</div>
+		<div class="col-50">
+			<!--<i class="icon address_icon ion-trash-a"  ng-click="delete_address(address.address_type_id)"></i>-->
+			<span style="color:orange;font-size:14px" ng-click="delete_address(address.address_type_id)">DELETE</span>
+		</div>
+	  
+	  </div>
+  
+  </div>
+  
+  <div class="card" ng-repeat="address in address_details" ng-if="address.address_type_id=='4'">
+  
+	  <div class="row">
+	  
+		<div class="col col-25">
+			<i class="ion-help-circled ion_icons_header"></i>
+		</div>
+		
+		<div class="col col-75">
+			<span style="color:black">Others</span>
+		</div>
+	  
+	  </div>
+	  <div class="row">
+		
+		<div class="col col-25">
+		
+		</div>
+		<div class="col col-75">
+			<p style="font-size:13px">{{address.address}}</p>
+		</div>
 			
-			
-			</ion-nav-view>
-		</ion-tab>
-			<ion-tab title="Business">
-			<ion-nav-view name="home-tab">
-				
-				<div class="list card" ng-repeat="address in address_details" ng-if="address.address_type_id=='3'">
-					<div class="item item-body">
-				
-						<div>
-							    <p>{{address.address}}</p>
-						</div>
-				
-						<div style="padding-top:10px">
-							<i class="icon address_icon ion-trash-a" style="float:right;" ng-click="delete_address(address.address_type_id)"></i>
-							<i class="icon ion-edit address_icon" style="float:left;" ui-sref="app.edit_address({address_type : 3,address_id : address.id})"></i>
-						</div>
-					
-					</div>
-				</div>
-			
-			
-			</ion-nav-view>
-		</ion-tab>
-		<ion-tab title="Others">
-			<ion-nav-view name="home-tab">
-			
-				<div class="list card" ng-repeat="address in address_details" ng-if="address.address_type_id=='4'">
-					<div class="item item-body">
-				
-						<div>
-							    <p>{{address.address}}</p>
-						</div>
-			
-						<div style="padding-top:10px">
-							<i class="icon address_icon ion-trash-a" style="float:right;" ng-click="delete_address(address.address_type_id)"></i>
-							<i class="icon ion-edit address_icon" style="float:left;" ui-sref="app.edit_address({address_type : 4,address_id : address.id})"></i>
-						</div>
-					
-					</div>
-				</div>
-			
-			
-			</ion-nav-view>
-		</ion-tab>
-	</ion-tabs>
-	</div>
+	  </div>
+	  <div class="row" align="center">
+	  
+		<div class="col col-50">
+			<!--<i class="icon ion-edit address_icon"  ui-sref="app.edit_address({address_type : 1,address_id : address.id})"></i>-->
+			<span style="color:orange;font-size:14px" ui-sref="app.edit_address({address_type : 4,address_id : address.id})">EDIT</span>
+		</div>
+		<div class="col-50">
+			<!--<i class="icon address_icon ion-trash-a"  ng-click="delete_address(address.address_type_id)"></i>-->
+			<span style="color:orange;font-size:14px;" ng-click="delete_address(address.address_type_id)">DELETE</span>
+		</div>
+	  
+	  </div>
+  
+  </div>
+  
+   <div class="card" style="height:100%" ng-if="address_details.length < 1">
+  
+	  <img src="img/house.png" style="width:{{width}}px;margin:auto;display:block">
+	  <div align="center">
+	  <span style="font-size:13px">You don't have any address saved.Saving address helps you checkout faster.</span>
+		</div>
+  </div>
+	  
 	
   </ion-content>
 </ion-view>

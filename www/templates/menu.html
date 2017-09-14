@@ -17,8 +17,8 @@
    <ion-nav-buttons side="right" >
 
    <div class = "row header-icon-padding"  >
-   <div class = "col"><i class="ion_icons_header ion-android-notifications custom-icon " ui-sref="app.notification"></i></div>
-   <div class = "col"><i class="ion-ios-heart ion_icons_header" ui-sref="app.favourites"></i></div>
+   <!--<div class = "col"><i class="ion_icons_header ion-android-notifications custom-icon " ui-sref="app.notification"></i></div>
+   <div class = "col"><i class="ion-ios-heart ion_icons_header" ui-sref="app.favourites"></i></div>-->
    <div class = "col"><i  class="ion-android-funnel ion_icons_header" ng-if="is_cart=='1'" ng-click="filter_modal()"></i></div>
    <!-- <div class = "col"><i class="ion-android-arrow-dropleft ion_icons_header" ng-click="goBack()" ng-if="back_show=='1'"></i></div>-->
    
@@ -58,6 +58,18 @@
           <i class="icon ion-ios-monitor-outline"></i>
           My Order
         </ion-item>
+		<ion-item  menu-close ui-sref="app.notification"   class="item-icon-left" >
+          <i class="icon ion-android-notifications"></i>
+          Notifications
+        </ion-item>
+		<ion-item  menu-close ui-sref="app.favourites"   class="item-icon-left" >
+          <i class="icon ion-ios-heart"></i>
+         Favourites
+        </ion-item>
+		<ion-item  menu-close ui-sref="app.payment_option"   class="item-icon-left" >
+          <i class="icon ion-social-usd"></i>
+          Payments
+        </ion-item>
        <ion-item  menu-close ui-sref="app.booking_history"  class="item-icon-left" >
           <i class="icon ion-ios-compose"></i>
           Table Booking History
@@ -77,7 +89,7 @@
         </ion-item>
         <ion-item  menu-close   class="item-icon-left"  ui-sref="app.about">
           <i class="icon ion-android-list"></i>
-          About Us
+          {{userdata.branch_name}}
         </ion-item> 
     <!--  <ion-item  menu-close   class="item-icon-left"  ui-sref="app.address_book">
           <i class="icon ion-android-list"></i>

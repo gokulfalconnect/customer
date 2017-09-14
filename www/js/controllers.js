@@ -12,7 +12,8 @@
 		
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope,$state, $ionicSideMenuDelegate,  $ionicModal,  $ionicHistory, $ionicLoading, $http, $ionicPopup) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope,$state, $ionicSideMenuDelegate,  $ionicModal, 
+ $ionicHistory, $ionicLoading, $http, $ionicPopup,$ionicPlatform,$ionicHistory) {
 //$rootScope.is_cart = '0';
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -21,12 +22,21 @@ angular.module('starter.controllers', [])
   //$scope.$on('$ionicView.enter', function(e) {
   //});
   
-  if(window.localStorage.getItem('user') == null || window.localStorage.getItem('user_id') == undefined)
+ 
+  
+  
+  if(window.localStorage.getItem('user_id') == null || window.localStorage.getItem('user_id') == undefined || window.localStorage.getItem('user_id') == " " || window.localStorage.getItem('user_id') == '' || window.localStorage.getItem('user_id') == ' ' || window.localStorage.getItem('user_id') == "")
   {
+	 
+	  
 	  $rootScope.user_status = 0;
   }
   else
   {
+	  
+	  
+	 // alert("user id="+window.localStorage.getItem('user_id'));
+	 
 	  $rootScope.user_status = 1;
   }
   
@@ -38,6 +48,8 @@ angular.module('starter.controllers', [])
   $scope.userdata.name = window.localStorage.getItem('user_name');
   $scope.userdata.phone = window.localStorage.getItem('user_phone');
   $scope.userdata.image = window.localStorage.getItem('user_image');
+  
+  $scope.userdata.branch_name = window.localStorage.getItem('branch_name');
   
   if(window.localStorage.getItem('balance_amount')!=undefined)
   {
@@ -135,7 +147,7 @@ angular.module('starter.controllers', [])
 					  });
 		}
 		   
-	
+	 
   }
   
   $scope.goBack = function()
@@ -391,6 +403,17 @@ angular.module('starter.controllers', [])
 	 /*$ionicPlatform.registerBackButtonAction(function (event) {
 			event.preventDefault();
 			}, 100);*/
+			
+			$ionicPlatform.registerBackButtonAction(function (event) {
+			
+						
+  if($state.current.name=="app.index"){
+    navigator.app.exitApp(); 
+  }
+  else {
+    navigator.app.backHistory();
+  }
+}, 100);
 	
 	$rootScope.is_cart = '0';
 	$rootScope.home_page = '0';
@@ -429,12 +452,12 @@ angular.module('starter.controllers', [])
 		  
 		  else
 		  {
-			    $scope.logindata.app_id = window.localStorage.getItem('app_id');
+			  //  $scope.logindata.app_id = window.localStorage.getItem('app_id');
 			 
-			    $scope.logindata.device_type = window.localStorage.getItem('deviceType');
+			//    $scope.logindata.device_type = window.localStorage.getItem('deviceType');
 			  
 			  
-			  
+		  
 	$scope.logindata.app_id  = 'KmP9qeRMCp8Fuhsuns4XEH509Fytg8iHDOgvC2BAUKkrbhJhyFBk4unAdFGuPo8HMl9Evl5VYeATFcK5aNBuSX869AzY85uRmJwSg78a3O22w9zfTlLofTWzVmoNFqUl4a';
 			
 	$scope.logindata.device_type = 'Android';
@@ -883,40 +906,22 @@ angular.module('starter.controllers', [])
 	
 	$scope.profile_details = {};
 	
+	$scope.langdata = {};
+	
+		
 	$scope.profile_details.customer_id = window.localStorage.getItem('user_id');
 	
-	$scope.profile_details.lang = window.localStorage.getItem('lang');
+	$scope.langdata.lang = window.localStorage.getItem('lang');
 	
-	$scope.change_password = function()
+	//alert($scope.langdata.lang);
+		
+	$scope.change_lang = function()
 	{
-		$scope.openmodal();
-	
-	}
-	
-	$scope.openmodal = function()
-	{
-		$ionicModal.fromTemplateUrl('templates/change_password.html', {
-						scope: $scope
-					  }).then(function(modal) {
-						  
-							
-							$scope.modal = modal;
-							$scope.modal.show();
-														
-					  });
+		window.localStorage.setItem('lang',$scope.langdata.lang);
 	}
 	
 	
-	$scope.closeModal =  function()
-	 {
-		  $scope.modal.remove();
-	 }
-	 
-	 $scope.pwd_change = function()
-	 {
-		 
-		 $scope.closeModal();
-	 }
+	
 	 
 	 
 	 $ionicLoading.show();
@@ -962,6 +967,81 @@ angular.module('starter.controllers', [])
 							
 									
 								});
+								
+								 $scope.language_list = [
+    { text: "SQ", value: "Albanian" },
+    { text: "AR", value: "Arabic" },
+    { text: "HY", value: "Armenian" },
+	 { text: "EU", value: "Basque" },
+    { text: "BN", value: "Bengali" },
+    { text: "BG", value: "Bulgarian" },
+	{ text: "CA", value: "Catalan" },
+    { text: "KM", value: "Cambodian" },
+    { text: "ZH", value: "Chinese (Mandarin)" },
+	 { text: "HR", value: "Croation" },
+    { text: "CS", value: "Czech" },
+    { text: "DA", value: "Danish" },
+	 { text: "NL", value: "Dutch" },
+    { text: "EN", value: "English" },
+    { text: "ET", value: "Estonian" },
+	 { text: "FJ", value: "Fiji" },
+    { text: "FI", value: "Finnish" },
+    { text: "FR", value: "French" },
+	 { text: "KA", value: "Georgian" },
+	 { text: "DE", value: "German" },
+	 { text: "EL", value: "Greek" },
+	 { text: "GU", value: "Gujarati" },
+	 { text: "HE", value: "Hebrew" },
+	 { text: "HI", value: "Hindi" },
+	 { text: "HU", value: "Hungarian" },
+	 { text: "IS", value: "Icelandic" },
+	  { text: "ID", value: "Indonesian" },
+	 { text: "GA", value: "Irish" },
+	 { text: "IT", value: "Italian" },
+	 { text: "JA", value: "Japanese" },
+	 { text: "JW", value: "Javanese" },
+	 { text: "KO", value: "Korean" },
+	 { text: "LA", value: "Latin" },
+	 { text: "LV", value: "Latvian" },
+	  { text: "Lt", value: "Lithuanian" },
+	 { text: "MK", value: "Macedonian" },
+	 { text: "MS", value: "Malay" },
+	 { text: "ML", value: "Malayalam" },
+	 { text: "MT", value: "Maltese" },
+	 { text: "MI", value: "Maori" },
+	 { text: "MR", value: "Marathi" },
+	 { text: "MN", value: "Mongolian" },
+	 { text: "NE", value: "Nepali" },
+	 { text: "No", value: "Norwegian" },
+	 { text: "FA", value: "Persian" },
+	 { text: "PL", value: "Polish" },
+	 { text: "PT", value: "Portuguese" },
+	 { text: "PA", value: "Punjabi" },
+	 { text: "QU", value: "Quechua" },
+	 { text: "RO", value: "Romanian" },
+	 { text: "RU", value: "Russian" },
+	 { text: "SM", value: "Samoan" },
+	 { text: "SR", value: "Serbian" },
+	 { text: "SK", value: "Slovak" },
+	 { text: "SL", value: "Slovenian" },
+	 { text: "ES", value: "Spanish" },
+	 { text: "SW", value: "Swahili" },
+	 { text: "SV", value: "Swedish" },
+	 { text: "TA", value: "Tamil" },
+	 { text: "TT", value: "Tatar" },
+	 { text: "TE", value: "Telugu" },
+	 { text: "TH", value: "Thai" },
+	 { text: "BO", value: "Tibetan" },
+	 { text: "TO", value: "Tonga" },
+	 { text: "TR", value: "Turkish" },
+	 { text: "UK", value: "Ukranian" },
+	 { text: "UR", value: "Urdu" },
+	 { text: "UZ", value: "Uzbek" },
+	 { text: "VI", value: "Vietnamese" },
+	 { text: "CY", value: "Welsh" },
+	 { text: "XH", value: "Xhosa" },
+   
+  ];
 	 
 	
 }).controller('ForgotPwdCtrl', function($scope,$rootScope,$ionicPopup){
@@ -1092,6 +1172,8 @@ angular.module('starter.controllers', [])
 		
 		$scope.select_branch = function(id,name)
 		{
+			
+			
 			$scope.bookdata.branch = name;
 			
 			window.localStorage.setItem('br_id',id);
@@ -1278,13 +1360,51 @@ angular.module('starter.controllers', [])
 		
 	}
 	
-}).controller('NotificationCtrl',function($scope, $rootScope,$ionicPopup, $state,$ionicLoading,$http){
+}).controller('NotificationCtrl',function($scope, $rootScope,$ionicPopup, $state,$ionicLoading,$http,$ionicPlatform,$ionicHistory){
 	
 	$rootScope.is_cart = '0';
 	$rootScope.home_page = '0';
 	$rootScope.back_show = '1';
 	
 	$rootScope.display_cart = '1';
+	
+	$ionicPlatform.registerBackButtonAction(function (event) {
+	
+	
+	
+	$scope.lastView = $ionicHistory.backView();
+	
+	
+	
+	if($scope.lastView == null)
+	{
+		$state.go('app.home');
+	}
+	else
+	{
+		$scope.lasturl= $scope.lastView.url;
+
+	
+
+	if($scope.lasturl == '/app/home' || $scope.lasturl == '/app/index')
+								{
+									$state.go('app.home');
+
+								}
+								
+	else if ($scope.lasturl == '/app/food_menu')
+			{
+					$state.go('app.food_menu');				
+			}
+	
+	else
+	{
+		navigator.app.backHistory();
+	}
+	}
+
+	
+}, 100);
 	
 		if(window.localStorage.getItem('user_id')==undefined || window.localStorage.getItem('user_id')==null || window.localStorage.getItem('user_id')=='')
 		{
@@ -1417,7 +1537,7 @@ angular.module('starter.controllers', [])
 		
 	}
 	
-}).controller('FavouritesCtrl', function($scope, $rootScope,$ionicLoading,$http,$state,$ionicPopup){
+}).controller('FavouritesCtrl', function($scope, $rootScope,$ionicLoading,$http,$state,$ionicPopup,$ionicPlatform,$ionicHistory){
 	
 	$rootScope.is_cart = '0';
 	
@@ -1428,6 +1548,43 @@ angular.module('starter.controllers', [])
 		$rootScope.display_cart = '1';
 		
 		$scope.favourite_details = {};
+		
+		$ionicPlatform.registerBackButtonAction(function (event) {
+	
+	
+	
+	$scope.lastView = $ionicHistory.backView();
+	
+	
+	
+	if($scope.lastView == null)
+	{
+		$state.go('app.home');
+	}
+	else
+	{
+		$scope.lasturl= $scope.lastView.url;
+
+	
+
+	if($scope.lasturl == '/app/home'  || $scope.lasturl == '/app/index')
+								{
+									$state.go('app.home');
+
+								}
+	else if($scope.lasturl == '/app/food_menu')
+	{
+		$state.go('app.food_menu');
+	}
+		
+	else
+	{
+		navigator.app.backHistory();
+	}
+	}
+
+	
+}, 100);
 		
 		
 			if(window.localStorage.getItem('user_id')==undefined || window.localStorage.getItem('user_id')==null || window.localStorage.getItem('user_id')=='')
@@ -1592,6 +1749,25 @@ angular.module('starter.controllers', [])
 			event.preventDefault();
 			}, 100);*/
 	 	// alert("id="+window.localStorage.getItem('user_id'));
+		
+		$ionicPlatform.registerBackButtonAction(function (event) {
+			
+						
+  if($state.current.name=="app.home"){
+    navigator.app.exitApp(); 
+  }
+  else {
+    navigator.app.backHistory();
+  }
+}, 100);
+
+
+	if(window.localStorage.getItem('lang') == null)
+	{
+		
+		window.localStorage.setItem('lang','Albanian');
+	}
+	
 
    $rootScope.home_page = '1';
 	
@@ -1630,21 +1806,32 @@ angular.module('starter.controllers', [])
 										
 								$ionicLoading.hide();
 							
-						//	alert(JSON.stringify(response));
+							
 						
 						$scope.restaurant_details = response.restaurant;
 						
 						if(window.localStorage.getItem('restaurant_id') == undefined)
 						{
-							$scope.bookdata.branch =  JSON.stringify(response.restaurant[0].id);
 							
+							$scope.bookdata.branch =  JSON.stringify(response.restaurant[0].id)+','+response.restaurant[0].restaurant_name;
 							
+							//$scope.bookdata.branch =  JSON.stringify(response.restaurant[0].id);
 							
-							window.localStorage.setItem('restaurant_id',$scope.bookdata.branch);
+							//alert($scope.bookdata.branch);
+							
+							window.localStorage.setItem('branch_name',JSON.stringify(response.restaurant[0].restaurant_name));
+							
+							window.localStorage.setItem('branch_details',$scope.bookdata.branch);
+							
+							window.localStorage.setItem('restaurant_id',JSON.stringify(response.restaurant[0].id));
+							
 						}
 						else
 						{
-							$scope.bookdata.branch = window.localStorage.getItem('restaurant_id');
+							
+							//$scope.bookdata.branch = window.localStorage.getItem('restaurant_id');
+							
+							$scope.bookdata.branch = window.localStorage.getItem('branch_details');
 							
 							
 						}
@@ -1874,14 +2061,23 @@ angular.module('starter.controllers', [])
 	
 	$scope.click_branch = function(branch)
 	{
+		//alert("br="+branch);
+		$scope.branch_details = branch.split(',');
 		
+		
+		//alert($scope.datas[0]);
+		//alert($scope.datas[1]);
+		//$scope.branch.restaurant_id = branch;
 		$scope.branch.restaurant_id = branch;
 		
 		$scope.branch.customer_id = window.localStorage.getItem('user_id');
 		
-		window.localStorage.setItem('restaurant_id',branch);
+		//window.localStorage.setItem('restaurant_id',branch);
+		window.localStorage.setItem('restaurant_id',$scope.branch_details[0]);
 		
+		window.localStorage.setItem('branch_details',branch);
 		
+		window.localStorage.setItem('branch_name',$scope.branch_details[1]);
 		
 		$state.go($state.current, {}, {reload: true});	
 		
@@ -1935,7 +2131,7 @@ angular.module('starter.controllers', [])
 	
 	$rootScope.display_cart = '1';
 	
-}).controller('MyOrderCtrl', function($scope, $rootScope,$ionicLoading,$http,$state,$ionicPopup){
+}).controller('MyOrderCtrl', function($scope, $rootScope,$ionicLoading,$http,$state,$ionicPopup,$ionicPlatform,$ionicHistory){
 	
 	$rootScope.is_cart = '0';
 	
@@ -1948,6 +2144,45 @@ angular.module('starter.controllers', [])
 	$scope.past_order_details = {};
 	
 	$scope.present_order_details = {};
+	
+	
+	$ionicPlatform.registerBackButtonAction(function (event) {
+	
+	
+	
+	$scope.lastView = $ionicHistory.backView();
+	
+	
+	
+	if($scope.lastView == null)
+	{
+		$state.go('app.home');
+	}
+	else
+	{
+		$scope.lasturl= $scope.lastView.url;
+
+	
+
+	if($scope.lasturl == '/app/home')
+								{
+									$state.go('app.home');
+
+								}
+								
+	else if($scope.lasturl == '/app/index')
+	{
+		$state.go('app.home');
+			
+	}
+	else
+	{
+		navigator.app.backHistory();
+	}
+	}
+
+	
+}, 100);
 	
 		if(window.localStorage.getItem('user_id')==undefined || window.localStorage.getItem('user_id')==null || window.localStorage.getItem('user_id')=='')
 		{
@@ -2087,7 +2322,7 @@ angular.module('starter.controllers', [])
 	$scope.profileInfo.customer_id = window.localStorage.getItem('user_id');
 	
 	$scope.langdata.lang = window.localStorage.getItem('lang');
-	
+	//alert($scope.langdata.lang);
 	$ionicLoading.show();
 			
 	$http({
@@ -2146,9 +2381,14 @@ angular.module('starter.controllers', [])
 					  });
 	}
 	
-	$scope.closeModal =  function()
+	$scope.removeModal =  function()
 	 {
 		  $scope.modal.remove();
+	 }
+	 
+	 function close_popup()
+	 {
+		 $scope.modal.remove();
 	 }
 	 
 	 $scope.pwd_change = function()
@@ -2197,14 +2437,16 @@ angular.module('starter.controllers', [])
 							.success(function(response) {
 										
 								$ionicLoading.hide();
-							
+								
+							 
 							//alert(JSON.stringify(response.message));
 							
 							var alertPopup = $ionicPopup.alert({
 									 title: '',
 									 template: JSON.stringify(response.message)
-								  });							
-								
+								  });		
+								 
+								//
 														
 							}, 
 						
@@ -2221,12 +2463,12 @@ angular.module('starter.controllers', [])
 										 title: 'Network Error',
 										 template: 'Please try after some time'
 									  });
-							
-									
+							 
+									//$scope.modal.remove();
 								});
 			
 			
-			 $scope.closeModal();
+			
 		 }
 	 }
 	 
@@ -2453,44 +2695,7 @@ angular.module('starter.controllers', [])
 						
 						$ionicLoading.show();
 							
-								//alert("111");			
 							
-			/*	var options = new FileUploadOptions();
-				options.fileKey="img";
-				options.mimeType="image/jpeg";
-				fileURI = mediaFiles;
-				var params = new Object();
-				params.value1 = "test";
-				params.value2 = "param";
-				//params.contact_id = 205;
-				params.document_image = fileURI;
-				params.avatar = fileURI;
-				options.params = params;
-				options.chunkedMode = false;
-							
-				var ft = new FileTransfer();
-				alert("11="+fileURI);
-				ft.upload(fileURI, encodeURI(server_upload), win, fail, options);
-				//ft.upload(fileURI, encodeURI(server_upload), win, fail);
-				alert("22");
-				function win(r)
-				{
-					alert(JSON.stringify(r));
-					alert("img uploaded");
-					$ionicLoading.hide();
-						
-				}
-				function fail(error)
-				{
-					$ionicLoading.hide();
-					alert("error="+JSON.stringify(error));
-					
-				}
-						*/
-						
-					//	alert("aa="+JSON.stringify($scope.image_data));
-						
-						$ionicLoading.show();
 			
 	$http({
 								url: server+'doupdateprofileimage',
@@ -2610,13 +2815,66 @@ angular.module('starter.controllers', [])
    
   ];
 	 
+	$scope.change_lang = function()
+	{
+		
+			$ionicModal.fromTemplateUrl('templates/language_change_modal.html', {
+						scope: $scope
+					  }).then(function(modal) {
+						  
+							
+							$scope.modal = modal;
+							$scope.modal.show();
+														
+					  });
+	}
+	
+	$scope.select_lang = function()
+	{
+		window.localStorage.setItem('lang',$scope.langdata.lang);
+		$scope.closeModal();
+	}
+	
+	
+}).controller('FoodMenuCtrl', function($scope, $rootScope, $ionicPopup,$state,$http,$ionicLoading,$ionicSlideBoxDelegate,$ionicPlatform,$ionicHistory){
+	
+	
+		 $ionicPlatform.registerBackButtonAction(function (event) {
+	
+	
+	
+	$scope.lastView = $ionicHistory.backView();
+	
+	
+	
+	if($scope.lastView == null)
+	{
+		$state.go('app.home');
+	}
+	else
+	{
+		$scope.lasturl= $scope.lastView.url;
 
 	
+
+	if($scope.lasturl == '/app/home' || $scope.lasturl == '/app/index')
+								{
+									$state.go('app.home');
+
+								}
+	else if($scope.lasturl == '/app/food_menu')
+	{
+		$state.go('app.food_menu');
+	}							
+								
+	else
+	{
+		navigator.app.backHistory();
+	}
+	}
+
 	
-}).controller('FoodMenuCtrl', function($scope, $rootScope, $ionicPopup,$state,$http,$ionicLoading,$ionicSlideBoxDelegate){
-	
-	
-		 
+}, 100);
 		 
 		
 	
@@ -3355,9 +3613,46 @@ angular.module('starter.controllers', [])
 		
 	
 	
-}).controller('ProductCtrl',function($scope, $rootScope,$ionicPopup,$state,$stateParams,$ionicLoading,$http){
+}).controller('ProductCtrl',function($scope, $rootScope,$ionicPopup,$state,$stateParams,$ionicLoading,$http,$ionicPlatform,$ionicHistory){
 	
 
+	
+	$ionicPlatform.registerBackButtonAction(function (event) {
+	
+	
+	
+	$scope.lastView = $ionicHistory.backView();
+	
+	
+	
+	if($scope.lastView == null)
+	{
+		$state.go('app.home');
+	}
+	else
+	{
+		$scope.lasturl= $scope.lastView.url;
+
+	
+
+	if($scope.lasturl == '/app/home'  || $scope.lasturl == '/app/index')
+								{
+									$state.go('app.home');
+
+								}
+		else if($scope.lasturl == '/app/food_menu')
+	{
+		$state.go('app.food_menu');
+	}						
+	
+	else
+	{
+		navigator.app.backHistory();
+	}
+	}
+
+	
+}, 100);
 	
 	$rootScope.home_page = '0';
 	
@@ -5169,6 +5464,8 @@ angular.module('starter.controllers', [])
 	
 	$scope.checkout_address = {};
 	
+	$scope.address_type_ids = [];
+	
 	$scope.address_radio.value = [];
 	$scope.address_radio.value2 = [];
 	$scope.address_radio.value3 = [];
@@ -5241,7 +5538,9 @@ angular.module('starter.controllers', [])
 			
 			$ionicLoading.show();
 		 
+		  window.localStorage.removeItem('address_type_ids');
 		 
+		 $scope.address_type_ids = [];
 		 
 			
 	$http({
@@ -5263,6 +5562,17 @@ angular.module('starter.controllers', [])
 							//alert(JSON.stringify(response));
 							
 								$scope.address_details = response.Customeraddress;
+								
+								$scope.address_length = $scope.address_details.length;								
+								angular.forEach(response.Customeraddress, function(value) {
+									
+								$scope.address_type_ids.push(value.address_type_id);
+								
+								
+								});
+								
+								
+								window.localStorage.setItem('address_type_ids',JSON.stringify($scope.address_type_ids));
 														
 							}, 
 						
@@ -5351,7 +5661,13 @@ angular.module('starter.controllers', [])
      });
    }
 		
-		
+		$scope.address_full = function()
+		{
+				 var alertPopup = $ionicPopup.alert({
+         title: '',
+         template: 'Sorry you cant add a new address,because you already added all the 3 addresses '
+      });
+		}
 	
 	
 }).controller('AddAddressCtrl', function($scope,$state,$rootScope,$ionicLoading,$http,$sce, $ionicHistory,$ionicPopup,$cordovaGeolocation){
@@ -5371,15 +5687,22 @@ angular.module('starter.controllers', [])
 	
 	$scope.addressdata = {};
 	
+	
+	
 	 $scope.addresstypes= [
     {id:'1', name:'Home'},
-    {id:'2', name:'Office'},
-    {id:'3', name:'Business'},
-	{id:'4', name:'Others'}
+    {id:'2', name:'Work'},
+    {id:'4', name:'Others'}
 	 ];
+	 
+	 $scope.address_type_ids = JSON.parse(window.localStorage.getItem('address_type_ids'));
+	 
+	 
 	
 	var map;
 	var marker;
+	
+	$ionicLoading.show();
 	
 		 var options = {maximumAge:100000, timeout:50000, enableHighAccuracy: true};
  
@@ -5592,6 +5915,8 @@ angular.module('starter.controllers', [])
 	
 	function get_address(latlng)
 	{
+		$ionicLoading.hide();
+		
 		var geocoder = new google.maps.Geocoder();
 		  var latlng = latlng;
 		  var request = {
@@ -5832,7 +6157,7 @@ angular.module('starter.controllers', [])
 			}
 	}
 	
-}).controller('EditAddressCtrl',function($scope,$state,$rootScope, $ionicLoading, $http,$ionicPopup,$stateParams,$sce,$cordovaGeolocation){
+}).controller('EditAddressCtrl',function($scope,$state,$rootScope, $ionicLoading, $http,$ionicPopup,$stateParams,$sce,$cordovaGeolocation,$ionicHistory){
 	
 	$scope.width=window.screen.width;
 	
@@ -5848,22 +6173,33 @@ angular.module('starter.controllers', [])
 	
 	$scope.addressdata = {};
 	
+	$scope.new_address_type_ids = [];
+	
 	//$scope.address_data = [];
 	
 	
 	
 	 $scope.addresstypes= [
     {id:'1', name:'Home'},
-    {id:'2', name:'Office'},
-    {id:'3', name:'Business'},
-	{id:'4', name:'Others'}
+    {id:'2', name:'Work'},
+   	{id:'4', name:'Others'}
 	 ];
 	 
-
+	 $scope.addressdata.address_type_id = $stateParams.address_type;
 	 
+	 	 
+	$scope.address_type_ids = JSON.parse(window.localStorage.getItem('address_type_ids'));
+	
+		
+	$scope.index = $scope.address_type_ids.indexOf( $scope.addressdata.address_type_id);
+	
+				
+	$scope.new_address_type_ids = $scope.address_type_ids.splice($scope.index,1);
+	
+		 
 	 $scope.addressdata.customer_id = window.localStorage.getItem('user_id');
 	 
-	 $scope.addressdata.address_type_id = $stateParams.address_type;
+	 
 	 
 	 $ionicLoading.show();
 	 
@@ -6322,8 +6658,21 @@ angular.module('starter.controllers', [])
 							.success(function(response) {
 										
 								$ionicLoading.hide();
-							
+								
+								$scope.lastView = $ionicHistory.backView();
+								
+								$scope.lasturl= $scope.lastView.url;
+
+									if($scope.lasturl == '/app/profile_address_book')
+									{
 										$state.go('app.profile_address_book');
+									}
+									else
+									{
+										$state.go('app.address_book');
+									}
+							
+									
 								
 							}, 
 						
@@ -6816,7 +7165,7 @@ $rootScope.$ionicGoBack = function() {
 		document.getElementById('invalid_entry').style.display = "none";
 	}
 	
-}).controller('BookingHistoryCtrl',function($scope,$rootScope,$ionicPopup,$state, $ionicLoading,$http){
+}).controller('BookingHistoryCtrl',function($scope,$rootScope,$ionicPopup,$state, $ionicLoading,$http,$ionicPlatform,$ionicHistory){
 	
 	$rootScope.back_show = '0';
 	
@@ -6831,7 +7180,46 @@ $rootScope.$ionicGoBack = function() {
 	//$scope.reservation_data.customer_id = 1;
 	
 	
-	if(window.localStorage.getItem('user_id') == undefined || window.localStorage.getItem == '')
+	$ionicPlatform.registerBackButtonAction(function (event) {
+	
+	
+	
+	$scope.lastView = $ionicHistory.backView();
+	
+	
+	
+	if($scope.lastView == null)
+	{
+		$state.go('app.home');
+	}
+	else
+	{
+		$scope.lasturl= $scope.lastView.url;
+
+	
+
+	if($scope.lasturl == '/app/home')
+								{
+									$state.go('app.home');
+
+								}
+								
+	else if($scope.lasturl == '/app/index')
+	{
+		$state.go('app.home');
+			
+	}
+	else
+	{
+		navigator.app.backHistory();
+	}
+	}
+
+	
+}, 100);
+	
+	
+	if(window.localStorage.getItem('user_id')==undefined || window.localStorage.getItem('user_id')==null || window.localStorage.getItem('user_id')=='')
 	{
 									var alertPopup = $ionicPopup.alert({
 										 title: 'Login',
@@ -6989,7 +7377,8 @@ $rootScope.$ionicGoBack = function() {
 	}
 	
 
-}).controller('IntroCtrl',function($scope, $rootScope, $ionicSideMenuDelegate, $ionicSlideBoxDelegate, $state, $ionicLoading,$http,$ionicPopup,$ionicModal){
+}).controller('IntroCtrl',function($scope, $rootScope, $ionicSideMenuDelegate, $ionicSlideBoxDelegate, $state, $ionicLoading,$http,$ionicPopup,$ionicModal,$ionicPlatform){
+	
 	
 	
 	/* var confirmPopup = $ionicPopup.confirm({
@@ -7008,20 +7397,35 @@ $rootScope.$ionicGoBack = function() {
 							$scope.modal.show();
 														
 					  });
-		
+		
        } else {
          
        }
      });*/
 	 
+	 	$ionicPlatform.registerBackButtonAction(function (event) {
+			
+						
+  if($state.current.name=="app.intro"){
+    navigator.app.exitApp(); 
+  }
+  else {
+    navigator.app.backHistory();
+  }
+}, 100);
+
+
 	 $scope.langdata = {};
 	 
 	 $scope.indexval = 1;
 	 
-	 $scope.langdata.lang = 'AF';
+	 $scope.langdata.lang = 'Afrikanns';
+	 
+	 
 	 
 	 $scope.select_lang = function()
 	 {
+		 
 		window.localStorage.setItem('lang',$scope.langdata.lang);
 		$scope.closeModal();
 	 }
@@ -7616,7 +8020,7 @@ $rootScope.$ionicGoBack = function() {
 					$scope.orderplaced_details.restaurant_id = window.localStorage.getItem('restaurant_id');
 				}
 				
-				$scope.orderplaced_details.restaurant_id = '1';
+				//$scope.orderplaced_details.restaurant_id = '1';
 				
 				$scope.orderplaced_details.item_id = $scope.item_list;
 				
@@ -7778,20 +8182,20 @@ $rootScope.$ionicGoBack = function() {
 	
 	var markers = [
 								{
-									//"lat":position.coords.latitude,
-									//"lng": position.coords.longitude,
+									"lat":position.coords.latitude,
+									"lng": position.coords.longitude,
 									
-									"lat":13.0012,
-									"lng": 80.2565,
+									//"lat":13.0012,
+									//"lng": 80.2565,
 
 								},
 								
 								{
-									//"lat":window.localStorage.getItem('dr_lat'),
-									//"lng":window.localStorage.getItem('dr_long'),
+									"lat":window.localStorage.getItem('dr_lat'),
+									"lng":window.localStorage.getItem('dr_long'),
 									
-									"lat":12.9760,
-									"lng":80.2212,
+									//"lat":12.9760,
+									//"lng":80.2212,
 
 								}
 								
@@ -8006,9 +8410,19 @@ $rootScope.$ionicGoBack = function() {
 	
 	$rootScope.back_show = 1;
 	
+	$scope.width=window.screen.width;
+	
+	$scope.half_width = $scope.width/2;
+	
+	$scope.new_width =  parseInt($scope.half_width)-50;
+	
+	
+	
 }).controller('ProfileAddressBookCtrl', function($scope, $rootScope, $ionicLoading, $http, $ionicPopup){
 	
 	
+	
+	$scope.width=window.screen.width;
 	$rootScope.home_page = '0';
 	
 	$rootScope.is_cart = '0';
@@ -8027,6 +8441,8 @@ $rootScope.$ionicGoBack = function() {
 	
 	$scope.checkout_address = {};
 	
+	$scope.address_type_ids = [];
+	
 	$scope.customer_details.customer_id = window.localStorage.getItem('user_id');
 	
 				 
@@ -8038,6 +8454,9 @@ $rootScope.$ionicGoBack = function() {
 			
 			$ionicLoading.show();
 		 
+		 window.localStorage.removeItem('address_type_ids');
+		 
+		 $scope.address_type_ids = [];
 		 
 		 
 			
@@ -8060,6 +8479,21 @@ $rootScope.$ionicGoBack = function() {
 							//alert(JSON.stringify(response));
 							
 								$scope.address_details = response.Customeraddress;
+								
+								$scope.address_length = $scope.address_details.length;
+								
+								angular.forEach(response.Customeraddress, function(value) {
+									
+								$scope.address_type_ids.push(value.address_type_id);
+								//alert($scope.list_id);
+								
+										
+								
+								});
+								
+								//alert($scope.address_type_ids);
+								
+								window.localStorage.setItem('address_type_ids',JSON.stringify($scope.address_type_ids));
 														
 							}, 
 						
@@ -8121,6 +8555,7 @@ $rootScope.$ionicGoBack = function() {
 							
 								//alert(JSON.stringify(response.message));	
 							//	alert("address deleted sucessfully");
+							
 								get_address();
 														
 							}, 
@@ -8149,7 +8584,15 @@ $rootScope.$ionicGoBack = function() {
      });
    }
 								
-				
+		$scope.address_full = function()
+		{
+				 var alertPopup = $ionicPopup.alert({
+         title: '',
+         template: 'Sorry you cant add a new address,because you already added all the 3 addresses. '
+      });
+		}
+
+			
 	
 }).controller('EnquiryCtrl', function($scope ,$ionicPopup,$ionicLoading,$http,$state,$ionicModal){
 	
@@ -8246,7 +8689,7 @@ $rootScope.$ionicGoBack = function() {
 		}
 		
 	}
-}).controller('ViewOfferCtrl',function($scope,$ionicLoading,$state,$stateParams,$http,$ionicPopup,$rootScope){
+}).controller('ViewOfferCtrl',function($scope,$ionicLoading,$state,$stateParams,$http,$ionicPopup,$rootScope,$ionicPlatform,$ionicHistory){
 	
 	
 	$scope.offer_details = {};
@@ -8254,6 +8697,44 @@ $rootScope.$ionicGoBack = function() {
 	$scope.cart_details = {};
 	
 	$scope.cart_data = {};
+	
+	$ionicPlatform.registerBackButtonAction(function (event) {
+	
+	
+	
+	$scope.lastView = $ionicHistory.backView();
+	
+	
+	
+	if($scope.lastView == null)
+	{
+		$state.go('app.home');
+	}
+	else
+	{
+		$scope.lasturl= $scope.lastView.url;
+
+	
+
+	if($scope.lasturl == '/app/home'  || $scope.lasturl == '/app/index')
+								{
+									$state.go('app.home');
+
+								}
+	else if($scope.lasturl == '/app/hot_offers')
+	{
+		$state.go('app.hot_offers');
+	}
+		
+	
+	else
+	{
+		navigator.app.backHistory();
+	}
+	}
+
+	
+}, 100);
 	
 	if(window.localStorage.getItem('user_id')==undefined || window.localStorage.getItem('user_id')==null || window.localStorage.getItem('user_id')=='')
 		{
@@ -8711,4 +9192,608 @@ $rootScope.$ionicGoBack = function() {
     {name: "Value4", id:"4"},
 ];
 	
+}).controller('PaymentOptionCtrl', function($scope){
+	
+	$scope.width=window.screen.width;
+	
+	$scope.half_width = $scope.width/2;
+	
+	$scope.new_width =  parseInt($scope.half_width)-50;
+	
+	
+}).controller('SearchCtrl', function($scope,$ionicLoading,$http,$ionicPopup,$state,$ionicHistory,$ionicPlatform,$rootScope){
+	
+	$rootScope.display_cart = '1';
+	
+	$scope.cart_data = {};
+	
+	$scope.recent_list = [];
+	
+	 $ionicPlatform.registerBackButtonAction(function (event) {
+	
+	
+	
+	$scope.lastView = $ionicHistory.backView();
+	
+	
+	
+	if($scope.lastView == null)
+	{
+		$state.go('app.home');
+	}
+	else
+	{
+		$scope.lasturl= $scope.lastView.url;
+
+	alert(scope.lasturl);
+
+	if($scope.lasturl == '/app/home' || $scope.lasturl == '/app/index')
+								{
+									$state.go('app.home');
+
+								}
+	else if($scope.lasturl == '/app/search')
+	{
+		$state.go('app.search');
+	}							
+								
+	else
+	{
+		navigator.app.backHistory();
+	}
+	}
+
+	
+}, 100);
+	
+	$scope.width=window.screen.width;
+	$scope.new_width =  parseInt($scope.width)-50;
+	$scope.searchdata = {};
+	
+	//$scope.restaurant_details = {};
+	
+	//$scope.dish_details = {};
+	
+	$scope.tabIndex = 0;
+	
+	$scope.selectedIndex=0;
+	
+	if(window.localStorage.getItem('recent_search')==null || window.localStorage.getItem('recent_search')=='' || window.localStorage.getItem('recent_search')==' ')
+			{
+				
+			}
+			else
+			{
+				$scope.search_list = JSON.parse(window.localStorage.getItem('recent_search'));
+			}
+	
+	//console.log($scope.search_list);
+	
+	$scope.search_input = function(search)
+	{
+		
+		if(search!=undefined)
+		{
+			
+			if(window.localStorage.getItem('recent_search')==null || window.localStorage.getItem('recent_search')=='' || window.localStorage.getItem('recent_search')==' ')
+			{
+				
+			}
+			else
+			{
+				console.log(JSON.parse(window.localStorage.getItem('recent_search')));
+				$scope.search_list = JSON.parse(window.localStorage.getItem('recent_search'));
+			}
+			
+			
+		if(search.length>2)
+		{
+			document.getElementById('recent').style.display="none";
+			document.getElementById('tab_sel').style.display="block";
+			document.getElementById('tab_content').style.display="block";
+			
+			
+			
+			$scope.searchdata.searchitems = search;
+			
+			 
+			$ionicLoading.show();
+			
+	$http({
+								url: server+'searchrestaurantsitems',
+								method: "POST",
+								headers : {
+									
+									'Content-Type': 'application/json'
+									
+									
+								},
+								//timeout : 4500,
+								data: JSON.stringify($scope.searchdata),
+							})
+							.success(function(response) {
+										
+								$ionicLoading.hide();
+								if(response.result ==0)
+								{
+									$scope.restro_details = '0';
+									
+								}
+								else
+								{
+									$scope.restaurant_details = response.restaurantnames;
+									$scope.dish_details = response.restaurantitems;
+									$scope.restro_details = '1';
+								}
+								
+							
+							
+							}, 
+						
+							function(response) { // optional
+							
+								$ionicLoading.hide();  
+								  
+							}).error(function(data)
+								{
+									$ionicLoading.hide();
+									
+								
+								var alertPopup = $ionicPopup.alert({
+									 title: 'Network Error',
+									 template: 'Please try after some time'
+								  });
+														
+									
+								});
+			
+			
+		}
+		else
+		{
+			document.getElementById('recent').style.display="block";
+			document.getElementById('tab_sel').style.display="none";
+			document.getElementById('tab_content').style.display="none";
+		}
+		}
+	}
+	
+	$scope.clear_search = function()
+	{
+		
+	}
+	
+	$scope.restro_click = function(index)
+	{
+		$scope.selectedIndex = index;
+		$scope.tabIndex=0; 
+		
+	}
+	
+	$scope.dish_click = function(index)
+	{
+		$scope.selectedIndex = index;
+		$scope.tabIndex=1; 
+		
+	}
+	
+		$scope.click_add = function(id,price,restro_id,restro_name)
+	{
+		
+		if(window.localStorage.getItem('user_id')==undefined || window.localStorage.getItem('user_id')==null || window.localStorage.getItem('user_id')=='')
+		{
+			//alert("Please login to proceed");
+			var alertPopup = $ionicPopup.alert({
+         title: 'Login',
+         template: 'Please login to proceed'
+      });
+			$state.go('app.index');
+		}
+		
+		else
+			
+			{
+			//	document.getElementById('add'+id).style.display = "none";
+		
+		//document.getElementById('cart'+id).style.display = "inline-block";
+		
+		window.localStorage.setItem('branch_name',restro_name);
+		
+		$scope.branch_details =  restro_id+','+restro_name;
+
+		window.localStorage.setItem('branch_details',$scope.branch_details);
+		
+		window.localStorage.setItem('restaurant_id',restro_id);
+		
+		$scope.cart_data.customer_id = window.localStorage.getItem('user_id');
+		
+		$scope.total_qty = 1;
+		
+		$scope.cart_data.item_id = id;
+				
+				$scope.cart_data.noofquantity = $scope.total_qty;
+				
+				$scope.cart_data.amount = $scope.total_qty * price;
+			   
+			    $rootScope.cart_qty =1;
+				
+				//alert("D="+JSON.stringify($scope.cart_details));
+			 $ionicLoading.show();
+			
+	$http({
+								url: server+'AddCartItems',
+								method: "POST",
+								headers : {
+									
+									'Content-Type': 'application/json'
+									
+									
+								},
+								//timeout : 4500,
+								data: JSON.stringify($scope.cart_data),
+							})
+							.success(function(response) {
+										
+								$ionicLoading.hide();
+							
+							//alert(JSON.stringify(response.message));
+							
+							//$scope.product_details = response.restauranthome;
+							
+								//alert("ss="+JSON.stringify($scope.product_details));
+								
+								
+														
+							}, 
+						
+							function(response) { // optional
+							
+								$ionicLoading.hide();  
+								  
+							}).error(function(data)
+								{
+									$ionicLoading.hide();
+									//alert("error="+data);
+								//	alert("Network error. Please try after some time");
+								
+								var alertPopup = $ionicPopup.alert({
+									 title: 'Network Error',
+									 template: 'Please try after some time'
+								  });
+														
+									
+								});
+			}
+		
+		
+	}
+	
+	$scope.cart_decr = function(id,price,restro_id)
+	{
+		
+				
+		$scope.qty = document.getElementById(id).value;
+		
+		$scope.total_qty = parseInt($scope.qty)-1;
+		
+		$scope.cart_data.customer_id = window.localStorage.getItem('user_id');
+		
+		
+		
+		$scope.cart_data.item_id = id;
+				
+				$scope.cart_data.noofquantity = $scope.total_qty;
+				
+				$scope.cart_data.amount = $scope.total_qty * price;
+		
+		if($scope.total_qty<=1)
+		{
+			document.getElementById(id).value = 1;
+			
+			$scope.total_qty = 1;
+			
+			//document.getElementById('add'+id).style.display = "block";
+		
+		//document.getElementById('cart'+id).style.display = "none";
+		
+		$ionicLoading.show();
+			
+	$http({
+								url: server+'AddCartItems',
+								method: "POST",
+								headers : {
+									
+									'Content-Type': 'application/json'
+									
+									
+								},
+								//timeout : 4500,
+								data: JSON.stringify($scope.cart_data),
+							})
+							.success(function(response) {
+										
+								$ionicLoading.hide();
+							
+							//alert(JSON.stringify(response.message));
+							
+							//$scope.product_details = response.restauranthome;
+							
+								//alert("ss="+JSON.stringify($scope.product_details));
+								
+								
+														
+							}, 
+						
+							function(response) { // optional
+							
+								$ionicLoading.hide();  
+								  
+							}).error(function(data)
+								{
+									$ionicLoading.hide();
+									//alert("error="+data);
+								//	alert("Network error. Please try after some time");
+								
+								var alertPopup = $ionicPopup.alert({
+									 title: 'Network Error',
+									 template: 'Please try after some time'
+								  });
+														
+									
+								});
+			
+		}
+		else
+		{
+			document.getElementById(id).value = $scope.total_qty;
+			
+			$ionicLoading.show();
+			
+	$http({
+								url: server+'AddCartItems',
+								method: "POST",
+								headers : {
+									
+									'Content-Type': 'application/json'
+									
+									
+								},
+								//timeout : 4500,
+								data: JSON.stringify($scope.cart_data),
+							})
+							.success(function(response) {
+										
+								$ionicLoading.hide();
+							
+							//alert(JSON.stringify(response.message));
+							
+							//$scope.product_details = response.restauranthome;
+							
+								//alert("ss="+JSON.stringify($scope.product_details));
+								
+								
+														
+							}, 
+						
+							function(response) { // optional
+							
+								$ionicLoading.hide();  
+								  
+							}).error(function(data)
+								{
+									$ionicLoading.hide();
+									//alert("error="+data);
+								//	alert("Network error. Please try after some time");
+								
+								var alertPopup = $ionicPopup.alert({
+									 title: 'Network Error',
+									 template: 'Please try after some time'
+								  });
+														
+									
+								});
+		}
+		
+		
+		
+		
+	}
+	
+		$scope.cart_incr = function(id,price,restro_id)
+	{ 
+		
+		
+		
+		$scope.qty = document.getElementById(id).value;
+		
+		$scope.total_qty = parseInt($scope.qty)+1;
+		
+		document.getElementById(id).value = $scope.total_qty;
+		
+		$scope.cart_data.customer_id = window.localStorage.getItem('user_id');
+		
+		$scope.cart_data.item_id = id;
+				
+				$scope.cart_data.noofquantity = $scope.total_qty;
+				
+				$scope.cart_data.amount = $scope.total_qty * price;
+			   
+			    $rootScope.cart_qty =1;
+				
+				//alert("D="+JSON.stringify($scope.cart_details));
+			 $ionicLoading.show();
+			
+	$http({
+								url: server+'AddCartItems',
+								method: "POST",
+								headers : {
+									
+									'Content-Type': 'application/json'
+									
+									
+								},
+								//timeout : 4500,
+								data: JSON.stringify($scope.cart_data),
+							})
+							.success(function(response) {
+										
+								$ionicLoading.hide();
+							
+							//alert(JSON.stringify(response.message));
+							
+							//$scope.product_details = response.restauranthome;
+							
+								//alert("ss="+JSON.stringify($scope.product_details));
+								
+								
+														
+							}, 
+						
+							function(response) { // optional
+							
+								$ionicLoading.hide();  
+								  
+							}).error(function(data)
+								{
+									$ionicLoading.hide();
+									//alert("error="+data);
+								//	alert("Network error. Please try after some time");
+								
+								var alertPopup = $ionicPopup.alert({
+									 title: 'Network Error',
+									 template: 'Please try after some time'
+								  });
+														
+									
+								});
+		
+		
+	}
+	
+	$scope.select_branch = function(id,name)
+	{
+		
+		$scope.restro_id = id;
+		window.localStorage.setItem('restaurant_id',id);
+		window.localStorage.setItem('branch_name',name);
+		
+		$scope.branch_details =  id+','+name;
+
+			window.localStorage.setItem('branch_details',$scope.branch_details);
+		
+		$state.go('app.food_menu');
+	}
+	
+	$scope.recent_push = function(item)
+	{
+		
+		
+			if(item == ' ' || item == '' || item == undefined)
+		{
+			
+		}
+		else
+		{ 
+				if(window.localStorage.getItem('recent_search')==null || window.localStorage.getItem('recent_search')=='' || window.localStorage.getItem('recent_search')==' ')
+					{
+						$scope.recent_list.push(item);
+						window.localStorage.setItem('recent_search',JSON.stringify($scope.recent_list));
+					}
+				
+				else
+					{
+						$scope.recent_list = JSON.parse(window.localStorage.getItem('recent_search'));
+						
+						if($scope.recent_list.indexOf(item) == -1)
+						{
+							$scope.recent_list.push(item);
+							window.localStorage.setItem('recent_search',JSON.stringify($scope.recent_list));
+						}
+										
+											
+					}
+			
+			
+		}
+		
+	}
+	
+	
+	
+	
+	$scope.click_recent = function(item)
+	{
+		
+		document.getElementById('recent').style.display="none";
+			document.getElementById('tab_sel').style.display="block";
+			document.getElementById('tab_content').style.display="block";
+			
+			$scope.searchdata.searchitems = item;
+			 
+			$ionicLoading.show();
+			
+	$http({
+								url: server+'searchrestaurantsitems',
+								method: "POST",
+								headers : {
+									
+									'Content-Type': 'application/json'
+									
+									
+								},
+								//timeout : 4500,
+								data: JSON.stringify($scope.searchdata),
+							})
+							.success(function(response) {
+										
+								$ionicLoading.hide();
+								if(response.result ==0)
+								{
+									$scope.restro_details = '0';
+									
+								}
+								else
+								{
+									$scope.restaurant_details = response.restaurantnames;
+									$scope.dish_details = response.restaurantitems;
+									$scope.restro_details = '1';
+								}
+								
+							
+							
+							}, 
+						
+							function(response) { // optional
+							
+								$ionicLoading.hide();  
+								  
+							}).error(function(data)
+								{
+									$ionicLoading.hide();
+									
+								
+								var alertPopup = $ionicPopup.alert({
+									 title: 'Network Error',
+									 template: 'Please try after some time'
+								  });
+														
+									
+								});
+	}
+	
+	$scope.recent_clear = function()
+	{
+		
+		
+		$scope.searchlist = [];
+		
+		$scope.search_list = JSON.stringify(window.localStorage.setItem('recent_search',$scope.searchlist));
+		
+		
+	}
+	
+	
+}).controller('PaymentHistoryCtrl', function($scope){
+	
 });
+

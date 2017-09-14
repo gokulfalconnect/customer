@@ -47,7 +47,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngSanitize', 'MassAu
 	  
 	window.addEventListener('printerstatechanged', function (e) {
 		
-		alert("in");
+		
 		
 			if(e.detail=='restro://'){
 				window.location.href = '#/app/index';
@@ -80,7 +80,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngSanitize', 'MassAu
 		 
 	/*One siganl start*/	
 	
-	 var notificationOpenedCallback = function(jsonData) {
+	/* var notificationOpenedCallback = function(jsonData) {
   // alert('notificationOpenedCallback: ' + JSON.stringify(jsonData));
   };
   
@@ -90,11 +90,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngSanitize', 'MassAu
     .endInit();
 	
 	window.plugins.OneSignal.getIds(function(ids) {
+		
+		window.localStorage.setItem('app_id',ids.userId);
 		//alert("id="+ids.userId);
 	
 	});
 	
-	window.plugins.OneSignal.enableInAppAlertNotification(true);
+	window.plugins.OneSignal.enableInAppAlertNotification(true);*/
 	
 	/*one signal end*/
 		
@@ -389,16 +391,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngSanitize', 'MassAu
     controller: 'AppCtrl'
   })
 
-  .state('app.search', {
-    url: '/search',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/search.html'
-      }
-    }
-  })
-  
-  .state('app.browse', {
+    .state('app.browse', {
       url: '/browse',
       views: {
         'menuContent': {
@@ -755,6 +748,39 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngSanitize', 'MassAu
       }
     }
   })
+  .state('app.payment_option', {
+	    cache: false,
+    url: '/payment_option',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/payment_option.html',
+		
+        controller: 'PaymentOptionCtrl'
+      }
+    }
+  })
+   .state('app.search', {
+	    cache: false,
+    url: '/search',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/search.html',
+		
+        controller: 'SearchCtrl'
+      }
+    }
+  })
+   .state('app.payment_history', {
+	    cache: false,
+    url: '/payment_history',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/payment_history.html',
+		
+        controller: 'PaymentHistoryCtrl'
+      }
+    }
+  })
   .state('app.my_order', {
 	  cache: false,
     url: '/my_order',
@@ -766,7 +792,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngSanitize', 'MassAu
     }
   });
   
-  //alert(window.localStorage.getItem('user_id'));
+  //alert(window.localStorage.getItem('user_status'));
   
   if(window.localStorage.getItem('user_id')== null || window.localStorage.getItem('user_id')=='')
   {

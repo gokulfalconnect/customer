@@ -1,6 +1,6 @@
 <ion-view view-title="My Order" hide-back-button="true">
 
-<ion-content class="padding" overflow-scroll="true">
+<ion-content class="padding" overflow-scroll="true"  style="background-color:#AAAEA4">
 
 <div>
   <ion-tabs class="no-header tabs-positive">
@@ -63,11 +63,11 @@
 			<ion-nav-view name="home-tab">
 					<div style="padding-top:40px">
 					<div class="card" ng-repeat="order in past_order_details"  ui-sref="app.order_details({order_id : order.id})">
-						<div class="item item-thumbnail-left">
+						<div class="item">
 					      
 					      <div class="col">
 					      
-					      <p style="white-space: none !important;">{{order.address}}</p>
+					      <p>{{order.address}}</p>
 					      </div>
 					    <div class="col col-50">
 					      	 	<span> Payment Method :</span>

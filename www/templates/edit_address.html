@@ -21,7 +21,7 @@
 					<span class="input-label ext">Address Type</span>
 					<select  ng-model="addressdata.address_type">
 							<option value="">Please Select</option>
-							<option ng-repeat="addtypes in addresstypes" value="{{addtypes.id}}">
+							<option ng-repeat="addtypes in addresstypes" value="{{addtypes.id}}" ng-if="address_type_ids.indexOf(addtypes.id) == -1">
 							{{addtypes.name}}
 							</option>
 										

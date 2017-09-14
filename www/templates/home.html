@@ -2,6 +2,12 @@
 
 <ion-view  view-title="Home" cache-view="false" hide-back-button="true">
 
+	<ion-nav-buttons side="right">
+		<i style="padding:10px;position:relative" class="ion-ios-search ion_icons_header" ui-sref="app.search"></i>
+		
+		
+    </ion-nav-buttons>
+
 <div class = "tabs tabs-top tabs-striped tabs-top tabs-color-light " style="padding-top:32px;height:81px;width:100%;">
     <a class = "tab-item item-wrap" ng-repeat="categories in menu_categories"    ng-click="tab_click(categories.id,$index)"  ng-class="{active: $index===selectedIndex}" style="width:100%">
       {{categories.category_name}}
@@ -13,14 +19,14 @@
 		<!--Select-->
 		<div class="list" style="margin-top: 50px;">
 			<label class = "item item-input item-select item-positive">
-				<div class="col col-40">
+				<div class="col col-50">
 					<span class="input-label">
 						Select the Branch
 					</span>
 				</div>
-				<div class="col col-60">
+				<div class="col col-50">
 					<select  ng-model="bookdata.branch" ng-change="click_branch(bookdata.branch)">
-						<option ng-repeat ="restaurant in restaurant_details" value="{{restaurant.id}}">
+						<option ng-repeat ="restaurant in restaurant_details" value="{{restaurant.id}},{{restaurant.restaurant_name}}">
 						{{restaurant.restaurant_name}}
 						</option>
 						

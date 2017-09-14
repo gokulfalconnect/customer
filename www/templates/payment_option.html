@@ -1,8 +1,12 @@
-<ion-view view-title="My Wallet"  hide-back-button="true">
-  <ion-content style="background-color:#AAAEA4">
+<ion-view view-title="Payment">
+<ion-nav-buttons side="right">
+		<i style="padding:10px;position:relative" class="ion-ios-paper-outline ion_icons_header" ui-sref="app.payment_history"></i>
+		
+		
+    </ion-nav-buttons>
+  <ion-content  style="background-color:#AAAEA4">
+  <div>
   
-	
-	
 	<div class="card" style="position:relative;padding-top:20px">
 		
 		<div align="center">
@@ -24,6 +28,41 @@
 		
 		</div>
 	
+	</div>
+	<div class="card">
+	
+		<span style="top:6px;position:relative;padding-left:6px">Wallets</span></br></br>
+		
+		<div class="row">
+			<div class="col col-25">
+				<img src="img/paytm.png">
+			</div>
+			<div class="col col-75">
+				<span style="top:10px">Paytm</span>
+			</div>
+		
+		</div>
+		
+		<div class="row">
+			<div class="col col-25">
+				<img src="img/mobiwik.png">
+			</div>
+			<div class="col col-75">
+				<span style="top:10px">Mobikwik</span>
+			</div>
+		
+		</div>
+		
+		<div class="row">
+			<div class="col col-25">
+				<img src="img/freecharge.jpeg">
+			</div>
+			<div class="col col-75">
+				<span style="top:10px">Freecharge</span>
+			</div>
+		
+		</div>
+  
 	</div>
 	
 	<div class="card">
@@ -74,17 +113,34 @@
 	
 	</div>
 	
-	<div class="card" style="height:80px" >
+	<div class="card">
+	
+		<span style="top:6px;position:relative;padding-left:6px">other modes of payment</span></br></br>
 		
-		<div>
-			<i class="ion-ios-timer-outline ion_icons_header"></i><span style="font-size:13px">  View transaction history</span>
+		<div class="row">
+			<div class="col col-25">
+				<img src="img/netbanking.PNG">
+			</div>
+			<div class="col col-75">
+				<span style="top:10px">Netbanking</span>
+			</div>
+		
 		</div>
-		<div>
-			<i class="ion-ios-help-outline ion_icons_header"></i><span style="font-size:13px">  Help</span>
+		
+		<div class="row">
+			<div class="col col-25">
+				<img src="img/cash.jpg">
+			</div>
+			<div class="col col-75">
+				<span style="top:10px">Cash On Delivery</span>
+			</div>
+		
 		</div>
 	
 	</div>
 	
-  
+	
+	
+  </div>
   </ion-content>
 </ion-view>

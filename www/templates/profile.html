@@ -21,18 +21,24 @@
 	</div>
 
 	<div class="row">
-			<div class="col col-33" align="center" ui-sref="app.wallet">
-				<img src="img/wallet.svg" width="30" height="28">
-				<h5 class="white-font4">Wallet</h5>
-			</div>
-			<div class="col col-33" align="center"  ui-sref="app.profile_address_book">
-				<img src="img/notebook.svg" width="30" height="28">
+			
+			<div class="col col-50" align="center" ui-sref="app.profile_address_book">
+				<img src="img/notebook.svg" width="30" height="25"  >
 				<h5 class="white-font4">Address Book</h5>
 			</div>
-			<div class="col col-33" align="center">
+			<div class="col col-50" align="center">
 				<img src="img/message.svg" width="30" height="28">
 				<h5 class="white-font4">Message</h5>
 			</div>
+		<!--	<div class="col col-40" align="center"  ng-click="open_lang()">
+		
+			<select  ng-model="langdata.lang" ng-change="change_lang()">
+						<option ng-repeat ="lang in language_list" value="{{lang.text}}">
+						{{lang.value}}
+						</option>
+						
+					</select>
+			</div>-->
 		</div>
 	</div>
 
@@ -79,7 +85,34 @@
 			</div>
 		</div>
 	</label>
-<!--	<label class="item-input item-stacked-label row-bottom-border">
+	<label class="item-input item-stacked-label row-bottom-border">
+		<div class="row">
+			<div class="col col-80">
+				<input type="text"  name="language" maxlength="20"  placeholder="Language" ng-model="langdata.lang" readonly>
+			</div>
+			<div class="col col-20 icon-padding1" align="right">
+				<img src="img/language.png" width="30" height="30">
+			</div>
+		</div>
+	</label>
+
+	<!--<label class="item-input item-stacked-label row-bottom-border">
+		<div class="row">
+			<div class="col col-80" align="center"  ng-click="open_lang()">
+		
+			<select  ng-model="langdata.lang" ng-change="change_lang()">
+						<option ng-repeat ="lang in language_list" value="{{lang.text}}">
+						{{lang.value}}
+						</option>
+						
+					</select>
+			</div>
+			<div class="col col-20 icon-padding1" align="right">
+				<img src="img/language.png" width="40" height="40">
+			</div>
+		</div>
+	</label>
+	<label class="item-input item-stacked-label row-bottom-border">
 		<div class="row">
 			<div class="col col-80">
 				<h5>No 13, Gandhi Nagar, Adyar, Chennai</h5>

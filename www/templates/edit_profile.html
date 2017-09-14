@@ -21,22 +21,17 @@
 	</div>
 
 	<div class="row">
-			<div class="col col-30" align="center" ui-sref="app.wallet">
+		<!--	<div class="col col-30" align="center" ui-sref="app.wallet">
 				<img src="img/wallet.svg" width="30" height="25">
 				<h5 class="white-font4">Wallet</h5>
-			</div>
-			<div class="col col-30" align="center" ui-sref="app.profile_address_book">
+			</div>-->
+			<div class="col col-50" align="center" ui-sref="app.profile_address_book">
 				<img src="img/notebook.svg" width="30" height="25"  >
 				<h5 class="white-font4">Address Book</h5>
 			</div>
-			<div class="col col-40" align="center"  ng-click="open_lang()">
-		
-			<select  ng-model="langdata.lang" ng-change="click_branch(bookdata.branch)">
-						<option ng-repeat ="lang in language_list" value="{{lang.text}}">
-						{{lang.value}}
-						</option>
-						
-					</select>
+			<div class="col col-50" align="center">
+				<img src="img/message.svg" width="30" height="28">
+				<h5 class="white-font4">Message</h5>
 			</div>
 		</div>
 	</div>
@@ -78,6 +73,32 @@
 			</div>
 		</div>
 	</label>
+	<label class="item-input item-stacked-label row-bottom-border">
+		<div class="row"  ng-click="change_lang()">
+			<div class="col col-80">
+				<input type="text"  name="language" maxlength="20"  placeholder="Language" ng-model="langdata.lang" readonly>
+			</div>
+			<div class="col col-20 icon-padding1" align="right">
+				<img src="img/language.png" width="30" height="30">
+			</div>
+		</div>
+	</label>
+	<!--<label class="item-input item-stacked-label row-bottom-border">
+		<div class="row">
+			<div class="col col-80" align="center"  ng-click="open_lang()">
+		
+			<select  ng-model="langdata.lang" ng-change="change_lang()">
+						<option ng-repeat ="lang in language_list" value="{{lang.text}}">
+						{{lang.value}}
+						</option>
+						
+					</select>
+			</div>
+			<div class="col col-20 icon-padding1" align="right">
+				<img src="img/language.png" width="40" height="40">
+			</div>
+		</div>
+	</label>-->
     
    <br>
    <div class="row">

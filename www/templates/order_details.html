@@ -86,6 +86,11 @@ and (max-device-width : 1024px) {
 			Track Order
 			</button>
 		</div>
+		<div id ="track1"  class="col col-40"  ng-if="order_items.order_status!='OutToDelivery'">
+			<button class="button button-full button-small button-assertive">
+			Track Order
+			</button>
+		</div>
 
 	</div>
 
@@ -110,6 +115,7 @@ and (max-device-width : 1024px) {
         <h2>{{item.item_name}}</h2>
     <p>Quantiy : {{item.item_quanitity}}</p>
         <p>Rs.{{item.amount}}</p>
+		<p>Total : Rs.{{item.itemTotalPrice}}</p>
         </ion-item>
       </div>
    

@@ -3,7 +3,7 @@
   
   
 
-	<div id="map_canvas" style="width: {{width}}px; height: 50%;">
+	<div id="map_canvas" style="width: {{width}}px; height: 35%;">
 	
 	
       
@@ -13,8 +13,8 @@
 		<div class="list-inset">
 			<form method="post" ng-submit="add_address(addressdata)">
 				
-				<label class="item item-input item-stacked-label">
-					<span class="input-label heading">Enter House Name/Number</span>
+			<!--	<label class="item item-input item-stacked-label">
+					<span class="input-label">Enter House Name/Number</span>
 					<input type="text"  name="firstname" ng-model="addressdata.building_name">
 				</label>
 				<label class="item item-input item-stacked-label">
@@ -30,7 +30,26 @@
 							</option>
 										
 					</select>
+				</label>-->
+									<div>
+					   <label>
+						  <input type = "text" ng-model="addressdata.building_name" placeholder = "House Name/Number" />
+					   </label>
+
+					   <label class="item-stacked-label">
+						  <textarea placeholder="This is an awesome comment box" ng-model="addressdata.address" rows="20"  id="address_value" cols="40" ></textarea>
+					    </label>
+					   <label class="item item-input item-stacked-label">
+					<span class="input-label ext">Address Type</span>
+					<select  ng-model="addressdata.address_type">
+							<option value="">Please Select</option>
+							<option ng-repeat="addtypes in addresstypes" value="{{addtypes.id}}" ng-if="address_type_ids.indexOf(addtypes.id) == -1">
+							{{addtypes.name}}
+							</option>
+										
+					</select>
 				</label>
+					</div>
 				<input class="button button-block button-royal" type="submit"  value="Add Address"/>  
 				
 			</form>
