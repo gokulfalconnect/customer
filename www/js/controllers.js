@@ -1386,6 +1386,9 @@ angular.module('starter.controllers', [])
 	
 	$scope.notification_items = [];
 	
+	$scope.width=window.screen.width;
+	$scope.new_width =  parseInt($scope.width)-50;
+	
 	$ionicPlatform.registerBackButtonAction(function (event) {
 	
 	
@@ -1479,12 +1482,14 @@ angular.module('starter.controllers', [])
 							
 							angular.forEach(response.notification, function(item) {
 									
-									if(item.message != '')
+									if(item.message != null  && item.message != '' )
 									{
+										
 										$scope.notification_items.push(item);
-									}								
+									}				
+										
 												
-								console.log($scope.notification_items);
+								//console.log($scope.notification_items);
 								});
 							
 																					
@@ -1545,12 +1550,17 @@ angular.module('starter.controllers', [])
 							
 							angular.forEach(response.notification, function(item) {
 									
-									if(item.message != '')
+									if(item.message != null  && item.message != '' )
 									{
-										$scope.notification_items.push(item);
-									}								
 										
-								console.log($scope.notification_items);
+										
+										$scope.notification_items.push(item);
+									}	
+										
+										
+										
+								//alert($scope.notification_items);
+								//alert("le="+$scope.notification_items.length);
 								});
 							
 														
@@ -1997,7 +2007,10 @@ angular.module('starter.controllers', [])
 															
 							//alert(JSON.stringify(response));
 							
-							$scope.menu_categories = response.restauranthomecategory;
+							if(response.restauranthomecategory!=undefined)
+							{
+								$scope.menu_categories = response.restauranthomecategory;
+							
 							
 								//$scope.menu_categories = response.restauranthomecategory;
 								
@@ -2014,6 +2027,9 @@ angular.module('starter.controllers', [])
 								$scope.home_banners = response.restauranthomebanners;
 								
 								$ionicSlideBoxDelegate.update();
+							}
+							
+							
 										
 							}, 
 						
@@ -3531,6 +3547,8 @@ angular.module('starter.controllers', [])
 		
 		else
 		{
+			
+			
 			$ionicLoading.show();
 			
 	$http({
@@ -10862,7 +10880,7 @@ $rootScope.$ionicGoBack = function() {
 	    		if(value==item_Id)
 	    		{
 	    			flag = true;
-	    			console.log(1)
+	    			//console.log(1)
 
 	    		}
 	    		else{
@@ -10887,6 +10905,8 @@ $rootScope.$ionicGoBack = function() {
 	$scope.removecart = {};
 	
 	$scope.get_cart = {};
+	
+	$scope.search = {};
 	
 	$scope.title = window.localStorage.getItem('branch_name');
 	//$scope.show = {};
@@ -11761,14 +11781,21 @@ $rootScope.$ionicGoBack = function() {
 	$scope.clear_search = function()
 	{
 		
-		$scope.search.search_data = null;
 		
-		$scope.restaurant_details = {};
-		$scope.dish_details = {};
+		if($scope.search.search_data!='')
+		{
+			$scope.search.search_data = null;
 		
-		document.getElementById('recent').style.display="block";
-		document.getElementById('tab_sel').style.display="none";
-		document.getElementById('tab_content').style.display="none";
+			$scope.restaurant_details = {};
+			$scope.dish_details = {};
+		
+			document.getElementById('recent').style.display="block";
+			document.getElementById('tab_sel').style.display="none";
+			document.getElementById('tab_content').style.display="none";
+		}
+		
+		
+		
 	}
 	
 	//$scope.get_cart_details = function()
@@ -11802,7 +11829,13 @@ $rootScope.$ionicGoBack = function() {
 															
 							$scope.cart_items = response.Cartitems;
 							
-							$rootScope.cart_count = $scope.cart_items.length;
+							
+							
+							if($scope.cart_items!=undefined)
+							{
+								
+								
+								$rootScope.cart_count = $scope.cart_items.length;
 																		
 							$scope.cart_items.cart_amount = response.Cartamount;
 							
@@ -11830,6 +11863,10 @@ $rootScope.$ionicGoBack = function() {
 												
 								
 								});
+							}
+							
+							
+							
 									
 							}, 
 						
