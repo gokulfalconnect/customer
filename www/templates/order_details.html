@@ -75,7 +75,7 @@ and (max-device-width : 1024px) {
 			Total Amount : Rs {{order_items.total_amount}}
 		</div>
 	</div>
-	<div class="row">
+	<!--<div class="row">
 		<div class="col col-50">
 			<button class="button button-full button-small button-assertive" ng-click="open_rate()">
 			Rate Delivery 
@@ -92,7 +92,7 @@ and (max-device-width : 1024px) {
 			</button>
 		</div>
 
-	</div>
+	</div>-->
 
 
 </ion-item>
@@ -105,22 +105,96 @@ and (max-device-width : 1024px) {
     </ion-list> -->
 
 <ion-scroll direction = "y" style = "scroll-behavior: smooth;">
-<div class = "scroll-container" style="padding-top:100px">
-  <div class="list card" ng-repeat="item in order_items">
-   
-    <div class = "row">
-      <div class = "col item-padding-card">
-        <ion-item class="item-avatar-left ">
-        <img ng-src="{{item.image_url}}" style="background-color: #FFF;">
-        <h2>{{item.item_name}}</h2>
-    <p>Quantiy : {{item.item_quanitity}}</p>
-        <p>Rs.{{item.amount}}</p>
-		<p>Total : Rs.{{item.itemTotalPrice}}</p>
-        </ion-item>
-      </div>
-   
+<div class = "scroll-container" style="padding-top:15%">
+
+	<div  id="map_canvas1"  style="width:{{width}}px;height:52%;">
+ 
+		   
     </div>
+	<div>
+		<ion-item  ng-click="itemtoggleGroup(item.id)">
+			<button class="button button-full button-small button-assertive">
+				View Order Items
+			</button>
+		</ion-item>
+		<ion-item class="item-accordion" ng-if="itemshownGroup ==item.id">
+			<div class="list card" ng-repeat="item in order_items">
+   
+				<div class = "row">
+					<div class = "col item-padding-card">
+						<ion-item class="item-avatar-left ">
+							<img ng-src="{{item.image_url}}" style="background-color: #FFF;">
+							<span style="font-size:12px">{{item.item_name}}</span></br>
+							<span style="font-size:12px">{{item.item_quanitity}} X {{item.amount | number : 2}} = </span>
+							<span style="font-size:12px">Rs.{{item.amount | number : 2}}</span>
+							<span style="font-size:12px">Rs.{{item.itemTotalPrice | number : 2}}</span>
+						</ion-item>
+				   </div>
+			   
+				</div>
+			</div>
+						
+		</ion-item>
+    </div>
+		<div class="card" ng-if="order_items.order_status=='Waitingforconfirmation'" style="height:50px" align="center">
+			<span>You order is in waiting for confirmation</span>
+		</div>
+		<div class="card" ng-if="order_items.order_status=='orderConfirmed'" style="height:50px" align="center">
+			<span>You order is confirmed,delivery boy is on the way to restaurant</span>
+		</div>
+		<div class="card" ng-if="order_items.order_status=='Rejected'" style="height:50px" align="center">
+			<span>You order is rejected.</span>
+		</div>
+		<div class="card" ng-if="order_items.order_status=='outtodelivery'" style="" align="center">
+			<span>You order is out for delivery.</span>
+		<ion-item  ng-click="toggleGroup(order_id)">
+			<button class="button button-full button-small button-assertive">
+				View Delivery Boy Details
+			</button>
+		</ion-item>
+		<ion-item class="item-accordion" ng-if="shownGroup ==order_id">
+			<div class="card item item-divider"  ng-repeat="driver in driver_details">
+				<div class="row">
+					<div class="col col-50">
+						<h3 class="h4-font">Driver Name</h3>
+						<h4>{{driver.deliveryboyname}}</h4>
+						<button class="button button-full button-small button-assertive" ui-sref="app.track({order_id : order_details.orderid})">
+											Track
+						</button>
+					</div>
+								
+					<div class="col col-50">
+						<h3 class="h4-font">Mobile Number</h3>
+						<h4>{{driver.deliveryboyphone}}</h4>
+						<a href="tel:' + 91{{driver.deliveryboyphone}} + '"><button class="button button-full button-small button-assertive"> 
+								Call
+						</button></a>
+					</div>
+				</div>
+				<div class="row">
+								
+				</div>
+						
+			</div>
+						
+		</ion-item>
   </div>
+  <div class="card" ng-if="order_items.order_status=='Delivered'" style="height:50px" align="center">
+			<span>You order is delivered.</span></br>
+			<button class="button button-full button-small button-assertive" ng-click="open_rate()">
+					Rate Delivery
+			</button>
+		</div>
+		<div class="card" ng-if="order_items.order_status=='MarkasCompleted'" style="height:50px" align="center">
+			<span>You order is delivered.</span></br>
+			<button class="button button-full button-small button-assertive" ng-click="open_rate()">
+				Rate Delivery
+			</button>
+		</div>
+	
+  
+  
+ 
 
 </ion-scroll>
 

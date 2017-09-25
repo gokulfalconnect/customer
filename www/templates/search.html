@@ -1,12 +1,13 @@
-<ion-view view-title="" hide-back-button="true">
+<ion-view view-title="{{title}}" hide-back-button="true">
 
-	<label class="item item-input" style="padding-top:41px;height:85px;width:100%;">
+	<div class="item item-input" style="padding-top:41px;height:85px;width:100%;">
       <i class="icon ion-search placeholder-icon"></i>
       <input type="text" placeholder="Search for branches,dishes" ng-model="search.search_data" ng-change = "search_input(search.search_data)" ng-blur="recent_push(search.search_data)">
-		
-	</label>
+		<i class="icon ion-android-close " style="padding-right:6%;font-size:20px" ng-click="clear_search()"></i>
+	</div>
+	
 	<div id="recent" >
-		<ion-item>
+		<ion-item >
 			<div class="card" style="background-color:#AAAEA4;height:40px;position:relative;padding-left:6px" >
 				
 					<div class="row">
@@ -69,7 +70,7 @@
 
    						<div class="row">
 							<div class="col col-30">
-									<span>rating : {{restro.average_rating}}</span>							 
+									<span>rating : {{restro.average_rating | number : 1}}</span>							 
 							</div>
 							<div class="col">
 								
@@ -85,14 +86,17 @@
 				</div>	
 			
 			
-			
-			<div class="card" ng-if="restro_details =='0'">
-				<img src="img/plate.png" style="width:{{new_width}}px;margin:auto;display:block;height:30%">
+			<div  ng-if="restro_details =='0'">
+			<div class="card">
+				<img src="img/no_restro.png" style="width:{{new_width}}px;margin:auto;display:block;height:30%">
 				<div align="center">
-					<span style="font-size:13px">No results found.Please check the spelling or try a different search.</span>
+					<span style="font-size:13px">No restaurants found.</span>
 				</div>
 			</div>
-		
+			<div class="card" align="center">
+				<span style="font-size:13px">Your favourite restaurant is missing, Please contact support.</span>
+			</div>
+		</div>
 		</div>
 		<div ng-show="tabIndex==1" style="padding-top:25%">
 		
@@ -110,19 +114,20 @@
 							<div class="col-40 card-padding" align="center">
 												 
 							<!--	<i class="icon icon-large ion-android-cart ion-icon-medium card-title-icon" ng-if="list_id.indexOf(item.id) == -1" ng-click="cart_popup(item.id,item.item_price)"></i>	-->
-								<div class="row" ng-show="cartBtn">
+							
+								<div class="row" ng-show="cart_id | checksearchcart:dish.itemid">
 									<div class="col col-15">
 										<input type='button' value='-' class='qtyminus' field='quantity' ng-click="cart_decr(dish.itemid,dish.item_price,dish.restaurant_id)"/>
 									</div>
 									<div class="col col-10">
-										<input type='text' id='{{dish.itemid}}' name='quantity' value='1' min="1" class='qty' />
+										<input type='text' id='{{dish.itemid}}' name='quantity' value='1' min="0" class='qty' />
 									</div>
 									<div class="col col-15">
 										<input type='button' value='+' class='qtyplus' field='quantity'  ng-click="cart_incr(dish.itemid,dish.item_price,dish.restaurant_id)"/>
 									</div>
 									
 								</div>
-								<div class="row"  ng-click="cartBtn=!cartBtn;click_add(dish.itemid,dish.item_price,dish.restaurant_id,dish.restaurant_name)" ng-show="!cartBtn">
+								<div class="row"  ng-click="cartBtn=!cartBtn;click_add(dish.itemid,dish.item_price,dish.restaurant_id,dish.restaurant_name)" ng-hide="cart_id | checksearchcart:dish.itemid">
 									<input type='button' value='ADD' class='addbtn' />
 								</div>
 								
@@ -154,14 +159,17 @@
 					
 				
 				</div>
-			
-			<div class="card" ng-if="restro_details =='0'">
+			<div  ng-if="restro_details =='0'">
+			<div class="card">
 				<img src="img/plate.png" style="width:{{new_width}}px;margin:auto;display:block;height:30%">
 				<div align="center">
-					<span style="font-size:13px">No results found.Please check the spelling or try a different search.</span>
+					<span style="font-size:13px">No dishes found.</span>
 				</div>
 			</div>
-		
+			<div class="card" align="center">
+				<span style="font-size:13px">Your favourite dish is missing, Please contact support.</span>
+			</div>
+		</div>
 		</div>
 	</div>
 	

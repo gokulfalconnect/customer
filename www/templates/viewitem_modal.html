@@ -1,0 +1,50 @@
+<ion-modal-view  hide-back-button="false" cache-view="true" class="grey_bg">
+<ion-nav-bar class="bar-assertive">
+		<ion-nav-title>
+			Item Details
+		</ion-nav-title>
+		<ion-nav-buttons side="right">
+      	<button class="button button-icon button-clear ion-close-round" ng-click="closeModal()">
+        	</button>
+    	</ion-nav-buttons>
+	</ion-nav-bar>
+  <ion-content>
+	<div class = "scroll-container" style="">
+		<ion-list>
+			<ion-item style="padding-top:50px">
+				<div class="row">
+
+					<div class="col col-60">
+						Total Amount : Rs {{order_items.total_amount}}
+					</div>
+				</div>
+			</ion-item>
+		</ion-list>
+		<div  id="map_canvas"  style="width:{{width}}px;height:52%;">
+ 
+		   
+    </div>
+	<!--	<div class="list" ng-repeat="item in order_items">
+	   
+		
+			<div class="row">
+				<div class="col item-avatar-left">
+					
+						<img ng-src="{{item.image_url}}" style="background-color: #FFF;">
+					<span style="font-size:12px">{{item.item_name}}</span></br>
+					<span style="font-size:12px">{{item.item_quanitity}} X {{item.amount}} = </span>
+					<span style="font-size:12px">Rs.{{item.itemTotalPrice}}</span>
+					
+				</div>
+			</div>
+			
+	  </div>-->
+  </div>		
+				
+	 
+</ion-content>
+
+
+</ion-modal-view>
+
+

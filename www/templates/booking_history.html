@@ -12,8 +12,43 @@
 		<ion-tab title="New Bookings">
 			<ion-nav-view name="home-tab">
 			
-			
-				<div class="card" ng-repeat="resdata in reservation_presentdata">
+				<div class="item item-divider" ng-repeat="resdata in reservation_presentdata">
+					<div class="row">
+						<h2 align="center">{{resdata.restaurant_name}}</h2>
+					</div>
+					<div class="row">
+						<div class="col col-50">
+							<h3 class="h4-font">Reservation Date</h3>
+							<h4>{{resdata.reservation_date}}</h4>
+						</div>
+						<div class="col col-50">
+							<h3 class="h4-font">Reservation Time</h3>
+							<h4>{{resdata.timeslot}}</h4>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col col-50">
+							<h3 class="h4-font"> No of seats</h3>
+							<h4>{{resdata.party_size}}</h4>
+						</div>
+						<div class="col col-50">
+							<h3 class="h4-font">Reservation Status</h3>
+							<h4>{{resdata.status_name}}</h4>
+						</div>
+							
+					</div>
+					<div class="row cart-delete-padding" style="padding-top:5px">
+						<i class="ion-android-arrow-dropleft ion-trash-a icon-font-delete icon-font-medium" ng-click="cancel_book(resdata.id)"></i>
+						</div>	
+					<!-- <div class="item item-body" align="center" style="background-color:red" ng-click="cancel_book(resdata.id)">
+							<div class="show-list-numbers-and-dots">
+							  <span class="order-success">CliCK TO CANCEL BOOKING</span>
+							</div>
+						</div>-->
+					
+				</div>
+						
+				<!--<div class="card" ng-repeat="resdata in reservation_presentdata">
 					<div >		
 							<h2 align="center">{{resdata.restaurant_name}}</h2>
 						
@@ -67,11 +102,15 @@
 						</div>
 				   </div>
 				
-			</div>
+			</div>-->
 					
 				<div class="card" ng-if="reservation_presentdata.length<1">
 				
-					<span>There is no reservations available</span>
+					<!--<span>There is no reservations available</span>-->
+					<img src="img/nobooking.png" style="width:{{new_width}}px;margin:auto;display:block;height:30%">
+					<div align="center">
+					<span style="font-size:13px">No Bookings Available.</span>
+					</div>
 				
 				</div>
 		
@@ -79,8 +118,40 @@
 		</ion-tab>
 		<ion-tab title="Past Bookings">
 			<ion-nav-view name="home-tab">
+				<div class="item item-divider" ng-repeat="resdata in reservation_pastdata">
+					<div class="row">
+						<h2 align="center">{{resdata.restaurant_name}}</h2>
+					</div>
+					<div class="row">
+						<div class="col col-50">
+							<h3 class="h4-font">Reservation Date</h3>
+							<h4>{{resdata.reservation_date}}</h4>
+						</div>
+						<div class="col col-50">
+							<h3 class="h4-font">Reservation Time</h3>
+							<h4>{{resdata.timeslot}}</h4>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col col-50">
+							<h3 class="h4-font"> No of seats</h3>
+							<h4>{{resdata.party_size}}</h4>
+						</div>
+						<div class="col col-50">
+							<h3 class="h4-font">Reservation Status</h3>
+							<h4>{{resdata.status_name}}</h4>
+						</div>
+							
+					</div>
+					<!-- <div class="item item-body" align="center" style="background-color:red" ng-click="cancel_book(resdata.id)">
+							<div class="show-list-numbers-and-dots">
+							  <span class="order-success">CliCK TO CANCEL BOOKING</span>
+							</div>
+						</div>-->
+					
+				</div>
 				
-				<div class="card" ng-repeat="pastdata in reservation_pastdata">
+				<!--<div class="card" ng-repeat="pastdata in reservation_pastdata">
 					<div>		
 							<h2 align="center">{{pastdata.restaurant_name}}</h2>
 						
@@ -137,10 +208,14 @@
 
 				
 				
-			</div>
+			</div>-->
 			<div class="card" ng-if="reservation_pastdata.length<1">
 				
-				<span>No Reservations are Available</span>
+				<!--<span>No Reservations are Available</span>-->
+				<img src="img/nobooking.png" style="width:{{new_width}}px;margin:auto;display:block;height:30%">
+					<div align="center">
+					<span style="font-size:13px">No Bookings Available.</span>
+					</div>
 				
 				</div>
 			

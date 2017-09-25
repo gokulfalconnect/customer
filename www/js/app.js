@@ -66,9 +66,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngSanitize', 'MassAu
 			  }
 			}, 100);
 	  
-	 
+	/*cordova.getAppVersion.getVersionNumber(function (version) {
+		
+    window.localStorage.setItem('app_version',version);	
+		
+	});*/
 	
+	$rootScope.deviceInformation = ionic.Platform.device();
 	
+		
+	window.localStorage.setItem('device_model',$rootScope.deviceInformation.model);
+	
+	window.localStorage.setItem('uuid',$rootScope.deviceInformation.uuid);
 	
 	
 	var deviceType = (navigator.userAgent.match(/iPad/i))  == "iPad" ? "iPad" : (navigator.userAgent.match(/iPhone/i))  == "iPhone" ? "iPhone" : (navigator.userAgent.match(/Android/i)) == "Android" ? "Android" : (navigator.userAgent.match(/BlackBerry/i)) == "BlackBerry" ? "BlackBerry" : "null";
@@ -657,7 +666,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngSanitize', 'MassAu
   })
     .state('app.order_details', {
 		cache: false,
-    url: '/order_details:order_id',
+    url: '/order_details:order_id:lat:long',
     views: {
       'menuContent': {
         templateUrl: 'templates/order_details.html',

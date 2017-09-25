@@ -40,11 +40,15 @@ angular.module('starter.controllers', [])
 	  $rootScope.user_status = 1;
   }
   
+  
+  
     $scope.userdata = {};
   
   $scope.menu_click = function()
   {
-	   
+	  
+  $scope.userdata.app_version = window.localStorage.getItem('app_version');
+ 
   $scope.userdata.name = window.localStorage.getItem('user_name');
   $scope.userdata.phone = window.localStorage.getItem('user_phone');
   $scope.userdata.image = window.localStorage.getItem('user_image');
@@ -452,9 +456,9 @@ angular.module('starter.controllers', [])
 		  
 		  else
 		  {
-			  //  $scope.logindata.app_id = window.localStorage.getItem('app_id');
+			  $scope.logindata.app_id = window.localStorage.getItem('app_id');
 			 
-			//    $scope.logindata.device_type = window.localStorage.getItem('deviceType');
+			    $scope.logindata.device_type = window.localStorage.getItem('deviceType');
 			  
 			  
 		  
@@ -1079,6 +1083,12 @@ angular.module('starter.controllers', [])
 	
 	$scope.book_details = {};
 	
+	$scope.ratedata = {};
+	
+	$scope.ratedata.qstn3 ='me';
+	
+	$scope.bookdata.nameofcustomer = window.localStorage.getItem('user_name');
+		$scope.bookdata.mobilenum = window.localStorage.getItem('user_phone');
 	 
 	 $scope.example = {
        // value: new Date(2017, 7, 4),
@@ -1118,8 +1128,14 @@ angular.module('starter.controllers', [])
 				var dd = today.getDate();
 				var mm = today.getMonth()+1;
 				var yy = today.getFullYear();
+				
+				var hh = today.getHours();
+				var ms = today.getMinutes();
+				var ss = today.getSeconds();
+				
+				$scope.bookdata.booking_date = yy+'-'+mm+'-'+dd+' '+hh+':'+ms+':'+ss;
 		
-		$scope.bookdata.booking_date = dd+'/'+mm+'/'+yy;
+		//$scope.bookdata.booking_date = dd+'-'+mm+'-'+yy;
 	 
 	  //     var restaurant = window.localStorage['restaurant_details'];
 		
@@ -1368,6 +1384,8 @@ angular.module('starter.controllers', [])
 	
 	$rootScope.display_cart = '1';
 	
+	$scope.notification_items = [];
+	
 	$ionicPlatform.registerBackButtonAction(function (event) {
 	
 	
@@ -1426,6 +1444,8 @@ angular.module('starter.controllers', [])
      confirmPopup.then(function(res) {
        if(res) {
 		   
+		   $scope.notification_items = [];
+		   
         window.localStorage.removeItem('balance_amount');
 		
 		window.localStorage.removeItem('coupon_amt');
@@ -1454,9 +1474,20 @@ angular.module('starter.controllers', [])
 							
 							//alert(JSON.stringify(response));
 							
-							$scope.notification_items = response.notification;
+							//$scope.notification_items = response.notification;
 							
-														
+							
+							angular.forEach(response.notification, function(item) {
+									
+									if(item.message != '')
+									{
+										$scope.notification_items.push(item);
+									}								
+												
+								console.log($scope.notification_items);
+								});
+							
+																					
 							}, 
 						
 							function(response) { // optional
@@ -1485,6 +1516,7 @@ angular.module('starter.controllers', [])
 		
 		else
 		{
+			 $scope.notification_items = [];
 			$scope.notification_details = {};
 		
 		$scope.notification_details.customer_id = window.localStorage.getItem('user_id');
@@ -1509,7 +1541,17 @@ angular.module('starter.controllers', [])
 							
 							//alert(JSON.stringify(response));
 							
-							$scope.notification_items = response.notification;
+							//$scope.notification_items = response.notification;
+							
+							angular.forEach(response.notification, function(item) {
+									
+									if(item.message != '')
+									{
+										$scope.notification_items.push(item);
+									}								
+										
+								console.log($scope.notification_items);
+								});
 							
 														
 							}, 
@@ -1733,6 +1775,7 @@ angular.module('starter.controllers', [])
 		
 	
 }).controller('HomeCtrl', function($scope, $rootScope, $cordovaGeolocation,$ionicLoading,$http,$state, $ionicSlideBoxDelegate, $ionicPlatform,$ionicPopup){
+
 	
 	 $scope.width=window.screen.width;
 	 
@@ -2131,7 +2174,9 @@ angular.module('starter.controllers', [])
 	
 	$rootScope.display_cart = '1';
 	
-}).controller('MyOrderCtrl', function($scope, $rootScope,$ionicLoading,$http,$state,$ionicPopup,$ionicPlatform,$ionicHistory){
+}).controller('MyOrderCtrl', function($scope, $rootScope,$ionicLoading,$http,$state,$ionicPopup,$ionicPlatform,$ionicHistory,$ionicModal,$cordovaGeolocation){
+	
+	$scope.width=window.screen.width;
 	
 	$rootScope.is_cart = '0';
 	
@@ -2144,6 +2189,16 @@ angular.module('starter.controllers', [])
 	$scope.past_order_details = {};
 	
 	$scope.present_order_details = {};
+	
+	$scope.order_details = {};
+	
+	$scope.order_items = {};
+	
+	$scope.driver_item = {};
+	
+	$scope.reorder_items = {};
+	
+	$scope.removecart = {};
 	
 	
 	$ionicPlatform.registerBackButtonAction(function (event) {
@@ -2199,6 +2254,8 @@ angular.module('starter.controllers', [])
 			$scope.past_order_details.customer_id = window.localStorage.getItem('user_id');
 	
 	$scope.present_order_details.customer_id = window.localStorage.getItem('user_id');
+			
+			
 			
 		 $ionicLoading.show();
 			
@@ -2265,8 +2322,8 @@ angular.module('starter.controllers', [])
 								$scope.present_order_details = response.Customerorders;
 							
 							//alert(JSON.stringify(response));
-							
-								
+									
+														
 														
 							}, 
 						
@@ -2295,11 +2352,273 @@ angular.module('starter.controllers', [])
 			{
 
 				$state.go($state.current, {}, {reload: true});	
-			}			
+			}		
+
+		$scope.closeModal = function()
+			{
+				$scope.modal.remove();
+			}
+	
+	$scope.view_items = function(id)
+	
+	{
+		
+			
+		$ionicModal.fromTemplateUrl('templates/viewitem_modal.html', {
+						scope: $scope
+					  }).then(function(modal) {
+						  
+							
+							$scope.modal = modal;
+							$scope.modal.show();
+														
+					  });
+		
+		$scope.order_details.orderid =  id;
 	
 	
+	$scope.order_details.customer_id = window.localStorage.getItem('user_id');
 	
 	
+	 
+	 $ionicLoading.show();
+	 
+	$http({
+								url: server+'orderItemsdetails',
+								method: "POST",
+								headers : {
+									
+									'Content-Type': 'application/json'
+									
+									
+								},
+								//timeout : 4500,
+								data: JSON.stringify($scope.order_details),
+							})
+							.success(function(response) {
+										
+								$ionicLoading.hide();
+							
+										//alert("res="+JSON.stringify(response));	
+
+											$ionicLoading.hide();
+								
+								//alert(JSON.stringify(response));
+								
+								$scope.order_items = response.CustomerordersItems;
+								
+								$scope.order_items.total_amount = response.Ordersamount;	
+								
+								$scope.noSpaces = $scope.order_items[0].order_status_desc;
+
+								$scope.order_items.order_status = $scope.noSpaces.replace(/ /g, '');				
+									
+									//alert("a="+$scope.order_items.order_status);
+														
+							}, 
+						
+							function(response) { // optional
+							
+								$ionicLoading.hide();  
+								  
+							}).error(function(data)
+								{
+									$ionicLoading.hide();
+									//alert("error="+data);
+									//alert("Network error. Please try after some time");
+									var alertPopup = $ionicPopup.alert({
+										 title: 'Network Error',
+										 template: 'Please try after some time'
+									  });
+							
+									
+								});
+								
+	}
+	
+			
+  
+	$scope.reorder_cart = function(id)
+	{
+		$scope.reorder_items.customer_id = window.localStorage.getItem('user_id');
+	  
+	  	  
+	  $scope.reorder_items.order_id = id;
+		
+		$ionicLoading.show();
+			
+	$http({
+								url: server+'doreorderitems',
+								method: "POST",
+								headers : {
+									
+									'Content-Type': 'application/json'
+									
+									
+								},
+								//timeout : 4500,
+								data: JSON.stringify($scope.reorder_items),
+							})
+							.success(function(response) {
+										
+								$ionicLoading.hide();
+								
+								//alert(JSON.stringify(response));
+								
+							//	$scope.profileInfo = response.Customerprofile[0];		
+								$state.go('app.cart_details');
+								
+								
+							}, 
+						
+							function(response) { // optional
+							
+								$ionicLoading.hide();  
+								  
+							}).error(function(data)
+								{
+									$ionicLoading.hide();
+									//alert("error="+data);
+									//alert("Network error. Please try after some time");
+									var alertPopup = $ionicPopup.alert({
+												 title: 'Network Error',
+												 template: 'Please try after some time'
+											  });
+																	
+									
+								});
+	}
+  
+  $scope.reorder = function(id,restro_id,restro_name)
+  {
+	  
+	 
+	  
+	  window.localStorage.setItem('branch_name',restro_name);
+							
+	  window.localStorage.setItem('restaurant_id',restro_id);
+	  
+	  $scope.branch_details =  restro_id+','+restro_name;
+
+		window.localStorage.setItem('branch_details',$scope.branch_details);
+	  
+	  $scope.reorder_items.customer_id = window.localStorage.getItem('user_id');
+	  
+	  	  
+	  $scope.reorder_items.order_id = id;
+	  
+	  $ionicLoading.show();
+			
+	$http({
+								url: server+'getCartItemsdetails',
+								method: "POST",
+								headers : {
+									
+									'Content-Type': 'application/json'
+									
+									
+								},
+								//timeout : 4500,
+								data: JSON.stringify($scope.reorder_items),
+							})
+							.success(function(response) {
+										
+								$ionicLoading.hide();
+								
+								//alert(JSON.stringify(response));
+								
+									$scope.item_details = response.Cartitems;
+									
+									if($scope.item_details == 0)
+									{
+										$scope.reorder_cart(id);
+									}
+								else
+								{
+								
+									angular.forEach(response.Cartitems, function(value) {
+									
+									$scope.cart_id = value.cart_id;	
+																			
+									
+									$scope.removecart.customer_id = window.localStorage.getItem('user_id');
+		
+		$scope.removecart.cart_id = $scope.cart_id;
+		
+		 $ionicLoading.show();
+			
+	$http({
+								url: server+'doremoveCart',
+								method: "POST",
+								headers : {
+									
+									'Content-Type': 'application/json'
+									
+									
+								},
+								//timeout : 4500,
+								data: JSON.stringify($scope.removecart),
+							})
+							.success(function(response) {
+										
+								$ionicLoading.hide();
+							
+							//alert(JSON.stringify(response.message));
+							
+																					
+							}, 
+						
+							function(response) { // optional
+							
+								$ionicLoading.hide();  
+								  
+							}).error(function(data)
+								{
+									$ionicLoading.hide();
+									//alert("error="+data);
+									//alert("Network error. Please try after some time");
+										var alertPopup = $ionicPopup.alert({
+										 title: 'Network Error',
+										 template: 'Please try after some time'
+									  });
+									
+								});
+											
+								
+								});
+								
+								$scope.reorder_cart(id);
+								
+								}
+								
+								
+							}, 
+						
+							function(response) { // optional
+							
+								$ionicLoading.hide();  
+								  
+							}).error(function(data)
+								{
+									$ionicLoading.hide();
+									//alert("error="+data);
+									//alert("Network error. Please try after some time");
+									var alertPopup = $ionicPopup.alert({
+												 title: 'Network Error',
+												 template: 'Please try after some time'
+											  });
+																	
+									
+								});
+	  
+	  
+	  
+	/*  */
+	
+	  
+  }
+  
+  
 	
 }).controller('EditProfileCtrl', function($scope,$ionicModal,  $state, $rootScope, $ionicActionSheet,$ionicLoading,$http, $cordovaCamera,$ionicPopup){
 	
@@ -2829,15 +3148,43 @@ angular.module('starter.controllers', [])
 					  });
 	}
 	
-	$scope.select_lang = function()
+	$scope.select_lang = function(lang)
 	{
-		window.localStorage.setItem('lang',$scope.langdata.lang);
+		
+		window.localStorage.setItem('lang',lang);
+		$scope.langdata.lang = lang;
 		$scope.closeModal();
 	}
 	
 	
+}).filter('checkcart', function () {
+    return function (data, itemId) { 
+    	var flag = false; 
+    	angular.forEach(data,function(value,key){
+    		//console.log(value+" - "+itemId);
+    		if(flag!=true)
+    		{
+	    		if(value==itemId)
+	    		{
+	    			flag = true;
+	    			//console.log(1)
+
+	    		}
+	    		else{
+	    			flag = false;
+	    			//console.log(2);
+	    		}
+    		}
+    	})   
+       	//console.log(itemId+' - '+flag);
+        return flag;
+    }
 }).controller('FoodMenuCtrl', function($scope, $rootScope, $ionicPopup,$state,$http,$ionicLoading,$ionicSlideBoxDelegate,$ionicPlatform,$ionicHistory){
 	
+	$scope.width=window.screen.width;
+	$scope.new_width =  parseInt($scope.width)-50;
+	
+	$scope.title = window.localStorage.getItem('branch_name');
 	
 		 $ionicPlatform.registerBackButtonAction(function (event) {
 	
@@ -2916,15 +3263,23 @@ angular.module('starter.controllers', [])
 	  
 	  $scope.cart_data = {};
 	  
-	  $scope.cart_details.customer_id = window.localStorage.getItem('user_id');
+	  $scope.removecart = {};
 	  
-	   $scope.branch.customer_id = window.localStorage.getItem('user_id');
+	  $scope.show = {};
 	  
-	  $scope.branch.restaurant_id = window.localStorage.getItem('restaurant_id');
+	  $scope.removecart = {};
 	  
-	  $scope.selectedIndex=0;
+	  $scope.get_cart = {};
 	  
-	  $ionicLoading.show();
+	 get_cart_details();
+	 
+	 function get_cart_details()
+	 {
+		 $scope.list_id = [];
+		 
+		  $scope.cart_details.customer_id = window.localStorage.getItem('user_id');
+		 
+		 $ionicLoading.show();
 			
 	$http({
 								url: server+'getCartItemsdetails',
@@ -2945,6 +3300,28 @@ angular.module('starter.controllers', [])
 													
 							$scope.cart_items = response.Cartitems;
 							
+							if($scope.cart_items.length == 0)
+							{
+								$scope.branch_id = 0;
+								
+								$scope.branch_name = 0;
+								
+								$rootScope.cart_qty = 0;
+							}
+							else
+							{
+								$scope.branch_id = response.Cartitems[0].restaurant_id;
+								
+								$scope.branch_name = response.Cartitems[0].restaurant_name;
+								
+								
+							}
+							
+														
+							$rootScope.cart_count =$scope.cart_items.length;
+							
+							
+							
 							angular.forEach(response.Cartitems, function(value) {
 									
 								$scope.list_id.push(value.item_id);
@@ -2953,6 +3330,7 @@ angular.module('starter.controllers', [])
 												
 								
 								});
+							//console.log($scope.list_id);
 								
 														
 							}, 
@@ -2975,6 +3353,17 @@ angular.module('starter.controllers', [])
 									
 								});
 	
+	 }
+	  
+	  $scope.cart_details.customer_id = window.localStorage.getItem('user_id');
+	  
+	   $scope.branch.customer_id = window.localStorage.getItem('user_id');
+	  
+	  $scope.branch.restaurant_id = window.localStorage.getItem('restaurant_id');
+	  
+	  $scope.selectedIndex=0;
+	  
+	  
 	
 		 $ionicLoading.show();
 			
@@ -3046,7 +3435,7 @@ angular.module('starter.controllers', [])
 							}).error(function(data)
 								{
 									$ionicLoading.hide();
-									alert("error11="+data);
+									//alert("error11="+data);
 							
 									
 								});
@@ -3200,132 +3589,6 @@ angular.module('starter.controllers', [])
 	
 	
 	
-	$scope.cart_popup  = function(id,price)
-	{
-		if(window.localStorage.getItem('user_id')==undefined || window.localStorage.getItem('user_id')==null || window.localStorage.getItem('user_id')=='')
-		{
-			//alert("Please login to proceed");
-			var alertPopup = $ionicPopup.alert({
-         title: 'Login',
-         template: 'Please login to proceed'
-      });
-			$state.go('app.index');
-		}
-		
-		else
-		{
-			$scope.data = {};
-			$scope.data.count = 1;
-		
-		 var myPopup = $ionicPopup.show({
-     template: '<input type="tel" ng-model="data.count" maxlength="2" onKeyUp="if(this.value>15){this.value=15;}else if(this.value<0){this.value=1;}">',
-     title: 'Enter Quantity',
-     subTitle: '',
-     scope: $scope,
-     buttons: [
-       { text: 'Cancel' },
-       {
-         text: '<b>Add</b>',
-         type: 'button-positive',
-         onTap: function(e) {
-			 
-           if ($scope.data.count == undefined) {
-			   $scope.data.count = 1;
-            // alert("Please Enter Quantiy");
-			var alertPopup = $ionicPopup.alert({
-				 title: '',
-				 template: 'Please enter quantity'
-			  });
-             e.preventDefault();
-           } else {
-			   
-			  if($scope.data.count < 1)
-			   {
-				   $scope.data.count = 1;
-				  	 var alertPopup = $ionicPopup.alert({
-					 title: '',
-					 template: 'Please enter a valid quantity'
-				  });
-				   e.preventDefault();
-			   }
-			   
-			   else
-			   {
-
-				   
-				    $scope.cart_details.item_id = id;
-				
-				$scope.cart_details.noofquantity = $scope.data.count;
-				
-				$scope.cart_details.amount = $scope.data.count * price;
-			   
-			    $rootScope.cart_qty =1;
-				
-				//alert("D="+JSON.stringify($scope.cart_details));
-			 $ionicLoading.show();
-			
-	$http({
-								url: server+'AddCartItems',
-								method: "POST",
-								headers : {
-									
-									'Content-Type': 'application/json'
-									
-									
-								},
-								//timeout : 4500,
-								data: JSON.stringify($scope.cart_details),
-							})
-							.success(function(response) {
-										
-								$ionicLoading.hide();
-							
-							//alert(JSON.stringify(response.message));
-							
-							//$scope.product_details = response.restauranthome;
-							
-								//alert("ss="+JSON.stringify($scope.product_details));
-								
-								
-														
-							}, 
-						
-							function(response) { // optional
-							
-								$ionicLoading.hide();  
-								  
-							}).error(function(data)
-								{
-									$ionicLoading.hide();
-									//alert("error="+data);
-								//	alert("Network error. Please try after some time");
-								
-								var alertPopup = $ionicPopup.alert({
-									 title: 'Network Error',
-									 template: 'Please try after some time'
-								  });
-														
-									
-								});
-			   }
-			   
-			//  alert("total="+$scope.data.count * price);
-			   
-			   
-            
-           }
-         }
-       },
-     ]
-   });
-		}
-		
-		
-		
-	}
-	
-	
-	
 	$scope.cart_incr = function(id,price)
 	{ 
 		
@@ -3338,6 +3601,8 @@ angular.module('starter.controllers', [])
 		document.getElementById(id).value = $scope.total_qty;
 		
 		$scope.cart_data.customer_id = window.localStorage.getItem('user_id');
+		
+		$scope.cart_data.restaurant_id = window.localStorage.getItem('restaurant_id');
 		
 		$scope.cart_data.item_id = id;
 				
@@ -3365,6 +3630,8 @@ angular.module('starter.controllers', [])
 							.success(function(response) {
 										
 								$ionicLoading.hide();
+								
+								
 							
 							//alert(JSON.stringify(response.message));
 							
@@ -3407,7 +3674,7 @@ angular.module('starter.controllers', [])
 		
 		$scope.cart_data.customer_id = window.localStorage.getItem('user_id');
 		
-		
+		$scope.cart_data.restaurant_id = window.localStorage.getItem('restaurant_id');
 		
 		$scope.cart_data.item_id = id;
 				
@@ -3415,20 +3682,19 @@ angular.module('starter.controllers', [])
 				
 				$scope.cart_data.amount = $scope.total_qty * price;
 		
-		if($scope.total_qty<=1)
+		if($scope.total_qty<1)
 		{
-			document.getElementById(id).value = 1;
-			
-			$scope.total_qty = 1;
-			
-			//document.getElementById('add'+id).style.display = "block";
+			document.getElementById(id).value = 0;
 		
-		//document.getElementById('cart'+id).style.display = "none";
+		
+		$scope.cart_details.customer_id = window.localStorage.getItem('user_id');
+		
+	
 		
 		$ionicLoading.show();
 			
 	$http({
-								url: server+'AddCartItems',
+								url: server+'getCartItemsdetails',
 								method: "POST",
 								headers : {
 									
@@ -3437,7 +3703,37 @@ angular.module('starter.controllers', [])
 									
 								},
 								//timeout : 4500,
-								data: JSON.stringify($scope.cart_data),
+								data: JSON.stringify($scope.cart_details),
+							})
+							.success(function(response) {
+										
+								$ionicLoading.hide();
+								
+								//alert("re="+JSON.stringify(response));
+								angular.forEach(response.Cartitems, function(value) {
+									
+								if(value.item_id == id)
+								{
+									$scope.cart_id = value.cart_id;
+									
+									
+									$scope.removecart.customer_id = window.localStorage.getItem('user_id');
+		
+		$scope.removecart.cart_id = $scope.cart_id;
+		
+		 $ionicLoading.show();
+			
+	$http({
+								url: server+'doremoveCart',
+								method: "POST",
+								headers : {
+									
+									'Content-Type': 'application/json'
+									
+									
+								},
+								//timeout : 4500,
+								data: JSON.stringify($scope.removecart),
 							})
 							.success(function(response) {
 										
@@ -3445,10 +3741,36 @@ angular.module('starter.controllers', [])
 							
 							//alert(JSON.stringify(response.message));
 							
-							//$scope.product_details = response.restauranthome;
+							//$state.go($state.current, {}, {reload: true});	
+														
+						get_cart_details();
+														
+							}, 
+						
+							function(response) { // optional
 							
-								//alert("ss="+JSON.stringify($scope.product_details));
+								$ionicLoading.hide();  
+								  
+							}).error(function(data)
+								{
+									$ionicLoading.hide();
+									//alert("error="+data);
+									//alert("Network error. Please try after some time");
+										var alertPopup = $ionicPopup.alert({
+										 title: 'Network Error',
+										 template: 'Please try after some time'
+									  });
+									
+								});
+									
+									
+								}
 								
+								
+								
+								});
+								
+															
 								
 														
 							}, 
@@ -3461,13 +3783,11 @@ angular.module('starter.controllers', [])
 								{
 									$ionicLoading.hide();
 									//alert("error="+data);
-								//	alert("Network error. Please try after some time");
-								
-								var alertPopup = $ionicPopup.alert({
-									 title: 'Network Error',
-									 template: 'Please try after some time'
-								  });
-														
+									//alert("Network error. Please try after some time");
+										var alertPopup = $ionicPopup.alert({
+											 title: 'Network Error',
+											 template: 'Please try after some time'
+										  });
 									
 								});
 			
@@ -3548,7 +3868,150 @@ angular.module('starter.controllers', [])
 		
 		//document.getElementById('cart'+id).style.display = "inline-block";
 		
-		$scope.cart_data.customer_id = window.localStorage.getItem('user_id');
+		$scope.current_branch_id = window.localStorage.getItem('restaurant_id');
+		
+		$scope.current_branch_name = window.localStorage.getItem('branch_name');
+		
+		//alert("from branch="+$scope.current_branch_id);
+		
+		//alert("from cart="+$scope.branch_id);
+		
+		if($scope.current_branch_id != $scope.branch_id && $scope.branch_id !=0)
+		{
+			 var confirmPopup = $ionicPopup.confirm({
+				title: 'Replace cart item?',
+				template: 'Your cart contains dishes from '+$scope.branch_name+'. Do you want to discard the selection and add dishes from '+$scope.current_branch_name+'.'
+				});
+			confirmPopup.then(function(res) {
+				if(res) 
+				{
+				//remove previous cart and add new
+				
+				$scope.get_cart.customer_id = window.localStorage.getItem('user_id');
+				
+				//alert(JSON.stringify($scope.get_cart));
+				
+					 $ionicLoading.show();
+			
+	$http({
+								url: server+'getCartItemsdetails',
+								method: "POST",
+								headers : {
+									
+									'Content-Type': 'application/json'
+									
+									
+								},
+								//timeout : 4500,
+								data: JSON.stringify($scope.get_cart),
+							})
+							.success(function(response) {
+										
+								$ionicLoading.hide();
+								
+								//alert(JSON.stringify(response));
+								
+								
+									$scope.item_details = response.Cartitems;
+									//alert(JSON.stringify($scope.item_details));
+								
+									angular.forEach(response.Cartitems, function(value) {
+									
+									$scope.list_id.push(value.item_id);
+									$scope.cart_id = value.cart_id;	
+																			
+									
+									$scope.removecart.customer_id = window.localStorage.getItem('user_id');
+		
+		$scope.removecart.cart_id = $scope.cart_id;
+		
+		 $ionicLoading.show();
+			
+	$http({
+								url: server+'doremoveCart',
+								method: "POST",
+								headers : {
+									
+									'Content-Type': 'application/json'
+									
+									
+								},
+								//timeout : 4500,
+								data: JSON.stringify($scope.removecart),
+							})
+							.success(function(response) {
+										
+								$ionicLoading.hide();
+							
+														
+																					
+							}, 
+						
+							function(response) { // optional
+							
+								$ionicLoading.hide();  
+								  
+							}).error(function(data)
+								{
+									$ionicLoading.hide();
+									//alert("error="+data);
+									//alert("Network error. Please try after some time");
+										var alertPopup = $ionicPopup.alert({
+										 title: 'Network Error',
+										 template: 'Please try after some time'
+									  });
+									
+								});
+											
+								
+								});
+								
+								
+								$scope.add_items(id,price);
+								
+								
+								
+							}, 
+						
+							function(response) { // optional
+							
+								$ionicLoading.hide();  
+								  
+							}).error(function(data)
+								{
+									$ionicLoading.hide();
+									//alert("error="+data);
+									//alert("Network error. Please try after some time");
+									var alertPopup = $ionicPopup.alert({
+												 title: 'Network Error',
+												 template: 'Please try after some time'
+											  });
+																	
+									
+								});
+		
+		
+				} 
+				else 
+				{
+					 window.localStorage.setItem('branch_name',$scope.branch_name);
+					 
+					 window.localStorage.setItem('restaurant_id',$scope.branch_id);
+					 
+					 $scope.branch_details =  $scope.branch_id+','+$scope.branch_name;
+
+					window.localStorage.setItem('branch_details',$scope.branch_details);
+					
+					$state.go($state.current, {}, {reload: true});	
+				}
+			});
+	   
+		}
+		else
+		{
+			$scope.cart_data.customer_id = window.localStorage.getItem('user_id');
+		
+		$scope.cart_data.restaurant_id = window.localStorage.getItem('restaurant_id');
 		
 		$scope.total_qty = 1;
 		
@@ -3578,13 +4041,15 @@ angular.module('starter.controllers', [])
 							.success(function(response) {
 										
 								$ionicLoading.hide();
+								
+								$rootScope.cart_count = parseInt($rootScope.cart_count)+1;
 							
 							//alert(JSON.stringify(response.message));
 							
 							//$scope.product_details = response.restauranthome;
 							
 								//alert("ss="+JSON.stringify($scope.product_details));
-								
+								get_cart_details();
 								
 														
 							}, 
@@ -3606,16 +4071,139 @@ angular.module('starter.controllers', [])
 														
 									
 								});
+		}
+		
+		
 			}
 		
 		
 	}
-		
 	
+	$scope.add_items = function(id,price)
+	{
+		
+		$scope.cart_data.customer_id = window.localStorage.getItem('user_id');
+		
+		$scope.cart_data.restaurant_id = window.localStorage.getItem('restaurant_id');
+		
+		$scope.total_qty = 1;
+		
+		$scope.cart_data.item_id = id;
+				
+				$scope.cart_data.noofquantity = $scope.total_qty;
+				
+				$scope.cart_data.amount = $scope.total_qty * price;
+			   
+			    $rootScope.cart_qty =1;
+				
+				//alert("D="+JSON.stringify($scope.cart_details));
+			 $ionicLoading.show();
+			
+	$http({
+								url: server+'AddCartItems',
+								method: "POST",
+								headers : {
+									
+									'Content-Type': 'application/json'
+									
+									
+								},
+								//timeout : 4500,
+								data: JSON.stringify($scope.cart_data),
+							})
+							.success(function(response) {
+										
+								$ionicLoading.hide();
+								
+								$rootScope.cart_count = 1;
+							
+										get_cart_details();					
+								
+														
+							}, 
+						
+							function(response) { // optional
+							
+								$ionicLoading.hide();  
+								  
+							}).error(function(data)
+								{
+									$ionicLoading.hide();
+									//alert("error="+data);
+								//	alert("Network error. Please try after some time");
+								
+								var alertPopup = $ionicPopup.alert({
+									 title: 'Network Error',
+									 template: 'Please try after some time'
+								  });
+														
+									
+								});
+	}
+		
+	$scope.get_cart_details = function()
+	{
+		
+		
+		$scope.cart_details.customer_id = window.localStorage.getItem('user_id');
+		
+		$ionicLoading.show();
+			
+	$http({
+								url: server+'getCartItemsdetails',
+								method: "POST",
+								headers : {
+									
+									'Content-Type': 'application/json'
+									
+									
+								},
+								//timeout : 4500,
+								data: JSON.stringify($scope.cart_details),
+							})
+							.success(function(response) {
+										
+								$ionicLoading.hide();
+								
+								//alert("re="+JSON.stringify(response));
+								
+															
+							$scope.cart_items = response.Cartitems;
+							
+							$rootScope.cart_count = $scope.cart_items.length;
+																		
+							$scope.cart_items.cart_amount = response.Cartamount;
+							
+							if(response.Cartitems.length == 0)
+							{
+								
+								$rootScope.cart_qty = 0;
+							}
+							
+								//$scope.get_cart_details();
+														
+							}, 
+						
+							function(response) { // optional
+							
+								$ionicLoading.hide();  
+								  
+							}).error(function(data)
+								{
+									$ionicLoading.hide();
+									//alert("error="+data);
+									//alert("Network error. Please try after some time");
+										var alertPopup = $ionicPopup.alert({
+											 title: 'Network Error',
+											 template: 'Please try after some time'
+										  });
+									
+								});
+	}
 	
 }).controller('ProductCtrl',function($scope, $rootScope,$ionicPopup,$state,$stateParams,$ionicLoading,$http,$ionicPlatform,$ionicHistory){
 	
-
+	$scope.show = {};
 	
 	$ionicPlatform.registerBackButtonAction(function (event) {
 	
@@ -3672,7 +4260,11 @@ angular.module('starter.controllers', [])
 	
 	$scope.fav_details = {};
 	
+	$scope.removecart = {};
+	
 	$scope.list_id = [];
+	
+	$scope.get_cart = {};
 	
 	$scope.cart_details.customer_id = window.localStorage.getItem('user_id');
 	
@@ -3700,15 +4292,29 @@ angular.module('starter.controllers', [])
 							.success(function(response) {
 										
 								$ionicLoading.hide();
-								
-													
+							
+																					
 							$scope.cart_items = response.Cartitems;
+							if($scope.cart_items.length == 0)
+							{
+								$scope.branch_id = 0;
+								
+								$scope.branch_name = 0;
+							}
+							else
+							{
+								$scope.branch_id = response.Cartitems[0].restaurant_id;
+								
+								$scope.branch_name = response.Cartitems[0].restaurant_name;
+								
+								
+							}
+							
+							$rootScope.cart_count = $scope.cart_items.length;
 							
 							angular.forEach(response.Cartitems, function(value) {
 									
 								$scope.list_id.push(value.item_id);
-								
-												
 								
 								});
 								
@@ -3779,128 +4385,7 @@ angular.module('starter.controllers', [])
 									
 								});
 	
-	$scope.cart_popup  = function(id)
-	{
-		
-	//	alert("aa="+window.localStorage.getItem('user_id'))
-		
-		if(window.localStorage.getItem('user_id')==undefined || window.localStorage.getItem('user_id')==null || window.localStorage.getItem('user_id')=='')
-		{
-			//alert("Please login to proceed");
-			var alertPopup = $ionicPopup.alert({
-         title: 'Login',
-         template: 'Please login to proceed'
-      });
-			$state.go('app.index');
-		}
-		else
-		{
-			$scope.data = {};
-			
-			$scope.data.count = 1;
-		
-		 var myPopup = $ionicPopup.show({
-     template: '<input type="tel" ng-model="data.count" maxlength="2" onKeyUp="if(this.value>15){this.value=15;}else if(this.value<0){this.value=1;}">',
-     title: 'Enter Quantity',
-     subTitle: '',
-     scope: $scope,
-     buttons: [
-       { text: 'Cancel' },
-       {
-         text: '<b>Add</b>',
-         type: 'button-positive',
-         onTap: function(e) {
-			
-           if ($scope.data.count == undefined || $scope.data.count == '') {
-			  
-			   $scope.data.count = 1;
-             //alert("Please Enter Quantiy");
-			 var alertPopup = $ionicPopup.alert({
-         title: '',
-         template: 'Please enter quantity'
-      });
-             e.preventDefault();
-           } else {
-			   
-			   if($scope.data.count < 1)
-			   {
-				   $scope.data.count = 1;
-				  	 var alertPopup = $ionicPopup.alert({
-					 title: '',
-					 template: 'Please enter a valid quantity'
-				  });
-				   e.preventDefault();
-			   }
-			   else
-			   {
-				     $rootScope.cart_qty =1;
-			   
-			   $scope.cart_details.noofquantity = $scope.data.count;
-			   
-			   $scope.cart_details.item_id = id;
-			   
-			   $scope.cart_details.amount = $scope.data.count * $scope.cart_details.price;
-			   
-			   //alert("D="+JSON.stringify($scope.cart_details));
-			  
-			  $ionicLoading.show();
-			
-	$http({
-								url: server+'AddCartItems',
-								method: "POST",
-								headers : {
-									
-									'Content-Type': 'application/json'
-									
-									
-								},
-								//timeout : 4500,
-								data: JSON.stringify($scope.cart_details),
-							})
-							.success(function(response) {
-										
-								$ionicLoading.hide();
-							
-							//alert(JSON.stringify(response.message));
-							
-							//$scope.product_details = response.restauranthome;
-							
-								//alert("ss="+JSON.stringify($scope.product_details));
-								
-								//console.log($rootScope.cart_qty);
-										//	console.log($rootScope.display_cart);			
-							}, 
-						
-							function(response) { // optional
-							
-								$ionicLoading.hide();  
-								  
-							}).error(function(data)
-								{
-									$ionicLoading.hide();
-									//alert("error="+data);
-									//alert("Network error. Please try after some time");
-									var alertPopup = $ionicPopup.alert({
-										 title: 'Network Error',
-										 template: 'Network error. Please try after some time'
-									  });
-															
-									
-								});
-			   }
-			   
-			 
-            
-           }
-         }
-       },
-     ]
-   });
-		}
-		
-		
-		
-	}
+	
 	
 	$scope.add_fav = function(id)
 	{
@@ -4070,7 +4555,150 @@ angular.module('starter.controllers', [])
 		
 		//document.getElementById('cart'+id).style.display = "inline-block";
 		
-		$scope.cart_data.customer_id = window.localStorage.getItem('user_id');
+		$scope.current_branch_id = window.localStorage.getItem('restaurant_id');
+		
+		$scope.current_branch_name = window.localStorage.getItem('branch_name');
+		
+		//alert("c="+$scope.current_branch_id);
+		
+		//alert("br="+$scope.branch_id);
+		
+		if($scope.current_branch_id != $scope.branch_id && $scope.branch_id !=0)
+		{
+			 var confirmPopup = $ionicPopup.confirm({
+				title: 'Replace cart item?',
+				template: 'Your cart contains dishes from '+$scope.branch_name+'. Do you want to discard the selection and add dishes from '+$scope.current_branch_name+'.'
+				});
+			confirmPopup.then(function(res) {
+				if(res) 
+				{
+				//remove previous cart and add new
+				
+				$scope.get_cart.customer_id = window.localStorage.getItem('user_id');
+				
+				//alert(JSON.stringify($scope.get_cart));
+				
+					 $ionicLoading.show();
+			
+	$http({
+								url: server+'getCartItemsdetails',
+								method: "POST",
+								headers : {
+									
+									'Content-Type': 'application/json'
+									
+									
+								},
+								//timeout : 4500,
+								data: JSON.stringify($scope.get_cart),
+							})
+							.success(function(response) {
+										
+								$ionicLoading.hide();
+								
+								//alert(JSON.stringify(response));
+								
+								
+									$scope.item_details = response.Cartitems;
+									//alert(JSON.stringify($scope.item_details));
+								
+									angular.forEach(response.Cartitems, function(value) {
+									
+									
+									$scope.cart_id = value.cart_id;	
+																			
+									
+									$scope.removecart.customer_id = window.localStorage.getItem('user_id');
+		
+		$scope.removecart.cart_id = $scope.cart_id;
+		
+		 $ionicLoading.show();
+			
+	$http({
+								url: server+'doremoveCart',
+								method: "POST",
+								headers : {
+									
+									'Content-Type': 'application/json'
+									
+									
+								},
+								//timeout : 4500,
+								data: JSON.stringify($scope.removecart),
+							})
+							.success(function(response) {
+										
+								$ionicLoading.hide();
+							
+														
+																					
+							}, 
+						
+							function(response) { // optional
+							
+								$ionicLoading.hide();  
+								  
+							}).error(function(data)
+								{
+									$ionicLoading.hide();
+									//alert("error="+data);
+									//alert("Network error. Please try after some time");
+										var alertPopup = $ionicPopup.alert({
+										 title: 'Network Error',
+										 template: 'Please try after some time'
+									  });
+									
+								});
+											
+								
+								});
+								
+								
+								$scope.add_items(id,price);
+								
+								
+								
+							}, 
+						
+							function(response) { // optional
+							
+								$ionicLoading.hide();  
+								  
+							}).error(function(data)
+								{
+									$ionicLoading.hide();
+									//alert("error="+data);
+									//alert("Network error. Please try after some time");
+									var alertPopup = $ionicPopup.alert({
+												 title: 'Network Error',
+												 template: 'Please try after some time'
+											  });
+																	
+									
+								});
+		
+		
+				} 
+				else 
+				{
+					 window.localStorage.setItem('branch_name',$scope.branch_name);
+					 
+					 window.localStorage.setItem('restaurant_id',$scope.branch_id);
+					 
+					 $scope.branch_details =  $scope.branch_id+','+$scope.branch_name;
+
+					window.localStorage.setItem('branch_details',$scope.branch_details);
+					$state.go('app.food_menu');
+					//$state.go($state.current, {}, {reload: true});	
+				}
+			});
+	   
+		}
+		else
+		{
+			$scope.cart_data.customer_id = window.localStorage.getItem('user_id');
+		
+		$scope.cart_data.restaurant_id = window.localStorage.getItem('restaurant_id');
 		
 		$scope.total_qty = 1;
 		
@@ -4100,6 +4728,8 @@ angular.module('starter.controllers', [])
 							.success(function(response) {
 										
 								$ionicLoading.hide();
+								
+								$rootScope.cart_count = parseInt($rootScope.cart_count)+1;
 							
 							//alert(JSON.stringify(response.message));
 							
@@ -4128,40 +4758,33 @@ angular.module('starter.controllers', [])
 														
 									
 								});
+		}
+		
+		
 			}
 		
 		
 	}
 	
-		$scope.cart_decr = function(id,price)
+	$scope.add_items = function(id,price)
 	{
-		
-				
-		$scope.qty = document.getElementById(id).value;
-		
-		$scope.total_qty = parseInt($scope.qty)-1;
 		
 		$scope.cart_data.customer_id = window.localStorage.getItem('user_id');
 		
+		$scope.cart_data.restaurant_id = window.localStorage.getItem('restaurant_id');
 		
+		$scope.total_qty = 1;
 		
 		$scope.cart_data.item_id = id;
 				
 				$scope.cart_data.noofquantity = $scope.total_qty;
 				
 				$scope.cart_data.amount = $scope.total_qty * price;
-		
-		if($scope.total_qty<=1)
-		{
-			document.getElementById(id).value = 1;
-			
-			$scope.total_qty = 1;
-			
-			//document.getElementById('add'+id).style.display = "block";
-		
-		//document.getElementById('cart'+id).style.display = "none";
-		
-		$ionicLoading.show();
+			   
+			    $rootScope.cart_qty =1;
+				
+				//alert("D="+JSON.stringify($scope.cart_details));
+			 $ionicLoading.show();
 			
 	$http({
 								url: server+'AddCartItems',
@@ -4178,13 +4801,10 @@ angular.module('starter.controllers', [])
 							.success(function(response) {
 										
 								$ionicLoading.hide();
-							
-							//alert(JSON.stringify(response.message));
-							
-							//$scope.product_details = response.restauranthome;
-							
-								//alert("ss="+JSON.stringify($scope.product_details));
 								
+								$rootScope.cart_count = 1;
+							
+															
 								
 														
 							}, 
@@ -4206,7 +4826,141 @@ angular.module('starter.controllers', [])
 														
 									
 								});
+	}
+	
+		$scope.cart_decr = function(id,price)
+	{
+		
+				
+		$scope.qty = document.getElementById(id).value;
+		
+		$scope.total_qty = parseInt($scope.qty)-1;
+		
+		$scope.cart_data.customer_id = window.localStorage.getItem('user_id');
+		
+		$scope.cart_data.restaurant_id = window.localStorage.getItem('restaurant_id');
+		
+		$scope.cart_data.item_id = id;
+				
+				$scope.cart_data.noofquantity = $scope.total_qty;
+				
+				$scope.cart_data.amount = $scope.total_qty * price;
+		
+		if($scope.total_qty<1)
+		{
 			
+			
+		document.getElementById(id).value = 0;
+		
+		
+		$scope.cart_details.customer_id = window.localStorage.getItem('user_id');
+		
+	
+		
+		$ionicLoading.show();
+			
+	$http({
+								url: server+'getCartItemsdetails',
+								method: "POST",
+								headers : {
+									
+									'Content-Type': 'application/json'
+									
+									
+								},
+								//timeout : 4500,
+								data: JSON.stringify($scope.cart_details),
+							})
+							.success(function(response) {
+										
+								$ionicLoading.hide();
+								
+								//alert("re="+JSON.stringify(response));
+								angular.forEach(response.Cartitems, function(value) {
+									
+								if(value.item_id == id)
+								{
+									$scope.cart_id = value.cart_id;
+									
+									
+									$scope.removecart.customer_id = window.localStorage.getItem('user_id');
+		
+		$scope.removecart.cart_id = $scope.cart_id;
+		
+		 $ionicLoading.show();
+			
+	$http({
+								url: server+'doremoveCart',
+								method: "POST",
+								headers : {
+									
+									'Content-Type': 'application/json'
+									
+									
+								},
+								//timeout : 4500,
+								data: JSON.stringify($scope.removecart),
+							})
+							.success(function(response) {
+										
+								$ionicLoading.hide();
+							
+							//alert(JSON.stringify(response.message));
+							$scope.show.cartBtn = false;
+							
+							//$state.go($state.current, {}, {reload: true});	
+						
+							
+							
+							$scope.get_cart_details();
+														
+							}, 
+						
+							function(response) { // optional
+							
+								$ionicLoading.hide();  
+								  
+							}).error(function(data)
+								{
+									$ionicLoading.hide();
+									//alert("error="+data);
+									//alert("Network error. Please try after some time");
+										var alertPopup = $ionicPopup.alert({
+										 title: 'Network Error',
+										 template: 'Please try after some time'
+									  });
+									
+								});
+									
+									
+								}
+								
+								
+								
+								});
+								
+															
+								
+														
+							}, 
+						
+							function(response) { // optional
+							
+								$ionicLoading.hide();  
+								  
+							}).error(function(data)
+								{
+									$ionicLoading.hide();
+									//alert("error="+data);
+									//alert("Network error. Please try after some time");
+										var alertPopup = $ionicPopup.alert({
+											 title: 'Network Error',
+											 template: 'Please try after some time'
+										  });
+									
+								});
+		
+						
 		}
 		else
 		{
@@ -4277,6 +5031,8 @@ angular.module('starter.controllers', [])
 		
 		$scope.cart_data.customer_id = window.localStorage.getItem('user_id');
 		
+		$scope.cart_data.restaurant_id = window.localStorage.getItem('restaurant_id');
+		
 		$scope.cart_data.item_id = id;
 				
 				$scope.cart_data.noofquantity = $scope.total_qty;
@@ -4335,6 +5091,66 @@ angular.module('starter.controllers', [])
 		
 	}
 	
+		$scope.get_cart_details = function()
+	{
+		
+		
+		$scope.cart_details.customer_id = window.localStorage.getItem('user_id');
+		
+		$ionicLoading.show();
+			
+	$http({
+								url: server+'getCartItemsdetails',
+								method: "POST",
+								headers : {
+									
+									'Content-Type': 'application/json'
+									
+									
+								},
+								//timeout : 4500,
+								data: JSON.stringify($scope.cart_details),
+							})
+							.success(function(response) {
+										
+								$ionicLoading.hide();
+								
+								//alert("re="+JSON.stringify(response));
+								
+														
+							$scope.cart_items = response.Cartitems;
+							
+							$rootScope.cart_count = $scope.cart_items.length;
+																		
+							$scope.cart_items.cart_amount = response.Cartamount;
+							
+							if(response.Cartitems.length == 0)
+							{
+								
+								$rootScope.cart_qty = 0;
+							}
+							
+								
+														
+							}, 
+						
+							function(response) { // optional
+							
+								$ionicLoading.hide();  
+								  
+							}).error(function(data)
+								{
+									$ionicLoading.hide();
+									//alert("error="+data);
+									//alert("Network error. Please try after some time");
+										var alertPopup = $ionicPopup.alert({
+											 title: 'Network Error',
+											 template: 'Please try after some time'
+										  });
+									
+								});
+	}
+	
 	
 }).controller('HotOffersCtrl', function($scope, $rootScope,$ionicPopup,$ionicLoading,$http){
 	
@@ -4347,6 +5163,10 @@ angular.module('starter.controllers', [])
 	$rootScope.display_cart = '1';
 	
 	$scope.offer_data = {};
+	
+	$scope.width=window.screen.width;
+	$scope.new_width = parseInt($scope.width)/2;
+	$scope.final_width = parseInt($scope.new_width)-10;
 	
 		$scope.offer_data.restaurant_id = window.localStorage.getItem('restaurant_id'); 
 	
@@ -4904,6 +5724,8 @@ angular.module('starter.controllers', [])
 	$rootScope.display_cart = '1';
 	
 	
+	
+	
 	$scope.click_fav = function()
 	{
 		
@@ -4947,6 +5769,15 @@ angular.module('starter.controllers', [])
 	
 //	$window.location.reload();
 
+	$scope.width=window.screen.width;
+	
+	$scope.new_width = $scope.width/4;
+	
+	$scope.half_width = $scope.width/2;
+	
+	$scope.latest_width =  parseInt($scope.half_width)-50;
+	
+	
 
 	
 	$rootScope.home_page = '0';
@@ -4962,6 +5793,10 @@ angular.module('starter.controllers', [])
 	$scope.cart_items = {};
 	
 	$scope.edit_cart = {};
+	
+	$scope.removecart = {};
+	
+	$scope.show = {};
 	
 	$scope.cart_details.customer_id = window.localStorage.getItem('user_id');
 	
@@ -4999,13 +5834,19 @@ angular.module('starter.controllers', [])
 							
 							$scope.cart_items = response.Cartitems;
 							
+							$rootScope.cart_count = $scope.cart_items.length;
+							
 							$scope.cart_items.cart_amount = response.Cartamount;
 							
 							if(response.Cartitems.length == 0)
 							{
+								
 								$rootScope.cart_qty = 0;
 							}
-								
+							else
+							{
+								$rootScope.cart_qty = 1;
+							}
 								//alert("nn="+$scope.cart_items.cart_amount);
 														
 							}, 
@@ -5251,22 +6092,19 @@ angular.module('starter.controllers', [])
 			   $scope.edit_cart.amount = price*$scope.total_qty;
 		
 		
-		if($scope.total_qty<=1)
+		if($scope.total_qty<1)
 		{
-			document.getElementById(item_id).value = 1;
-			
-			$scope.total_qty = 1;
-			
-			//document.getElementById('add'+id).style.display = "block";
-		
-		//document.getElementById('cart'+id).style.display = "none";
+			document.getElementById(item_id).value = 0;
 		
 		
+		$scope.cart_details.customer_id = window.localStorage.getItem('user_id');
+		
+	
 		
 		$ionicLoading.show();
 			
 	$http({
-								url: server+'doupdateCart',
+								url: server+'getCartItemsdetails',
 								method: "POST",
 								headers : {
 									
@@ -5275,7 +6113,37 @@ angular.module('starter.controllers', [])
 									
 								},
 								//timeout : 4500,
-								data: JSON.stringify($scope.edit_cart),
+								data: JSON.stringify($scope.cart_details),
+							})
+							.success(function(response) {
+										
+								$ionicLoading.hide();
+								
+								//alert("re="+JSON.stringify(response));
+								angular.forEach(response.Cartitems, function(value) {
+									
+								if(value.item_id == item_id)
+								{
+									$scope.cart_id = value.cart_id;
+									
+									
+									$scope.removecart.customer_id = window.localStorage.getItem('user_id');
+		
+		$scope.removecart.cart_id = $scope.cart_id;
+		
+		 $ionicLoading.show();
+			
+	$http({
+								url: server+'doremoveCart',
+								method: "POST",
+								headers : {
+									
+									'Content-Type': 'application/json'
+									
+									
+								},
+								//timeout : 4500,
+								data: JSON.stringify($scope.removecart),
 							})
 							.success(function(response) {
 										
@@ -5283,11 +6151,10 @@ angular.module('starter.controllers', [])
 							
 							//alert(JSON.stringify(response.message));
 							
-							//$scope.product_details = response.restauranthome;
+						//	$state.go($state.current, {}, {reload: true});	
 							
-								//alert("ss="+JSON.stringify($scope.product_details));
-								
-								get_cart_details();
+														
+							get_cart_details();
 														
 							}, 
 						
@@ -5298,16 +6165,40 @@ angular.module('starter.controllers', [])
 							}).error(function(data)
 								{
 									$ionicLoading.hide();
-									
-									
 									//alert("error="+data);
-								//	alert("Network error. Please try after some time");
+									//alert("Network error. Please try after some time");
+										var alertPopup = $ionicPopup.alert({
+										 title: 'Network Error',
+										 template: 'Please try after some time'
+									  });
+									
+								});
+									
+									
+								}
 								
-								var alertPopup = $ionicPopup.alert({
-									 title: 'Network Error',
-									 template: 'Please try after some time'
-								  });
+								
+								
+								});
+								
+															
+								
 														
+							}, 
+						
+							function(response) { // optional
+							
+								$ionicLoading.hide();  
+								  
+							}).error(function(data)
+								{
+									$ionicLoading.hide();
+									//alert("error="+data);
+									//alert("Network error. Please try after some time");
+										var alertPopup = $ionicPopup.alert({
+											 title: 'Network Error',
+											 template: 'Please try after some time'
+										  });
 									
 								});
 			
@@ -7175,6 +8066,11 @@ $rootScope.$ionicGoBack = function() {
 	
 	$scope.reservation_data = {};
 	
+	$scope.width=window.screen.width;
+	$scope.new_width =  parseInt($scope.width)-50;
+	
+	//$scope.reservation_presentdata = {};
+	
 	$scope.reservation_data.customer_id = window.localStorage.getItem('user_id');
 	
 	//$scope.reservation_data.customer_id = 1;
@@ -7248,7 +8144,9 @@ $rootScope.$ionicGoBack = function() {
 										
 								$ionicLoading.hide();
 																							
-							$scope.reservation_presentdata = response.Resservationhistory;							
+							$scope.reservation_presentdata = response.Reservationhistory;	
+
+									//alert(JSON.stringify($scope.reservation_presentdata));
 														
 							}, 
 						
@@ -7287,7 +8185,7 @@ $rootScope.$ionicGoBack = function() {
 										
 								$ionicLoading.hide();
 																							
-								$scope.reservation_pastdata = response.Resservationhistory;								
+								$scope.reservation_pastdata = response.Reservationhistory;								
 														
 							}, 
 						
@@ -7535,7 +8433,7 @@ $rootScope.$ionicGoBack = function() {
 								});
 	
 	
-}).controller('OrderDetailsCtrl', function($scope,$rootScope,$stateParams, $ionicLoading,$http,$ionicPopup,$ionicModal){
+}).controller('OrderDetailsCtrl', function($scope,$rootScope,$stateParams, $ionicLoading,$http,$ionicPopup,$ionicModal,$cordovaGeolocation,$stateParams){
 	
 	
 	
@@ -7554,11 +8452,20 @@ $rootScope.$ionicGoBack = function() {
 	
 	$scope.feedbackdata = {};
 	
+	$scope.driver_item = {};
+	
 	// $scope.ratedata = {'qst1':'','qstn2':'','comment':'','qstn4':'','qstn5':''};
 	 
 	 //console.log($scope.ratedata.qst1);
+	 
+	 $scope.order_id = $stateParams.order_id;
 	
 	$scope.order_details.orderid = $stateParams.order_id;
+	
+	$scope.restro_latitude = $stateParams.lat;
+	
+	$scope.restro_longitude = $stateParams.long;
+	
 	
 	
 	$scope.order_details.customer_id = window.localStorage.getItem('user_id');
@@ -7594,8 +8501,149 @@ $rootScope.$ionicGoBack = function() {
 								$scope.order_items.total_amount = response.Ordersamount;	
 								
 								$scope.noSpaces = $scope.order_items[0].order_status_desc;
+								
+								$scope.cust_latitude = $scope.order_items[0].latitude;
+								
+								$scope.cust_longitude = $scope.order_items[0].longitude;
 
-								$scope.order_items.order_status = $scope.noSpaces.replace(/ /g, '');				
+								$scope.order_items.order_status = $scope.noSpaces.replace(/ /g, '');	
+
+										var options = {maximumAge:100000, timeout:50000, enableHighAccuracy:false};
+							
+						$cordovaGeolocation.getCurrentPosition(options).then(function(position){
+	  
+ 
+    var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+	
+	//alert("cus lon="+$scope.cust_longitude);
+	
+	//alert("cus lat="+$scope.cust_latitude);
+	
+	//alert($scope.restro_latitude);
+	
+	//alert($scope.restro_longitude);
+	
+	var markers = [
+								{	//"lat":window.localStorage.getItem('cur_lat'),
+									//"lng":window.localStorage.getItem('cur_long'),
+									
+									//"lat":$scope.restro_latitude,
+									//"lng": $scope.restro_longitude,
+									
+									"lat":13.0012,
+									"lng": 80.2565,
+									
+
+								},
+								
+								{
+									//"lat":window.localStorage.getItem('cust_lat'),
+									//"lng":window.localStorage.getItem('cust_long'),
+									
+									"lat":$scope.cust_latitude,
+									"lng":$scope.cust_longitude,
+									
+									
+								}
+								
+							];
+	
+    
+     var mapOptions = {
+       center: new google.maps.LatLng(markers[0].lat, markers[0].lng),
+      zoom:15,
+    
+    };
+	
+	
+	 
+	var map = new google.maps.Map(document.getElementById("map_canvas1"), mapOptions);
+	
+	 
+	
+	
+	 var infoWindow = new google.maps.InfoWindow();
+        var lat_lng = new Array();
+        var latlngbounds = new google.maps.LatLngBounds();
+		
+		
+			var data = markers[0]
+            var myLatlng = new google.maps.LatLng(data.lat, data.lng);
+			
+			
+            lat_lng.push(myLatlng);
+            var marker = new google.maps.Marker({
+                position: myLatlng, 
+                map: map,
+               
+				icon : 'https://maps.google.com/mapfiles/kml/pal2/icon32.png'
+            });
+            latlngbounds.extend(marker.position);
+            ;
+		  data = markers[1]
+             myLatlng = new google.maps.LatLng(data.lat, data.lng);
+			 
+			
+            lat_lng.push(myLatlng);
+             marker1 = new google.maps.Marker({
+                position: myLatlng,
+                map: map,
+               
+				icon : 'https://maps.google.com/mapfiles/kml/pal2/icon10.png'
+            });
+            latlngbounds.extend(marker1.position);
+
+			//addYourLocationButton($scope.map, marker)
+			
+			addYourLocationButton(map, markers);
+ 
+    //***********ROUTING****************//
+	
+	
+		 var path = new google.maps.MVCArray();
+ 
+        //Initialize the Direction Service
+        var service = new google.maps.DirectionsService();
+ 
+        //Set the Path Stroke Color
+        //var poly = new google.maps.Polyline({ map: map, strokeColor: '#4986E7',strokeOpacity: 1.0, strokeWeight: 2 });
+		var poly = new google.maps.Polyline({ map: map, strokeColor: '#4986E7' });
+	
+		service.route({
+                    origin: lat_lng[0],
+                    destination: lat_lng[1],
+                    travelMode: google.maps.DirectionsTravelMode.DRIVING
+                }, function (result, status) {
+					
+					
+					
+                    if (status == google.maps.DirectionsStatus.OK) {
+						
+						 
+                        for (var i = 0, len = result.routes[0].overview_path.length; i < len; i++) {
+                            path.push(result.routes[0].overview_path[i]);
+                        }
+                    }
+                });
+				
+				 //Loop and Draw Path Route between the Points on MAP
+				
+				 for (var i = 0; i < lat_lng.length; i++) {
+					 
+            if ((i + 1) < lat_lng.length) {
+                var src = lat_lng[i];
+                var des = lat_lng[i + 1];
+                path.push(src);
+				
+                poly.setPath(path);
+               
+            }
+        }
+ 
+  }, function(error){
+	  //alert("error loc");
+    console.log("Could not get location="+JSON.stringify(error));
+  });
 									
 									//alert("a="+$scope.order_items.order_status);
 														
@@ -7801,7 +8849,170 @@ $rootScope.$ionicGoBack = function() {
 								});
 		 
 	 }
+	 
+	 
+	 
+	   
+  
+  			  function addYourLocationButton(map, marker) 
+{
 	
+	var controlDiv = document.createElement('div');
+	
+	var firstChild = document.createElement('button');
+	firstChild.style.backgroundColor = '#fff';
+	firstChild.style.border = 'none';
+	firstChild.style.outline = 'none';
+	firstChild.style.width = '28px';
+	firstChild.style.height = '28px';
+	firstChild.style.borderRadius = '2px';
+	firstChild.style.boxShadow = '0 1px 4px rgba(0,0,0,0.3)';
+	firstChild.style.cursor = 'pointer';
+	firstChild.style.marginRight = '10px';
+	firstChild.style.padding = '0px';
+	firstChild.title = 'Your Location';
+	controlDiv.appendChild(firstChild);
+	
+	/*var secondChild = document.createElement('div');
+	
+	secondChild.style.margin = '5px';
+	secondChild.style.width = '18px';
+	secondChild.style.height = '18px';
+	secondChild.style.backgroundImage = 'url(img/mylocation.png)';
+	secondChild.style.backgroundSize = '180px 18px';
+	secondChild.style.backgroundPosition = '0px 0px';
+	secondChild.style.backgroundRepeat = 'no-repeat';
+	secondChild.id = 'you_location_img';
+	firstChild.appendChild(secondChild);*/
+	
+	var secondChild = document.createElement("IMG");
+	secondChild.setAttribute("src", "img/geo.png");
+	secondChild.setAttribute("width", "18px");
+	secondChild.setAttribute("height", "18px");
+	secondChild.setAttribute("backgroundSize", '180px 18px');
+	secondChild.setAttribute("backgroundPosition", '0px 0px');
+	secondChild.setAttribute("backgroundRepeat", "no-repeat");
+	secondChild.id = 'you_location_img';
+	firstChild.appendChild(secondChild);
+	
+	google.maps.event.addListener(map, 'center_changed', function () {
+        secondChild.style['background-position'] = '0 0';
+    });
+	
+	 firstChild.addEventListener('click', function () {
+		 
+        var imgX = 0,
+            animationInterval = setInterval(function () {
+                imgX = -imgX - 18 ;
+                secondChild.setAttribute['background-position'] = imgX+'px 0';
+            }, 500);
+
+        if(navigator.geolocation) {
+			
+            navigator.geolocation.getCurrentPosition(function(position) {
+				
+                var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                
+				map.setCenter(latlng);
+				//marker.setPosition(latLng);
+				//marker.setPosition(latlng);
+				//map.panTo(latlng);
+                clearInterval(animationInterval);
+				
+                secondChild.setAttribute['background-position'] = '-144px 0';
+            });
+        } else {
+            clearInterval(animationInterval);
+            secondChild.style['background-position'] = '0 0';
+        }
+		
+	
+		
+    });
+
+    controlDiv.index = 1;
+    map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(controlDiv);
+		
+}
+		$scope.toggleGroup = function(group) {
+									
+				if ($scope.isGroupShown(group)) {
+					
+					$scope.shownGroup = '0';
+					} else {
+						
+			$scope.shownGroup = group;
+			
+			$scope.driver_item.customer_id = window.localStorage.getItem('user_id');
+			
+			$scope.driver_item.order_id = group;
+			
+				$ionicLoading.show();
+			
+	$http({
+								url: server+'getdeliveryboyapi',
+								method: "POST",
+								headers : {
+									
+									'Content-Type': 'application/json'
+									
+									
+								},
+								//timeout : 4500,
+								data: JSON.stringify($scope.driver_item),
+							})
+							.success(function(response) {
+										
+								$ionicLoading.hide();
+								
+								//alert(JSON.stringify(response));
+								
+								$scope.driver_details = response.Deliveryboydetails;		
+								
+								
+								
+							}, 
+						
+							function(response) { // optional
+							
+								$ionicLoading.hide();  
+								  
+							}).error(function(data)
+								{
+									$ionicLoading.hide();
+									//alert("error="+data);
+									//alert("Network error. Please try after some time");
+									var alertPopup = $ionicPopup.alert({
+												 title: 'Network Error',
+												 template: 'Please try after some time'
+											  });
+																	
+									
+								});
+			
+			}
+			};
+			
+			$scope.isGroupShown = function(group) {
+    return $scope.shownGroup === group;
+  };
+  
+  $scope.itemtoggleGroup = function(group) {
+									
+				if ($scope.isitemGroupShown(group)) {
+					
+					$scope.itemshownGroup = '0';
+					} else {
+						
+			$scope.itemshownGroup = group;
+			
+						
+			}
+			};
+			
+			$scope.isitemGroupShown = function(group) {
+    return $scope.itemshownGroup === group;
+  };
 	
 }).controller('OrderPlacedCtrl', function($scope,$rootScope,$ionicPlatform,$ionicPopup){
 	
@@ -7821,7 +9032,9 @@ $rootScope.$ionicGoBack = function() {
 	
 }).controller('CheckOutCtrl', function($scope,$ionicLoading,$http,$rootScope,$state,$ionicPopup){
 	
-	 
+	 $scope.width=window.screen.width;
+	
+	$scope.new_width = $scope.width/4;
 		
 	$rootScope.display_cart = '0';
 	
@@ -7840,6 +9053,8 @@ $rootScope.$ionicGoBack = function() {
 	$scope.item_quantity = [];
 	
 	$scope.item_amount = [];
+	
+	$scope.offer_id = [];
 	
 	$scope.cart_details.customer_id = window.localStorage.getItem('user_id');
 	
@@ -7884,6 +9099,23 @@ $rootScope.$ionicGoBack = function() {
 							
 							$scope.cart_items = response.Cartitems;
 							
+							$scope.cart_branch_id = response.Cartitems[0].restaurant_id;
+							
+							$scope.cart_branch_name = response.Cartitems[0].restaurant_name;
+							
+														
+							if(window.localStorage.getItem('restaurant_id')!=$scope.cart_branch_id)
+							{
+								window.localStorage.setItem('restaurant_id',$scope.cart_branch_id);
+								
+								window.localStorage.setItem('branch_name',$scope.cart_branch_name);
+		
+								$scope.branch_details =  $scope.cart_branch_id+','+$scope.cart_branch_name;
+
+								window.localStorage.setItem('branch_details',$scope.branch_details);
+							}
+							
+							
 							angular.forEach(response.Cartitems, function(value) {
 									
 								$scope.item_list.push(value.item_id);
@@ -7891,6 +9123,11 @@ $rootScope.$ionicGoBack = function() {
 								$scope.item_quantity.push(value.quanitity);
 								
 								$scope.item_amount.push(value.item_price);
+								
+								if(value.offer_id!=null)
+								{
+									$scope.offer_id.push(value.offer_id);
+								}
 								
 								
 								});
@@ -8022,6 +9259,9 @@ $rootScope.$ionicGoBack = function() {
 				
 				//$scope.orderplaced_details.restaurant_id = '1';
 				
+				$scope.orderplaced_details.offer_id = $scope.offer_id;
+				
+								
 				$scope.orderplaced_details.item_id = $scope.item_list;
 				
 				$scope.orderplaced_details.item_quantity =  $scope.item_quantity;
@@ -8037,7 +9277,7 @@ $rootScope.$ionicGoBack = function() {
 						//alert("a="+JSON.stringify($scope.orderplaced_details));
 						
 						
-								$ionicLoading.show();
+							$ionicLoading.show();
 			
 	$http({
 								url: server+'doaddorderitems',
@@ -8698,6 +9938,14 @@ $rootScope.$ionicGoBack = function() {
 	
 	$scope.cart_data = {};
 	
+	$scope.cart_items = {};
+	
+	$scope.cart_item = {};
+	
+	$scope.get_cart = {};
+	
+	$scope.removecart = {};
+	
 	$ionicPlatform.registerBackButtonAction(function (event) {
 	
 	
@@ -8735,6 +9983,10 @@ $rootScope.$ionicGoBack = function() {
 
 	
 }, 100);
+
+
+	
+	
 	
 	if(window.localStorage.getItem('user_id')==undefined || window.localStorage.getItem('user_id')==null || window.localStorage.getItem('user_id')=='')
 		{
@@ -8748,6 +10000,94 @@ $rootScope.$ionicGoBack = function() {
 		
 	else
 	{
+		
+		
+		get_cart_details();
+	 
+	 function get_cart_details()
+	 {
+		 $scope.list_id = [];
+		 
+		  $scope.cart_item.customer_id = window.localStorage.getItem('user_id');
+		 
+		 $ionicLoading.show();
+			
+	$http({
+								url: server+'getCartItemsdetails',
+								method: "POST",
+								headers : {
+									
+									'Content-Type': 'application/json'
+									
+									
+								},
+								//timeout : 4500,
+								data: JSON.stringify($scope.cart_item),
+							})
+							.success(function(response) {
+										
+								$ionicLoading.hide();
+								
+													
+							$scope.cart_items = response.Cartitems;
+							
+							if($scope.cart_items.length == 0)
+							{
+								$scope.branch_id = 0;
+								
+								$scope.branch_name = 0;
+								
+								$rootScope.cart_qty = 0;
+							}
+							else
+							{
+								$scope.branch_id = response.Cartitems[0].restaurant_id;
+								
+								$scope.branch_name = response.Cartitems[0].restaurant_name;
+								
+								$rootScope.cart_count =response.Cartitems.length;
+								//alert("cc="+$rootScope.cart_count);
+								$rootScope.cart_qty =1;
+								
+							}
+							
+										angular.forEach(response.Cartitems, function(value) {
+									
+								$scope.list_id.push(value.item_id);
+								//alert($scope.list_id);
+								
+												
+								
+								});				
+							
+							;
+							
+									//console.log($scope.list_id);
+								
+														
+							}, 
+						
+							function(response) { // optional
+							
+								$ionicLoading.hide();  
+								  
+							}).error(function(data)
+								{
+									$ionicLoading.hide();
+									//alert("error="+data);
+									//alert("Network error. Please try after some time");
+									
+									var alertPopup = $ionicPopup.alert({
+									 title: 'Network Error',
+									 template: 'Please try after some time'
+								  });
+							
+									
+								});
+	
+	 }
+		
+		
 		$scope.offer_details.customer_id = window.localStorage.getItem('user_id');
 		
 		$scope.offer_details.offer_id = $stateParams.offer_id;
@@ -8793,123 +10133,9 @@ $rootScope.$ionicGoBack = function() {
 								});
 	}
 	
-	$scope.cart_popup  = function(id,price)
-	{
-		alert("id="+price);
-			$scope.data = {};
-			$scope.data.count = 1;
 		
-		 var myPopup = $ionicPopup.show({
-     template: '<input type="tel" ng-model="data.count" maxlength="2" onKeyUp="if(this.value>15){this.value=15;}else if(this.value<0){this.value=1;}">',
-     title: 'Enter Quantity',
-     subTitle: '',
-     scope: $scope,
-     buttons: [
-       { text: 'Cancel' },
-       {
-         text: '<b>Add</b>',
-         type: 'button-positive',
-         onTap: function(e) {
-			 
-           if ($scope.data.count == undefined) {
-			   $scope.data.count = 1;
-            // alert("Please Enter Quantiy");
-			var alertPopup = $ionicPopup.alert({
-				 title: '',
-				 template: 'Please enter quantity'
-			  });
-             e.preventDefault();
-           } else {
-			   
-			  if($scope.data.count < 1)
-			   {
-				   $scope.data.count = 1;
-				  	 var alertPopup = $ionicPopup.alert({
-					 title: '',
-					 template: 'Please enter a valid quantity'
-				  });
-				   e.preventDefault();
-			   }
-			   
-			   else
-			   {
-
-				   $scope.cart_details.customer_id = window.localStorage.getItem('user_id');
-				   
-				    $scope.cart_details.item_id = id;
-				
-				$scope.cart_details.noofquantity = $scope.data.count;
-				
-				$scope.cart_details.amount = $scope.data.count * price;
-			   
-			    $rootScope.cart_qty =1;
-				
-				$scope.cart_details.offer_id = $stateParams.offer_id;
-				
-				//alert("D="+JSON.stringify($scope.cart_details));
-			 $ionicLoading.show();
-			
-	$http({
-								url: server+'AddCartItems',
-								method: "POST",
-								headers : {
-									
-									'Content-Type': 'application/json'
-									
-									
-								},
-								//timeout : 4500,
-								data: JSON.stringify($scope.cart_details),
-							})
-							.success(function(response) {
-										
-								$ionicLoading.hide();
-							
-							//alert(JSON.stringify(response.message));
-							
-							//$scope.product_details = response.restauranthome;
-							
-								//alert("ss="+JSON.stringify($scope.product_details));
-								
-								
-														
-							}, 
-						
-							function(response) { // optional
-							
-								$ionicLoading.hide();  
-								  
-							}).error(function(data)
-								{
-									$ionicLoading.hide();
-									//alert("error="+data);
-								//	alert("Network error. Please try after some time");
-								
-								var alertPopup = $ionicPopup.alert({
-									 title: 'Network Error',
-									 template: 'Please try after some time'
-								  });
-														
-									
-								});
-			   }
-			   
-			//  alert("total="+$scope.data.count * price);
-			   
-			   
-            
-           }
-         }
-       },
-     ]
-   });
-		
-		
-		
-		
-	}
 	
-	$scope.click_add = function(id,price)
+	$scope.click_add = function(id,price,offer_amt,offer_type)
 	{
 	
 		if(window.localStorage.getItem('user_id')==undefined || window.localStorage.getItem('user_id')==null || window.localStorage.getItem('user_id')=='')
@@ -8925,11 +10151,158 @@ $rootScope.$ionicGoBack = function() {
 		else
 			
 			{
-			//	document.getElementById('add'+id).style.display = "none";
+				
+				//alert("cart branch="+$scope.branch_id);
+				
+				//alert("cart_b_name="+$scope.branch_name);
+				
+				
+				
+				$scope.current_branch_id = window.localStorage.getItem('restaurant_id');
 		
-		//document.getElementById('cart'+id).style.display = "inline-block";
+				$scope.current_branch_name = window.localStorage.getItem('branch_name');
+				
+				//alert("br sel="+$scope.current_branch_id);
+				
+				//alert("br name_sel="+$scope.current_branch_name);
+				
+			if($scope.current_branch_id != $scope.branch_id && $scope.branch_id !=0)
+				{
+					var confirmPopup = $ionicPopup.confirm({
+				title: 'Replace cart item?',
+				template: 'Your cart contains dishes from '+$scope.branch_name+'. Do you want to discard the selection and add dishes from '+$scope.current_branch_name+'.'
+				});
+			confirmPopup.then(function(res) {
+				if(res) 
+				{
+				//remove previous cart and add new
+				
+				$scope.get_cart.customer_id = window.localStorage.getItem('user_id');
+				
+				//alert(JSON.stringify($scope.get_cart));
+				
+					 $ionicLoading.show();
+			
+	$http({
+								url: server+'getCartItemsdetails',
+								method: "POST",
+								headers : {
+									
+									'Content-Type': 'application/json'
+									
+									
+								},
+								//timeout : 4500,
+								data: JSON.stringify($scope.get_cart),
+							})
+							.success(function(response) {
+										
+								$ionicLoading.hide();
+								
+								//alert(JSON.stringify(response));
+								
+								
+									$scope.item_details = response.Cartitems;
+									//alert(JSON.stringify($scope.item_details));
+								
+									angular.forEach(response.Cartitems, function(value) {
+									
+									
+									$scope.cart_id = value.cart_id;	
+																			
+									
+									$scope.removecart.customer_id = window.localStorage.getItem('user_id');
 		
-		$scope.cart_data.customer_id = window.localStorage.getItem('user_id');
+		$scope.removecart.cart_id = $scope.cart_id;
+		
+		 $ionicLoading.show();
+			
+	$http({
+								url: server+'doremoveCart',
+								method: "POST",
+								headers : {
+									
+									'Content-Type': 'application/json'
+									
+									
+								},
+								//timeout : 4500,
+								data: JSON.stringify($scope.removecart),
+							})
+							.success(function(response) {
+										
+								$ionicLoading.hide();
+							
+										//alert(JSON.stringify(response));				
+																					
+							}, 
+						
+							function(response) { // optional
+							
+								$ionicLoading.hide();  
+								  
+							}).error(function(data)
+								{
+									$ionicLoading.hide();
+									//alert("error="+data);
+									//alert("Network error. Please try after some time");
+										var alertPopup = $ionicPopup.alert({
+										 title: 'Network Error',
+										 template: 'Please try after some time'
+									  });
+									
+								});
+											
+								
+								});
+								
+								
+								$scope.add_items(id,price,offer_amt,offer_type);
+								
+								
+								
+							}, 
+						
+							function(response) { // optional
+							
+								$ionicLoading.hide();  
+								  
+							}).error(function(data)
+								{
+									$ionicLoading.hide();
+									//alert("error="+data);
+									//alert("Network error. Please try after some time");
+									var alertPopup = $ionicPopup.alert({
+												 title: 'Network Error',
+												 template: 'Please try after some time'
+											  });
+																	
+									
+								});
+		
+		
+				} 
+				else 
+				{
+					 window.localStorage.setItem('branch_name',$scope.branch_name);
+					 
+					 window.localStorage.setItem('restaurant_id',$scope.branch_id);
+					 
+					 $scope.branch_details =  $scope.branch_id+','+$scope.branch_name;
+
+					window.localStorage.setItem('branch_details',$scope.branch_details);
+					
+					$state.go('app.hot_offers');
+				}
+			});
+				}
+				
+				else
+				{
+					//alert("same branch");
+					$scope.cart_data.customer_id = window.localStorage.getItem('user_id');
+		
+		$scope.cart_data.restaurant_id = window.localStorage.getItem('restaurant_id');
 		
 		$scope.cart_data.offer_id = $stateParams.offer_id;
 		
@@ -8939,11 +10312,24 @@ $rootScope.$ionicGoBack = function() {
 				
 				$scope.cart_data.noofquantity = $scope.total_qty;
 				
-				$scope.cart_data.amount = $scope.total_qty * price;
-			   
-			    $rootScope.cart_qty =1;
+				$scope.cart_data.actual_amount = $scope.total_qty * price;
 				
-				//alert("D="+JSON.stringify($scope.cart_details));
+				if(offer_type == 'percent')
+				{
+					$scope.perecnt = parseInt($scope.cart_data.actual_amount)/parseInt(offer_amt);
+					$scope.cart_data.amount = parseInt($scope.cart_data.actual_amount)-parseInt($scope.perecnt);
+				}
+				else if(offer_type == 'amount')
+				{
+					$scope.cart_data.amount = parseInt($scope.cart_data.actual_amount)-parseInt(offer_amt);
+								
+				}
+				
+				
+			   
+			    //$rootScope.cart_qty =1;
+				
+				//alert("D="+JSON.stringify($scope.cart_data));
 			 $ionicLoading.show();
 			
 	$http({
@@ -8961,6 +10347,11 @@ $rootScope.$ionicGoBack = function() {
 							.success(function(response) {
 										
 								$ionicLoading.hide();
+							
+								$rootScope.cart_count = 1;
+							
+								get_cart_details();	
+								
 								
 								if(response.result == 0)
 								{
@@ -9003,12 +10394,118 @@ $rootScope.$ionicGoBack = function() {
 														
 									
 								});
+				}
+				
+			//	document.getElementById('add'+id).style.display = "none";
+		
+		//document.getElementById('cart'+id).style.display = "inline-block";
+		
+		
 			}
 		
 		
 	}
 	
-	$scope.cart_incr = function(id,price)
+		$scope.add_items = function(id,price,offer_amt,offer_type)
+	{
+		
+		$scope.cart_data.customer_id = window.localStorage.getItem('user_id');
+		
+		$scope.cart_data.restaurant_id = window.localStorage.getItem('restaurant_id');
+		
+		$scope.cart_data.offer_id = $stateParams.offer_id;
+		
+		$scope.total_qty = 1;
+		
+		$scope.cart_data.item_id = id;
+				
+				$scope.cart_data.noofquantity = $scope.total_qty;
+				
+				$scope.cart_data.actual_amount = $scope.total_qty * price;
+				
+				if(offer_type == 'percent')
+				{
+					$scope.perecnt = parseInt($scope.cart_data.actual_amount)/parseInt(offer_amt);
+					$scope.cart_data.amount = parseInt($scope.cart_data.actual_amount)-parseInt($scope.perecnt);
+				}
+				else if(offer_type == 'amount')
+				{
+					$scope.cart_data.amount = parseInt($scope.cart_data.actual_amount)-parseInt(offer_amt);
+								
+				}
+				
+				
+			   
+			    $rootScope.cart_qty =1;
+				
+				//alert("D="+JSON.stringify($scope.cart_data));
+			 $ionicLoading.show();
+			
+	$http({
+								url: server+'AddCartItems',
+								method: "POST",
+								headers : {
+									
+									'Content-Type': 'application/json'
+									
+									
+								},
+								//timeout : 4500,
+								data: JSON.stringify($scope.cart_data),
+							})
+							.success(function(response) {
+										
+								$ionicLoading.hide();
+								
+								$rootScope.cart_count = 1;
+							
+										get_cart_details();	
+								
+								
+								if(response.result == 0)
+								{
+									$rootScope.cart_qty =0;
+									
+									var alertPopup = $ionicPopup.alert({
+									 title: 'Network Error',
+									 template: response.message
+								  });
+								}
+								else
+								{
+									
+								}
+							
+							//alert(JSON.stringify(response.message));
+							
+							//$scope.product_details = response.restauranthome;
+							
+								//alert("ss="+JSON.stringify($scope.product_details));
+								
+								
+														
+							}, 
+						
+							function(response) { // optional
+							
+								$ionicLoading.hide();  
+								  
+							}).error(function(data)
+								{
+									$ionicLoading.hide();
+									//alert("error="+data);
+								//	alert("Network error. Please try after some time");
+								
+								var alertPopup = $ionicPopup.alert({
+									 title: 'Network Error',
+									 template: 'Please try after some time'
+								  });
+														
+									
+								});
+	}
+	
+	$scope.cart_incr = function(id,price,offer_amt,offer_type)
 	{ 
 		
 		
@@ -9021,15 +10518,33 @@ $rootScope.$ionicGoBack = function() {
 		
 		$scope.cart_data.customer_id = window.localStorage.getItem('user_id');
 		
+		$scope.cart_data.restaurant_id = window.localStorage.getItem('restaurant_id');
+		
 		$scope.cart_data.offer_id = $stateParams.offer_id;
 		
 		$scope.cart_data.item_id = id;
 				
 				$scope.cart_data.noofquantity = $scope.total_qty;
 				
-				$scope.cart_data.amount = $scope.total_qty * price;
+				$scope.cart_data.actual_amount = $scope.total_qty * price;
 			   
 			    $rootScope.cart_qty =1;
+					
+				if(offer_type == 'percent')
+				{
+					
+					$scope.perecnt = parseInt($scope.cart_data.actual_amount)/parseInt(offer_amt);
+					
+					$scope.cart_data.amount = parseInt($scope.cart_data.actual_amount)-parseInt($scope.perecnt);
+					
+				}
+				else if(offer_type == 'amount')
+				{
+					
+					$scope.cart_data.amount = parseInt($scope.cart_data.actual_amount)-parseInt(offer_amt);
+								
+				}
+				
 				
 				//alert("D="+JSON.stringify($scope.cart_details));
 			 $ionicLoading.show();
@@ -9049,6 +10564,8 @@ $rootScope.$ionicGoBack = function() {
 							.success(function(response) {
 										
 								$ionicLoading.hide();
+								
+								//get_cart_details();
 								
 									if(response.result == 0)
 								{
@@ -9095,7 +10612,7 @@ $rootScope.$ionicGoBack = function() {
 		
 	}
 	
-	$scope.cart_decr = function(id,price)
+	$scope.cart_decr = function(id,price,offer_amt,offer_type)
 	{
 		
 				
@@ -9103,7 +10620,127 @@ $rootScope.$ionicGoBack = function() {
 		
 		$scope.total_qty = parseInt($scope.qty)-1;
 		
-		$scope.cart_data.customer_id = window.localStorage.getItem('user_id');
+		if($scope.total_qty<1)
+		{
+			document.getElementById(id).value = 0;
+			
+			$scope.cart_data.customer_id = window.localStorage.getItem('user_id');
+		
+			$scope.cart_data.restaurant_id = window.localStorage.getItem('restaurant_id');
+			
+			$ionicLoading.show();
+			
+	$http({
+								url: server+'getCartItemsdetails',
+								method: "POST",
+								headers : {
+									
+									'Content-Type': 'application/json'
+									
+									
+								},
+								//timeout : 4500,
+								data: JSON.stringify($scope.cart_data),
+							})
+							.success(function(response) {
+										
+								$ionicLoading.hide();
+								
+								//alert("re="+JSON.stringify(response));
+								angular.forEach(response.Cartitems, function(value) {
+									
+								if(value.item_id == id)
+								{
+									$scope.cart_id = value.cart_id;
+									
+									
+									$scope.removecart.customer_id = window.localStorage.getItem('user_id');
+		
+		$scope.removecart.cart_id = $scope.cart_id;
+		
+		 $ionicLoading.show();
+			
+	$http({
+								url: server+'doremoveCart',
+								method: "POST",
+								headers : {
+									
+									'Content-Type': 'application/json'
+									
+									
+								},
+								//timeout : 4500,
+								data: JSON.stringify($scope.removecart),
+							})
+							.success(function(response) {
+										
+								$ionicLoading.hide();
+							
+							//alert(JSON.stringify(response.message));
+							
+						//	$state.go($state.current, {}, {reload: true});	
+						
+							//$scope.cartBtn = false;
+							
+						
+							
+						//	$scope.get_cart_details();
+						get_cart_details();
+														
+							}, 
+						
+							function(response) { // optional
+							
+								$ionicLoading.hide();  
+								  
+							}).error(function(data)
+								{
+									$ionicLoading.hide();
+									//alert("error="+data);
+									//alert("Network error. Please try after some time");
+										var alertPopup = $ionicPopup.alert({
+										 title: 'Network Error',
+										 template: 'Please try after some time'
+									  });
+									
+								});
+									
+									
+								}
+								
+								
+								
+								});
+								
+															
+								
+														
+							}, 
+						
+							function(response) { // optional
+							
+								$ionicLoading.hide();  
+								  
+							}).error(function(data)
+								{
+									$ionicLoading.hide();
+									//alert("error="+data);
+									//alert("Network error. Please try after some time");
+										var alertPopup = $ionicPopup.alert({
+											 title: 'Network Error',
+											 template: 'Please try after some time'
+										  });
+									
+								});
+			
+		}
+		else
+		{
+			
+			
+			$scope.cart_data.customer_id = window.localStorage.getItem('user_id');
+		
+		$scope.cart_data.restaurant_id = window.localStorage.getItem('restaurant_id');
 		
 		$scope.cart_data.offer_id = $stateParams.offer_id;
 		
@@ -9111,9 +10748,18 @@ $rootScope.$ionicGoBack = function() {
 				
 				$scope.cart_data.noofquantity = $scope.total_qty;
 				
-				$scope.cart_data.amount = $scope.total_qty * price;
+				$scope.cart_data.actual_amount = $scope.total_qty * price;
 		
-		
+			if(offer_type == 'percent')
+				{
+					$scope.perecnt = parseInt($scope.cart_data.actual_amount)/parseInt(offer_amt);
+					$scope.cart_data.amount = parseInt($scope.cart_data.actual_amount)-parseInt($scope.perecnt);
+				}
+				else if(offer_type == 'amount')
+				{
+					$scope.cart_data.amount = parseInt($scope.cart_data.actual_amount)-parseInt(offer_amt);
+								
+				}
 		
 			document.getElementById(id).value = $scope.total_qty;
 			
@@ -9148,7 +10794,7 @@ $rootScope.$ionicGoBack = function() {
 								{
 									
 								}
-							
+							//get_cart_details();
 							//alert(JSON.stringify(response.message));
 							
 							//$scope.product_details = response.restauranthome;
@@ -9176,6 +10822,10 @@ $rootScope.$ionicGoBack = function() {
 														
 									
 								});
+		}
+		
+		
+		
 		
 		
 	}
@@ -9201,6 +10851,29 @@ $rootScope.$ionicGoBack = function() {
 	$scope.new_width =  parseInt($scope.half_width)-50;
 	
 	
+}).filter('checksearchcart', function () {
+    return function (data, item_Id) { 
+    	//console.log(data+' - '+item_Id)
+    	var flag = false; 
+    	angular.forEach(data,function(value,key){
+    		//console.log(value+" - "+item_Id);
+    		if(flag!=true)
+    		{
+	    		if(value==item_Id)
+	    		{
+	    			flag = true;
+	    			console.log(1)
+
+	    		}
+	    		else{
+	    			flag = false;
+	    			//console.log(2);
+	    		}
+    		}
+    	})   
+       	//console.log(itemId+' - '+flag);
+        return flag;
+    }
 }).controller('SearchCtrl', function($scope,$ionicLoading,$http,$ionicPopup,$state,$ionicHistory,$ionicPlatform,$rootScope){
 	
 	$rootScope.display_cart = '1';
@@ -9208,6 +10881,15 @@ $rootScope.$ionicGoBack = function() {
 	$scope.cart_data = {};
 	
 	$scope.recent_list = [];
+	
+	$scope.cart_details = {};
+	
+	$scope.removecart = {};
+	
+	$scope.get_cart = {};
+	
+	$scope.title = window.localStorage.getItem('branch_name');
+	//$scope.show = {};
 	
 	 $ionicPlatform.registerBackButtonAction(function (event) {
 	
@@ -9223,9 +10905,10 @@ $rootScope.$ionicGoBack = function() {
 	}
 	else
 	{
+		
 		$scope.lasturl= $scope.lastView.url;
 
-	alert(scope.lasturl);
+	
 
 	if($scope.lasturl == '/app/home' || $scope.lasturl == '/app/index')
 								{
@@ -9258,6 +10941,8 @@ $rootScope.$ionicGoBack = function() {
 	
 	$scope.selectedIndex=0;
 	
+	get_cart_details();
+	
 	if(window.localStorage.getItem('recent_search')==null || window.localStorage.getItem('recent_search')=='' || window.localStorage.getItem('recent_search')==' ')
 			{
 				
@@ -9281,7 +10966,7 @@ $rootScope.$ionicGoBack = function() {
 			}
 			else
 			{
-				console.log(JSON.parse(window.localStorage.getItem('recent_search')));
+				//console.log(JSON.parse(window.localStorage.getItem('recent_search')));
 				$scope.search_list = JSON.parse(window.localStorage.getItem('recent_search'));
 			}
 			
@@ -9317,6 +11002,8 @@ $rootScope.$ionicGoBack = function() {
 								if(response.result ==0)
 								{
 									$scope.restro_details = '0';
+									$scope.restaurant_details = {};
+									$scope.dish_details = {};
 									
 								}
 								else
@@ -9358,10 +11045,6 @@ $rootScope.$ionicGoBack = function() {
 		}
 	}
 	
-	$scope.clear_search = function()
-	{
-		
-	}
 	
 	$scope.restro_click = function(index)
 	{
@@ -9397,15 +11080,168 @@ $rootScope.$ionicGoBack = function() {
 		
 		//document.getElementById('cart'+id).style.display = "inline-block";
 		
-		window.localStorage.setItem('branch_name',restro_name);
 		
-		$scope.branch_details =  restro_id+','+restro_name;
+		
+		$scope.current_branch_id = restro_id;
+		
+		$scope.current_branch_name = restro_name;
+		
+		//alert("new branch="+$scope.current_branch_id);
+		
+		//alert("cart brnch ="+$scope.branch_id);
+		
+		//alert("br="+$scope.branch_id);
+		
+		$scope.set_branch = window.localStorage.getItem('restaurant_id');
+		
+		$scope.set_name = window.localStorage.getItem('branch_name');
+		
+		//alert("set="+$scope.set_branch);
+		//if($scope.current_branch_id != ($scope.branch_id && $scope.branch_id !=0) || $scope.current_branch_id != $scope.set_branch)
+		if($scope.current_branch_id != $scope.branch_id && $scope.branch_id !=0)
+		{
+			 var confirmPopup = $ionicPopup.confirm({
+				title: 'Replace cart item?',
+				template: 'Your cart contains dishes from '+$scope.set_name+'. Do you want to discard the selection and add dishes from '+$scope.current_branch_name+'.'
+				});
+			confirmPopup.then(function(res) {
+				if(res) 
+				{
+				//remove previous cart and add new
+				
+				window.localStorage.setItem('branch_name',restro_name);
+		
+				$scope.branch_details =  restro_id+','+restro_name;
 
-		window.localStorage.setItem('branch_details',$scope.branch_details);
+				window.localStorage.setItem('branch_details',$scope.branch_details);
 		
-		window.localStorage.setItem('restaurant_id',restro_id);
+				window.localStorage.setItem('restaurant_id',restro_id);
+				
+				$scope.get_cart.customer_id = window.localStorage.getItem('user_id');
+				
+				//alert(JSON.stringify($scope.get_cart));
+				
+					 $ionicLoading.show();
+			
+	$http({
+								url: server+'getCartItemsdetails',
+								method: "POST",
+								headers : {
+									
+									'Content-Type': 'application/json'
+									
+									
+								},
+								//timeout : 4500,
+								data: JSON.stringify($scope.get_cart),
+							})
+							.success(function(response) {
+										
+								$ionicLoading.hide();
+								
+								//alert(JSON.stringify(response));
+								
+								
+									$scope.item_details = response.Cartitems;
+									//alert(JSON.stringify($scope.item_details));
+								
+									angular.forEach(response.Cartitems, function(value) {
+									
+									
+									$scope.cart_id = value.cart_id;	
+																			
+									
+									$scope.removecart.customer_id = window.localStorage.getItem('user_id');
 		
-		$scope.cart_data.customer_id = window.localStorage.getItem('user_id');
+		$scope.removecart.cart_id = $scope.cart_id;
+		
+		 $ionicLoading.show();
+			
+	$http({
+								url: server+'doremoveCart',
+								method: "POST",
+								headers : {
+									
+									'Content-Type': 'application/json'
+									
+									
+								},
+								//timeout : 4500,
+								data: JSON.stringify($scope.removecart),
+							})
+							.success(function(response) {
+										
+								$ionicLoading.hide();
+							
+														
+																					
+							}, 
+						
+							function(response) { // optional
+							
+								$ionicLoading.hide();  
+								  
+							}).error(function(data)
+								{
+									$ionicLoading.hide();
+									//alert("error="+data);
+									//alert("Network error. Please try after some time");
+										var alertPopup = $ionicPopup.alert({
+										 title: 'Network Error',
+										 template: 'Please try after some time'
+									  });
+									
+								});
+											
+								
+								});
+								
+								
+								$scope.add_items(id,price);
+								
+								
+								
+							}, 
+						
+							function(response) { // optional
+							
+								$ionicLoading.hide();  
+								  
+							}).error(function(data)
+								{
+									$ionicLoading.hide();
+									//alert("error="+data);
+									//alert("Network error. Please try after some time");
+									var alertPopup = $ionicPopup.alert({
+												 title: 'Network Error',
+												 template: 'Please try after some time'
+											  });
+																	
+									
+								});
+		
+		
+				} 
+				else 
+				{
+					 //window.localStorage.setItem('branch_name',$scope.branch_name);
+					 
+					 window.localStorage.setItem('restaurant_id',$scope.set_branch);
+					 
+					// $scope.branch_details =  $scope.branch_id+','+$scope.branch_name;
+
+					//window.localStorage.setItem('branch_details',$scope.branch_details);
+					//$state.go($state.current, {}, {reload: true});	
+					$state.go('app.home');
+				}
+			});
+	   
+		}
+		else
+		{
+			$scope.cart_data.customer_id = window.localStorage.getItem('user_id');
+		
+		$scope.cart_data.restaurant_id = window.localStorage.getItem('restaurant_id');
 		
 		$scope.total_qty = 1;
 		
@@ -9435,7 +11271,10 @@ $rootScope.$ionicGoBack = function() {
 							.success(function(response) {
 										
 								$ionicLoading.hide();
-							
+								
+								$rootScope.cart_count = parseInt($rootScope.cart_count)+1;
+
+							get_cart_details();
 							//alert(JSON.stringify(response.message));
 							
 							//$scope.product_details = response.restauranthome;
@@ -9463,9 +11302,76 @@ $rootScope.$ionicGoBack = function() {
 														
 									
 								});
+		}
+		
+		
 			}
 		
 		
+	}
+	
+	$scope.add_items = function(id,price)
+	{
+		
+		$scope.cart_data.customer_id = window.localStorage.getItem('user_id');
+		
+		$scope.cart_data.restaurant_id = window.localStorage.getItem('restaurant_id');
+		
+		$scope.total_qty = 1;
+		
+		$scope.cart_data.item_id = id;
+				
+				$scope.cart_data.noofquantity = $scope.total_qty;
+				
+				$scope.cart_data.amount = $scope.total_qty * price;
+			   
+			    $rootScope.cart_qty =1;
+				
+				//alert("D="+JSON.stringify($scope.cart_details));
+			 $ionicLoading.show();
+			
+	$http({
+								url: server+'AddCartItems',
+								method: "POST",
+								headers : {
+									
+									'Content-Type': 'application/json'
+									
+									
+								},
+								//timeout : 4500,
+								data: JSON.stringify($scope.cart_data),
+							})
+							.success(function(response) {
+										
+								$ionicLoading.hide();
+								
+								$rootScope.cart_count = 1;
+							
+									get_cart_details();						
+								
+														
+							}, 
+						
+							function(response) { // optional
+							
+								$ionicLoading.hide();  
+								  
+							}).error(function(data)
+								{
+									$ionicLoading.hide();
+									
+									
+									//alert("error="+data);
+								//	alert("Network error. Please try after some time");
+								
+								var alertPopup = $ionicPopup.alert({
+									 title: 'Network Error',
+									 template: 'Please try after some time'
+								  });
+														
+									
+								});
 	}
 	
 	$scope.cart_decr = function(id,price,restro_id)
@@ -9486,20 +11392,20 @@ $rootScope.$ionicGoBack = function() {
 				
 				$scope.cart_data.amount = $scope.total_qty * price;
 		
-		if($scope.total_qty<=1)
+		if($scope.total_qty<1)
 		{
-			document.getElementById(id).value = 1;
 			
-			$scope.total_qty = 1;
-			
-			//document.getElementById('add'+id).style.display = "block";
+			document.getElementById(id).value = 0;
 		
-		//document.getElementById('cart'+id).style.display = "none";
+		
+		$scope.cart_details.customer_id = window.localStorage.getItem('user_id');
+		
+	$scope.cart_details.restaurant_id = window.localStorage.getItem('restaurant_id');
 		
 		$ionicLoading.show();
 			
 	$http({
-								url: server+'AddCartItems',
+								url: server+'getCartItemsdetails',
 								method: "POST",
 								headers : {
 									
@@ -9508,7 +11414,37 @@ $rootScope.$ionicGoBack = function() {
 									
 								},
 								//timeout : 4500,
-								data: JSON.stringify($scope.cart_data),
+								data: JSON.stringify($scope.cart_details),
+							})
+							.success(function(response) {
+										
+								$ionicLoading.hide();
+								
+								//alert("re="+JSON.stringify(response));
+								angular.forEach(response.Cartitems, function(value) {
+									
+								if(value.item_id == id)
+								{
+									$scope.cart_id = value.cart_id;
+									
+									
+									$scope.removecart.customer_id = window.localStorage.getItem('user_id');
+		
+		$scope.removecart.cart_id = $scope.cart_id;
+		
+		 $ionicLoading.show();
+			
+	$http({
+								url: server+'doremoveCart',
+								method: "POST",
+								headers : {
+									
+									'Content-Type': 'application/json'
+									
+									
+								},
+								//timeout : 4500,
+								data: JSON.stringify($scope.removecart),
 							})
 							.success(function(response) {
 										
@@ -9516,10 +11452,41 @@ $rootScope.$ionicGoBack = function() {
 							
 							//alert(JSON.stringify(response.message));
 							
-							//$scope.product_details = response.restauranthome;
+						//	$state.go($state.current, {}, {reload: true});	
+						
+							//$scope.cartBtn = false;
 							
-								//alert("ss="+JSON.stringify($scope.product_details));
+						
+							
+						//	$scope.get_cart_details();
+						get_cart_details();
+														
+							}, 
+						
+							function(response) { // optional
+							
+								$ionicLoading.hide();  
+								  
+							}).error(function(data)
+								{
+									$ionicLoading.hide();
+									//alert("error="+data);
+									//alert("Network error. Please try after some time");
+										var alertPopup = $ionicPopup.alert({
+										 title: 'Network Error',
+										 template: 'Please try after some time'
+									  });
+									
+								});
+									
+									
+								}
 								
+								
+								
+								});
+								
+															
 								
 														
 							}, 
@@ -9532,16 +11499,13 @@ $rootScope.$ionicGoBack = function() {
 								{
 									$ionicLoading.hide();
 									//alert("error="+data);
-								//	alert("Network error. Please try after some time");
-								
-								var alertPopup = $ionicPopup.alert({
-									 title: 'Network Error',
-									 template: 'Please try after some time'
-								  });
-														
+									//alert("Network error. Please try after some time");
+										var alertPopup = $ionicPopup.alert({
+											 title: 'Network Error',
+											 template: 'Please try after some time'
+										  });
 									
 								});
-			
 		}
 		else
 		{
@@ -9611,6 +11575,8 @@ $rootScope.$ionicGoBack = function() {
 		document.getElementById(id).value = $scope.total_qty;
 		
 		$scope.cart_data.customer_id = window.localStorage.getItem('user_id');
+		
+		$scope.cart_data.restaurant_id = window.localStorage.getItem('restaurant_id');
 		
 		$scope.cart_data.item_id = id;
 				
@@ -9792,8 +11758,102 @@ $rootScope.$ionicGoBack = function() {
 		
 	}
 	
+	$scope.clear_search = function()
+	{
+		
+		$scope.search.search_data = null;
+		
+		$scope.restaurant_details = {};
+		$scope.dish_details = {};
+		
+		document.getElementById('recent').style.display="block";
+		document.getElementById('tab_sel').style.display="none";
+		document.getElementById('tab_content').style.display="none";
+	}
 	
+	//$scope.get_cart_details = function()
+	function get_cart_details()
+	{
+		
+			$scope.cart_id = [];				
+		
+		$scope.cart_details.customer_id = window.localStorage.getItem('user_id');
+		
+		$ionicLoading.show();
+			
+	$http({
+								url: server+'getCartItemsdetails',
+								method: "POST",
+								headers : {
+									
+									'Content-Type': 'application/json'
+									
+									
+								},
+								//timeout : 4500,
+								data: JSON.stringify($scope.cart_details),
+							})
+							.success(function(response) {
+										
+								$ionicLoading.hide();
+								
+								//alert("re="+JSON.stringify(response));
+								
+															
+							$scope.cart_items = response.Cartitems;
+							
+							$rootScope.cart_count = $scope.cart_items.length;
+																		
+							$scope.cart_items.cart_amount = response.Cartamount;
+							
+							if(response.Cartitems.length == 0)
+							{
+								
+								$rootScope.cart_qty = 0;
+								
+								$scope.branch_id = 0;
+								
+								$scope.branch_name = 0;
+							}
+							else
+							{
+								$scope.branch_id = response.Cartitems[0].restaurant_id;
+								
+								$scope.branch_name = response.Cartitems[0].restaurant_name;
+							}
+							
+								angular.forEach(response.Cartitems, function(value) {
+									
+								$scope.cart_id.push(value.item_id);
+								//alert($scope.list_id);
+								
+												
+								
+								});
+									
+							}, 
+						
+							function(response) { // optional
+							
+								$ionicLoading.hide();  
+								  
+							}).error(function(data)
+								{
+									$ionicLoading.hide();
+									//alert("error="+data);
+									//alert("Network error. Please try after some time");
+										var alertPopup = $ionicPopup.alert({
+											 title: 'Network Error',
+											 template: 'Please try after some time'
+										  });
+									
+								});
+	}
+	
+	
+		
 }).controller('PaymentHistoryCtrl', function($scope){
 	
 });
+
 

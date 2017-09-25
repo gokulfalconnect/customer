@@ -83,47 +83,72 @@ overflow-y: scroll;
 </ion-scroll> -->
 
 <ion-scroll scroll-height direction = "y" scroll="true">
- <div class = "scroll-container">
-  <div class="col" ng-repeat="item in cart_items">
-   
-     <div class="col cart-bg-color">
-        <img src="{{item.image_url}}" width="100%" height="200">
-     </div>
-      <div class="row cart-bg-color">
-     <div class="col col-70">
-           <h4 class="h4-font">{{item.item_name}}</h4>
-		    <h4 class="h4-font">{{item.quanitity}} (X) Rs.{{item.item_price}}</h4>
-          
-           <div  id="cart{{item.id}}" style="display:block">
-				<div  ng-click="add_demo()" style="display: inline-block">
-					<input type='button' value='-' class='qtyminus' field='quantity' ng-click="update_cart_decr(item.item_id,item.cart_id,item.item_price,item.quanitity,item.customers_id,item.offer_id)"/>
+	<div class = "scroll-container">
+		  <div class="col" ng-repeat="item in cart_items">
+		  
+				<div class="row cart-bg-color">
+					<div class="col col-40 cart-bg-color">
+						<img src="{{item.image_url}}" width="{{new_width}}" height="70">
+					</div>
+					<div class="col col-40">
+						<div class="row">
+							 <div  id="cart{{item.id}}" style="display:block">
+								<div  ng-click="add_demo()" style="display: inline-block">
+									<input type='button' value='-' class='qtyminus' field='quantity' ng-click="update_cart_decr(item.item_id,item.cart_id,item.item_price,item.quanitity,item.customers_id,item.offer_id)"/>
+								</div>
+								<div style="display: inline-block">
+									<input type='text' id='{{item.item_id}}' name='quantity' value='{{item.quanitity}}' min="0" class='cartqty' />
+								</div>
+								<div style="display: inline-block">
+									<input type='button' value='+' class='qtyplus' field='quantity'  ng-click="update_cart_incr(item.item_id,item.cart_id,item.item_price,item.quanitity,item.customers_id,item.offer_id)"/>
+								</div>
+							</div>	
+						</div>
+						<!--<div class="row cart-delete-padding" style="padding-top:5px">
+						<i class="ion-android-arrow-dropleft ion-trash-a icon-font-delete icon-font-medium" ng-click="cart_delete(item.customers_id,item.cart_id)"></i>
+						</div>	-->			
+						
+						
+						
+					</div>
+					<div class="col col-20 cart-delete-padding">
+						<i class="ion-android-arrow-dropleft ion-trash-a icon-font-delete icon-font-medium" ng-click="cart_delete(item.customers_id,item.cart_id)"></i>
+					</div>
+				
 				</div>
-				<div style="display: inline-block">
-					<input type='text' id='{{item.item_id}}' name='quantity' value='{{item.quanitity}}' min="1" class='cartqty' />
-				</div>
-				<div style="display: inline-block">
-					<input type='button' value='+' class='qtyplus' field='quantity'  ng-click="update_cart_incr(item.item_id,item.cart_id,item.item_price,item.quanitity,item.customers_id,item.offer_id)"/>
-				</div>
-									
-			</div>
 		   
-		   <!--  <h5 ng-click="cart_update(item.item_id,item.cart_id,item.item_price,item.quanitity,item.customers_id)">Quantity : {{item.quanitity}}  <i class="icon ion-edit icon-font-edit"></i></h5>-->
-    </div>
-     <div class="col-30 cart-delete-padding" style="padding-top: 15px;" align="center">
-			 <h4><img src="img/rupee.svg" width="13" height="13">  {{item.amount}}</h4>
-             <i class="ion-android-arrow-dropleft ion-trash-a icon-font-delete icon-font-medium" ng-click="cart_delete(item.customers_id,item.cart_id)"></i>
-            </div>
-    </div>
-	
-	<div class="row cart-bg-color">
-		<div class="col">
-			<h4 class="h4-font">{{item.item_name}}</h4>
+			 
+			  <div class="row cart-bg-color">
+			 <div class="col col-70">
+				   <span style="font-size:12px">{{item.item_name}}</span></br>
+					<span style="font-size:12px">{{item.quanitity}} (X) Rs.{{item.item_price | number : 2}}</span>
+				  
+				   
+				   <!--  <h5 ng-click="cart_update(item.item_id,item.cart_id,item.item_price,item.quanitity,item.customers_id)">Quantity : {{item.quanitity}}  <i class="icon ion-edit icon-font-edit"></i></h5>-->
+			</div>
+			 <div class="col-30 cart-delete-padding" align="center">
+					 <span style="font-size:12px"><img src="img/rupee.svg" width="13" height="13"> {{item.amount | number : 2}}</span>
+					 
+					</div>
+			</div>
+			
+			
+			
+		  </div>
+		  <div  ng-if="cart_qty =='0'">
+			<div class="card">
+				<img src="img/plate.png" style="width:{{latest_width}}px;margin:auto;display:block;height:30%">
+				<div align="center">
+					<span style="font-size:13px">No Items in the cart.</span>
+				</div>
+			</div>
+			<div class="card" align="center">
+				<button class="button button-full button-small button-assertive" ui-sref="app.food_menu">
+							Click To Continue
+				</button>
+			</div>
 		</div>
-	</div>
-	
-	
-  </div>
- </div>
+	 </div>
 </ion-scroll>
 
 <!--    <div class="list card" ng-repeat="item in cart_items">

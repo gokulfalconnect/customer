@@ -91,7 +91,7 @@ Add/Edit Address
 </ion-scroll> -->
 
 
-<ion-scroll scroll-height direction = "y" scroll="true">
+<!--<ion-scroll scroll-height direction = "y" scroll="true">
     <div class = "scroll-container">
           <div class="col" ng-repeat="item in cart_items" style="margin-bottom: 10px;">
           <div class="col" style="background-color: #f1f1f1;">
@@ -104,7 +104,24 @@ Add/Edit Address
           </div>
          </div>
     </div>
-</ion-scroll>
+</ion-scroll>-->
+
+	<ion-scroll scroll-height direction = "y" scroll="true">
+		<div class = "scroll-container">
+			<div class="col" ng-repeat="item in cart_items">
+				<div class="row">
+					<div class="col col-40">
+						<img src="{{item.image_url}}" width="{{new_width}}" height="100%">
+					</div>
+					<div class="col col-60">
+						<span style="font-size:12px">{{item.item_name}}</span></br>
+						<span style="font-size:12px"><img src="img/rupee.svg" width="13" height="13"> {{item.amount | number : 2}}</span></br>
+						<span style="font-size:12px">Quantity: {{item.quanitity}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ion-scroll>
 
 
 <div class="bottom-form">

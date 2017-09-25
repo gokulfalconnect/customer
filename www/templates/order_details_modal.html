@@ -1,0 +1,114 @@
+<ion-modal-view  hide-back-button="false" cache-view="true" class="grey_bg">
+<ion-nav-bar class="bar-assertive">
+		<ion-nav-title>
+			Offer Code
+		</ion-nav-title>
+		<ion-nav-buttons side="right">
+      	<button class="button button-icon button-clear ion-close-round" ng-click="closeModal()">
+        	</button>
+    	</ion-nav-buttons>
+	</ion-nav-bar>
+  <ion-content>
+
+			
+				<br>
+				<br>
+					<div class = "col" align="center">
+	  				 <div class = "col">
+	  		 				<img src="img/restaurant-logo.png" width="60" height="60">
+	  				 </div>
+	  		 		<div class = "col">
+	  		 				<h4 class="h4-font">Food Delivery App</h4>
+	  				 </div>
+	   			</div>
+
+	   			<div class = "col" align="center">
+	  				<form method="post" ng-submit="apply_coupon1(offerdata)">
+						
+						<div class="row">
+						
+							<div class="col" >
+								<!--  <label><h6 class="h4-font" align="left">Username</h6></label>-->
+								<input type="text" id="coupon_val" maxlength="10" style="text-decoration: underline;border: 2px solid #dadada;border-radius: 7px;" ng-model="offerdata.coupon_code"  placeholder="Enter offer code" ng-keydown = "offer_input(offerdata.coupon_code)">
+							</div>
+
+							<div class="col" id="clearbtn" style="display:none">
+								<!--<input type="submit" value="Apply" style="width:40px;height:10px" class="button button-full button-small button-assertive" ng-click="apply_coupon(offerdata)">-->
+								<input type="submit" value="Clear" style="width:40px;height:10px" class="button button-full button-small button-assertive" ng-click="clear_coupon(offerdata)">
+							</div>
+						</div>
+						<div class="row" align="center" id="invalid_entry" style="display:none">
+							<p>{{error_text}}</p>
+
+						</div>
+						
+							<h4>Today's Available Coupons</h4>
+						
+			<ion-list>
+ 
+ <h5>Select Any of the coupons</h5>
+ 
+	<div class="card" ng-repeat="coupon in coupon_data" style="width:100%">
+	<div class="row" style="background-color:#071242 ;height:50px;" >
+		<div text-align="center">{{coupon.coupon_descr}}</div>
+	</div>
+	<div class="row" style="background-color:#F5EFEE;">
+	<ion-list>
+	<div style="padding-top:5px">Discount Amount Rs:{{coupon.coupon_amount}}</div></br>
+		<div align="center">Minimum Order Amount Rs:{{coupon.coupon_min_order_amount}}</div></br>
+		<div>Valid Upto {{coupon.coupon_end_date}}</div><br>
+		<div>Coupon Code: {{coupon.coupon_code}}</div>
+		</ion-list>
+	</div>
+	<div class="row" style="background-color:#FEFAFA;heigt:50px;">
+		<button style="width:100%;height:30px;background-color:#6D9635" ng-click="click_coupon(coupon.coupon_code)">Click to get coupon</button>
+	</div>
+	</div>
+    
+     
+    
+	
+	
+  
+</ion-list>
+
+					</form>	
+	  		 			
+	   		
+	 </div>		
+
+<!--<div class="bottom-form" id="footerbtn" class="item-bg-color" style="display:none;margin: 0">
+  
+ 
+ 
+</div>-->
+	 
+</ion-content>
+
+<!--<div id="footerbtn" style="position: absolute; bottom: 0px; width: 100%;display:none;">
+	<div class="item-bg-color">
+        <div style="text-align: center">
+          <p>Bottom</p>
+        </div>
+	</div>
+    </div>-->
+
+	
+	<ion-footer-bar  id="footerbtn" class="item-bg-color" style="display:none;">
+	
+	 <div class="row item-bg-color">
+	  
+	  <div class="col col-40" align="center" ng-click="cancel_coupon()">
+		<span>Cancel</span>
+	  </div>
+	  <div class="col col-40 " align="center" ng-click="apply_coupon()">
+		<span>Apply</span>
+	  </div>
+	  
+	</div>
+	
+
+</ion-footer-bar>
+</ion-modal-view>
+
+

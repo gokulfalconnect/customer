@@ -57,10 +57,10 @@
 	
     </ion-nav-view>
 		
-	<ion-footer-bar align-title="left" ng-if="cart_qty=='1' && display_cart=='1'">
+	<ion-footer-bar align-title="left" ng-if="cart_qty=='1' && display_cart=='1'" class="item-bg-color">
 	<div class="row">
 		<div class="col col-50" align="center">
-			<span ng-click="go_cart()">View Cart</span>
+			<span ng-click="go_cart()">View Cart ({{cart_count}})</span>
 		</div>
 		<div class="col col-50" align="center">
           <span ng-click="go_checkout()">Checkout</span>

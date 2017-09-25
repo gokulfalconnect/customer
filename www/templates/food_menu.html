@@ -1,5 +1,11 @@
-<ion-view view-title=""  cache-view="false" hide-back-button="true">
+<ion-view view-title="{{title}}"  cache-view="false" hide-back-button="true">
     
+		<!--<ion-nav-buttons side="right">
+		<i style="padding-right:10px;position:relative" class="ion-ios-search ion_icons_header" ui-sref="app.search"></i>
+		
+		
+    </ion-nav-buttons>-->
+	
 	<div class = "tabs tabs-top tabs-striped tabs-top tabs-color-light" style="padding-top:32px;height:81px">
 				<a class = "tab-item item-wrap" ng-repeat="categories in menu_categories" ng-click="tab_click(categories.id,$index)" ng-class="{active: $index===selectedIndex}">
 						{{categories.category_name}}
@@ -7,6 +13,8 @@
 
   
 			</div>
+			
+
 	
   <ion-content overflow-scroll="true">
     <form>
@@ -41,7 +49,7 @@
 						<div class="row">
 							<div class="col-60 card-padding">
 							
-								 <span class="card-title-color">{{item.item_name}}</span>
+								 <span class="card-title-color">{{item.item_name}} </span>
 								 <img src="img/veg.jpg" width="20" height="20"  ng-if="item.item_type=='Vegetarian'">
 								<img src="img/non.jpg" width="20" height="20"  ng-if="item.item_type=='Non-vegetarian'">
 								<img src="img/vegan.jpg" width="20" height="20"  ng-if="item.item_type=='Vegan'">
@@ -49,19 +57,20 @@
 							<div class="col-40 card-padding" align="center">
 												 
 							<!--	<i class="icon icon-large ion-android-cart ion-icon-medium card-title-icon" ng-if="list_id.indexOf(item.id) == -1" ng-click="cart_popup(item.id,item.item_price)"></i>	-->
-								<div class="row" ng-show="cartBtn">
+							
+								<div class="row" ng-show="list_id | checkcart:item.id" >
 									<div class="col col-15">
-										<input type='button' value='-' class='qtyminus' field='quantity' ng-click="cart_decr(item.id,item.item_price)"/>
+										<input type='button' value='-' class='qtyminus' field='quantity' ng-click="cart_decr(item.id,item.item_price);cartBtn = $('#'+item.id).val()==0?false:true;"/>
 									</div>
 									<div class="col col-10">
-										<input type='text' id='{{item.id}}' name='quantity' value='1' min="1" class='qty' />
+										<input type='text' id='{{item.id}}' name='quantity' value='1' min="0" class='qty' />
 									</div>
 									<div class="col col-15">
 										<input type='button' value='+' class='qtyplus' field='quantity'  ng-click="cart_incr(item.id,item.item_price)"/>
 									</div>
 									
 								</div>
-								<div class="row"  ng-click="cartBtn=!cartBtn;click_add(item.id,item.item_price)" ng-show="!cartBtn">
+								<div class="row"  ng-click="cartBtn=!cartBtn;click_add(item.id,item.item_price)" ng-hide="list_id | checkcart:item.id">
 									<input type='button' value='ADD' class='addbtn' />
 								</div>
 								
@@ -76,7 +85,7 @@
    						<div class="row">
 							<div class="col">
 								<img src="img/rupee.svg" width="12" height="12">
-								<span class="card-price-name">{{item.item_price}}</span>
+								<span class="card-price-name">{{item.item_price | number : 2}}</span>
 								 
 							</div>
 							<div class="col" align="right">
@@ -94,7 +103,8 @@
 				
 				<div class="card" ng-if="menu_items.length<1">
 				
-				<span>No Items Available</span>
+				<!--<span>No Items Available</span>-->
+				<img src="img/plate.png" style="width:{{new_width}}px;margin:auto;display:block;height:30%">
 				
 				</div>
 				

@@ -50,9 +50,9 @@
       </div>
       </div> 
     
-    <ion-item  menu-close ui-sref="app.food_menu" class="item-icon-left" >
+    <ion-item  class="item-text-wrap" menu-close ui-sref="app.food_menu" class="item-icon-left" >
           <i class="icon ion-ios-book"></i>
-          Menu
+          Menu ({{userdata.branch_name}})
         </ion-item>
     <ion-item  menu-close ui-sref="app.my_order"   class="item-icon-left" >
           <i class="icon ion-ios-monitor-outline"></i>
@@ -72,7 +72,7 @@
         </ion-item>
        <ion-item  menu-close ui-sref="app.booking_history"  class="item-icon-left" >
           <i class="icon ion-ios-compose"></i>
-          Table Booking History
+          Table Booking 
         </ion-item>
 		
    <!--  <ion-item  menu-close ui-sref="app.branch"  class="item-icon-left" >
@@ -87,9 +87,9 @@
           <i class="icon ion-android-call"></i>
           Contact Us
         </ion-item>
-        <ion-item  menu-close   class="item-icon-left"  ui-sref="app.about">
+        <ion-item  class="item-text-wrap" menu-close   class="item-icon-left"  ui-sref="app.about">
           <i class="icon ion-android-list"></i>
-          {{userdata.branch_name}}
+          About ({{userdata.branch_name}})
         </ion-item> 
     <!--  <ion-item  menu-close   class="item-icon-left"  ui-sref="app.address_book">
           <i class="icon ion-android-list"></i>
@@ -105,6 +105,9 @@
 		
       <ion-item menu-close ng-click="logout()" ng-if="user_status=='1'">
           Logout
+        </ion-item>
+		<ion-item menu-close>
+          Version {{userdata.app_version}}
         </ion-item>
       </ion-list>
     </ion-content>

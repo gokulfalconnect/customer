@@ -2,14 +2,14 @@
 
  <ion-content class="has-header" overflow-scroll="true">
 
-  <div class="card coupon_cards" ng-repeat="offers in offer_data">
+  <div class="card coupon_cards" ng-repeat="offers in offer_data" ui-sref="app.view_offers({offer_id : offers.offersid})">
     <div class = "row">
-      <div class = "col col-25">
-      <img src="{{offers.image_url}}" width="70" height="70">
+      <div class = "col col-50">
+      <img src="{{offers.image_url}}" width="{{final_width}}" height="70">
       </div>
-      <div class = "col col-75 cou_pro_details" ui-sref="app.view_offers({offer_id : offers.offersid})">
-        <h4 class="textwrapper">{{offers.offer_name}}</h4>
-        <p class="textwrapper">{{offers.item_description}}</p>
+      <div class = "col col-50" >
+        <span class="textwrapper">{{offers.offer_name}}</span></br>
+        <span class="textwrapper">{{offers.item_description}}</span>
        
       </div>
      <!-- <div class = "col col-25 cou_pro_apply">

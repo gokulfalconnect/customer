@@ -13,19 +13,19 @@
 							<div class="col-40 card-padding" align="center">
 												 
 							<!--	<i class="icon icon-large ion-android-cart ion-icon-medium card-title-icon" ng-if="list_id.indexOf(item.id) == -1" ng-click="cart_popup(item.id,item.item_price)"></i>	-->
-								<div class="row" ng-show="cartBtn">
+								<div class="row" ng-show="list_id | checkcart:item.menu_items_id">
 									<div class="col col-15">
-										<input type='button' value='-' class='qtyminus' field='quantity' ng-click="cart_decr(item.offeritemsid,item.item_price)"/>
+										<input type='button' value='-' class='qtyminus' field='quantity' ng-click="cart_decr(item.menu_items_id,item.item_price,item.offer_value,item.offer_types)"/>
 									</div>
 									<div class="col col-10">
-										<input type='text' id='{{item.offeritemsid}}' name='quantity' value='1' min="1" class='qty' />
+										<input type='text' id='{{item.menu_items_id}}' name='quantity' value='1' min="0" class='qty' />
 									</div>
 									<div class="col col-15">
-										<input type='button' value='+' class='qtyplus' field='quantity'  ng-click="cart_incr(item.offeritemsid,item.item_price)"/>
+										<input type='button' value='+' class='qtyplus' field='quantity'  ng-click="cart_incr(item.menu_items_id,item.item_price,item.offer_value,item.offer_types)"/>
 									</div>
 									
 								</div>
-								<div class="row"  ng-click="cartBtn=!cartBtn;click_add(item.offeritemsid,item.item_price)" ng-show="!cartBtn">
+								<div class="row"  ng-click="cartBtn=!cartBtn;click_add(item.menu_items_id,item.item_price,item.offer_value,item.offer_types)" ng-hide="list_id | checkcart:item.menu_items_id">
 									<input type='button' value='ADD' class='addbtn' />
 								</div>
 								
@@ -49,11 +49,11 @@
 							</div>
 						</div>
 			
-						<div class="row" >
+						<!--<div class="row" >
 				      		<div class="col" id="img1">
 				        		<img src="{{item.image_url}}" class="img-responsive " id="img1" ui-sref="app.product({product_id : item.id})">
 				      		 </div>
-						</div>
+						</div>-->
 				</div>
 
   
